@@ -6,9 +6,7 @@ Follow these steps to work with the Git repository:
 
 1. **Set up: Clone the Repository**
   Navigate to your directory (e.g., `cse403`) and run the following command to clone the Git repository into a directory named `footnote`:
-
   ```bash git clone git@github.com:miahuynhh/footnote.git`
-
   Then, navigate to the footnote directory
   ```bash cd footnote`
 
@@ -23,9 +21,7 @@ Follow these steps to work with the Git repository:
   ```bash git add .`
     *(option 2: recommended) this allows you to add specific files*
   ```bash git add <file_names>`
-
   *2. stage the commit*
   ```bash git commit -m "descriptive commit message"`
-
   *3. push the commit*
   ```bash git push`
