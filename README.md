@@ -8,7 +8,8 @@ Follow these steps to work with the Git repository:
   Navigate to your directory (e.g., ```cse403```) and run the following command to clone the Git repository into a directory named ```footnote```: <br>
   ```bash
   git clone git@github.com:miahuynhh/footnote.git
-  ``` <br>
+  ```
+  <br>
   Then, navigate to the footnote directory:<br>
   ```bash cd footnote``` <br>
 
