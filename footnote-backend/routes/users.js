@@ -8,12 +8,10 @@ const express = require('express');
 const router = express.Router();
 
 // COPY THIS LINE INTO ANY FILES THAT NEED DB CONNECTION //
-const db = require('./database');
+const db = require('../database');
 
 // Handles the backend of a user login
 async function userLogin(username, password) {
-  // logic for user authentication
-  // respond with success or failure
   try {
     const [results] = await db.execute()
 
@@ -34,9 +32,9 @@ const userCreate = (req, res) => {
 };
 
 
-// /* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
+/* GET users listing. */
+router.get('/', function(req, res, next) {
+  res.send('respond with a resource');
+});
 
 module.exports = { router, userLogin, userCreate };
