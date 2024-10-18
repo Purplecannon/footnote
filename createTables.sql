@@ -17,7 +17,7 @@ CREATE TABLE USERS(
 
 -- pid: project id
 CREATE TABLE PROJECTS(
-  pid INT PRIMARY KEY AUTO_INCREMENT,
+  pid INT PRIMARY KEY,
   projectName VARCHAR(100),
   username VARCHAR(100) NOT NULL,
   FOREIGN KEY (username) REFERENCES USERS(username)
@@ -27,7 +27,7 @@ CREATE TABLE PROJECTS(
 -- timestamp: stored as an integer representing the number of seconds from the
 -- start of the video
 CREATE TABLE ANNOTATIONS(
-  aid INT PRIMARY KEY AUTO_INCREMENT,
+  aid INT PRIMARY KEY,
   timestamp INT NOT NULL,
   note VARCHAR(2000),
   pid INT,
