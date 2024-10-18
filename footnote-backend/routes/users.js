@@ -12,8 +12,9 @@ const db = require('../database');
 
 // Handles the backend of a user login
 async function userLogin(username, password) {
+  // TODO: FINISH THIS
   try {
-    const [results] = await db.execute()
+    const [results] = await db.execute();
 
   } catch (error) {
     console.error('Error querying from database: ', error);
@@ -23,12 +24,14 @@ async function userLogin(username, password) {
 
 // Handles the backend of a user create
 // Talks to the database
-const userCreate = (req, res) => {
-  const { username, password } = req.body;
-
-  // logic for creating a new user
-  // respond with success or failure
-
+async function userCreate(username, password) {
+  try {
+    if (!username || username.trim() === "") {
+      console.log('Username is empty');
+    }
+  } catch (error) {
+    console.error('Error querying from database: ', error);
+  }
 };
 
 
