@@ -16,6 +16,18 @@ const pool = mysql.createPool({
   }
 });
 
+// tests the connection
+pool.getConnection((err, connection) => {
+  if (err) {
+    console.error('Error connecting to the database: ', err.stack);
+    return;
+  } else {
+    console.log('Connected to the database as ' + connection.threadId);
+    connection.release();  // release the connection back to the pool
+  }
+});
+
+
 // export a Promise-based version of the pool
 module.exports = pool.promise();
 
