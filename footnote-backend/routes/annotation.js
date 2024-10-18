@@ -46,4 +46,3 @@ const createAnnotation = (req, res) => {
 };
 
 module.exports = { createAnnotation, router };
-

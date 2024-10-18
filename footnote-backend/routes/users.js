@@ -1,33 +1,28 @@
 /**
+ * Author: Mia
  * Handle all user-related logic
  */
 
-// npm install mysql2
-// for db connection
-
-
 // defines all the routes related to user operations
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// COPY THIS LINE INTO ANY FILES THAT NEED DB CONNECTION //
+const db = require('./database');
 
-// author: Mia
 // Handles the backend of a user login
-// Talks to the database
-const userLogin = (req, res) => {
-  const { username, password } = req.body;
-
-
+async function userLogin(username, password) {
   // logic for user authentication
   // respond with success or failure
+  try {
+    const [results] = await db.execute()
+
+  } catch (error) {
+    console.error('Error querying from database: ', error);
+  }
 
 };
 
-// author: Mia
 // Handles the backend of a user create
 // Talks to the database
 const userCreate = (req, res) => {
@@ -39,4 +34,9 @@ const userCreate = (req, res) => {
 };
 
 
-module.exports = { userLogin, userCreate, router };
+// /* GET users listing. */
+// router.get('/', function(req, res, next) {
+//   res.send('respond with a resource');
+// });
+
+module.exports = { router, userLogin, userCreate };
