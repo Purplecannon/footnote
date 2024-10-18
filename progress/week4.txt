@@ -2,5 +2,5 @@ Please write a short summary (5 sentences max) of what you did in Week 4.
 
 Mia:
 - Set up database configurations for DigitalOcean Cluster, connected the database
-to the JS app (dependencies installation, database.js)
-
+to the JS app (dependencies installation, wrote database.js)
+- Update databse schema and deployed it to DigitalOcean
