@@ -2,6 +2,10 @@
  * Handle all user-related logic
  */
 
+// npm install mysql2
+// for db connection
+
+
 // defines all the routes related to user operations
 var express = require('express');
 var router = express.Router();
@@ -16,6 +20,7 @@ router.get('/', function(req, res, next) {
 // Talks to the database
 const userLogin = (req, res) => {
   const { username, password } = req.body;
+
 
   // logic for user authentication
   // respond with success or failure
