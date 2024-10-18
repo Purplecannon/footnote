@@ -1,21 +1,23 @@
 var express = require('express');
 var router = express.Router();
+const db = require('./database')
 const Annotation = require('../createTables.sql'); // Using Annotation model from createTables.sql
 
 // Author: Lauren
 // Create a new blank annotation
-router.create('/', async (req, res) => {
+const createAnnotation = (req, res) => {
     try {
         const { pid, timestamp } = req.body;
 
-        // Find the last annotation for the project
-        const lastAnnotation = await Annotation.findOne({ pid }).sort({ aid: -1 });
-
-        // Determine the next aid
-        const nextAid = lastAnnotation ? lastAnnotation.aid + 1 : 1;
+        // Assuming you have a function to get the next available aid
+        const getNextAid = async () => {
+            const lastAnnotation = await db.query('SELECT MAX(aid) AS lastAid FROM annotations WHERE pid = ?', [pid]);
+            return lastAnnotation.rows[0].lastAid + 1 || 1;
+        };
 
         // Create a new annotation instance
-        const annotation = new Annotation({
+        // the new aid should be 
+        const newAnnotation = new Annotation({
             aid: nextAid,
             timestamp,
             note: '',
@@ -24,7 +26,16 @@ router.create('/', async (req, res) => {
 
 
         // Save the annotation to the database
-        await annotation.save();
+        db.query('INSERT INTO annotations (aid, timestamp, note, pid) VALUES (?, ?, ?, ?)',
+                [newAnnotation.aid, newAnnotation.timestamp, newAnnotation.note, newAnnotation.pid],
+                (err, result) => {
+                if (err) {
+                    console.error(err);
+                    res.status(500).json({ message: 'Error creating annotation' });
+                } else {
+                    res.status(201).json(newAnnotation);
+                }
+                });
 
         res.status(201).json(annotation);
     } catch (err) {
@@ -32,6 +43,6 @@ router.create('/', async (req, res) => {
         res.status(500).json({ message: 'Error creating annotation' });
     }
 
-});
+};
 
-module.exports = { router };
+module.exports = { createAnnotation, router };
