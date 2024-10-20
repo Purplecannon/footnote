@@ -1,8 +1,11 @@
 // Author: Mia
 const express = require('express');
-const router = express.Router();
-const db = require('../services/database');
+// const session = require('express-session');
+// const path = require('path');
+const conn = require('../services/database');
 const bcrypt = require('bcrypt');  // for password hashing
+
+const router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -10,28 +13,21 @@ router.get('/', function(req, res, next) {
 });
 
 async function userCreate(username, password) {
-  // start a transaction
-  const conn = await db.getConnection();  // initialize the connection object
+  const checkExistingSql = 'SELECT * FROM USERS WHERE username = ?';
+  const createUserSql = 'INSERT INTO USERS(username, hashedPassword) VALUES(?, ?)';
 
   try {
-    await conn.beginTransaction();
-
     // check if username or password is empty
     if (!username || username.trim() === "" || !password) {
-      await conn.rollback();
       return "Failed to create user\n";
     }
 
     const usernameLower = username.toLowerCase();
 
     // check if username already exists (not case-sensitive)
-    const [existingUser] = await conn.query(
-      "SELECT * FROM USERS WHERE username = ?",
-      [usernameLower]
-    );
+    const [existingUser] = await conn.promise().query(checkExistingSql, [usernameLower]);
 
     if (existingUser.length > 0) {
-      await conn.rollback();
       return "Failed to create user\n";
     }
 
@@ -40,23 +36,13 @@ async function userCreate(username, password) {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // insert the new user into the database
-    await conn.query(
-      "INSERT INTO USERS(username, hashedPassword) VALUES(?, ?)",
-      [usernameLower, hashedPassword]
-    );
+    await conn.promise().query(createUserSql, [usernameLower, hashedPassword]);
 
-    // commit the transaction (end)
-    await conn.commit();
     return "Created user " + username + "\n";
-
   } catch (error) {
     // handles error during user creation (eg. deadlock)
     console.error('Error during user creation: ', error);
-    await conn.rollback();
     return "Failed to create user\n";
-
-  } finally {
-    conn.release();  // release the connection back to the pool
   }
 };
 

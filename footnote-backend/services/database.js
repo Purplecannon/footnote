@@ -2,33 +2,36 @@
 // a central file for database configuration
 
 const mysql = require('mysql2');
+const fs = require('fs');
+require('dotenv').config();  // load env variables
 
-// create a connection pool (recommended for scaling)
-const pool = mysql.createPool({
-  host: 'private-footnote-mysql-db-do-user-18061608-0.d.db.ondigitalocean.com',
-  user: 'doadmin',
-  password: 'AVNS_GtmewqnqsWYUqVHb7_8',
-  database: 'defaultdb',
-  port: 25060,
+const caCert = fs.readFileSync(process.env.DB_SSL__CA);
+
+// create a connection
+const conn = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  port: process.env.DB_PORT,
   ssl: {
-    // enable SSL mode as required by the DigitalOcean database
-    rejectUnauthorized: true
+    // enable SSL mode as required by DigitalOcean database
+    rejectUnauthorized: true,
+    ca: caCert
   }
 });
 
 // tests the connection
-pool.getConnection((err, connection) => {
+conn.connect((err) => {
   if (err) {
-    console.error('Error connecting to the database: ', err.stack);
+    console.error('Error connecting to the database: ', err);
     return;
   } else {
-    console.log('Connected to the database as ' + connection.threadId);
-    connection.release();  // release the connection back to the pool
+    console.log('Connected to the database as ' + conn.threadId);
   }
 });
 
-// export a Promise-based version of the pool
-module.exports = pool.promise();
+module.exports = conn;
 
 ///////// NOTES ///////////
 /**

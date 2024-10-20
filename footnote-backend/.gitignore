@@ -1,3 +1,4 @@
 # Ignore environment variables
 .env
 ReadMe-alicia.md
+services/ca-certificate.crt
