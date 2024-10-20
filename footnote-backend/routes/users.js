@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+// Author: Mia
+const express = require('express');
+const router = express.Router();
 const db = require('../services/database');
 const bcrypt = require('bcrypt');  // for password hashing
 
