@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-// Path is set up. Figure out how to get username and password from front end.
+// TODO: Path is set up. Get username and password from front end.
 router.get('/create-user', async(req, res) => {
   const username = 'footnote';
   const password = 'yippie';
@@ -24,6 +24,7 @@ router.get('/create-user', async(req, res) => {
   }
 });
 
+// Create all necessary tables in Digital Ocean database.
 async function createTables() {
   const createTablesSql = `
     CREATE TABLE IF NOT EXISTS USERS(
@@ -45,6 +46,27 @@ async function createTables() {
   }
 }
 
+// Clear all necessary tables in Digital Ocean database.
+// Not the same as drop tables (this is clearing, not dropping).
+async function clearTables() {
+  const clearTablesSql = `DELETE FROM USERS`;
+
+  try {
+    await new Promise((resolve, reject) => {
+      conn.query(clearTablesSql, (err, results) => {
+        if (err) return reject(err);
+        resolve(results);
+      });
+    });
+    console.log('Successfully cleared tables');
+  } catch (err) {
+    console.log('Error clearing tables: ', err);
+  }
+}
+
+// Create a new user given a username and password.
+// The password stored is a hashed passowrd.
+// Usernames should be unique.
 async function userCreate(username, password) {
   const checkExistingSql = 'SELECT * FROM USERS WHERE username = ?';
   const createUserSql = 'INSERT INTO USERS(username, hashedPassword) VALUES(?, ?)';
@@ -79,6 +101,8 @@ async function userCreate(username, password) {
   }
 };
 
+// Exports
 module.exports = router;
 module.exports.createTables = createTables;
+module.exports.clearTables = clearTables;
 module.exports.userCreate = userCreate;
