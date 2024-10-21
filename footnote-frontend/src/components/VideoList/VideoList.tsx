@@ -1,14 +1,23 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+interface Video {
+  id: string;
+  title: string;
+  thumbnail: string;
+  videoUrl: string;
+}
+
 const VideoList: React.FC = () => {
-  const [videos, setVideos] = useState([
-    { id: 1, title: "Video 1", thumbnail: "thumbnail1.jpg" },
-    { id: 2, title: "Video 2", thumbnail: "thumbnail2.jpg" },
-    // Fetch your videos from the server in a real implementation
-  ]);
-  const [uploadProgress, setUploadProgress] = useState<number>(0);
-  const [isUploading, setIsUploading] = useState<boolean>(false);
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleVideoClick = (videoId: string) => {
+    navigate(`/video/${videoId}`); // Navigate to playback page
+  };
 
   const handleFileUpload = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -16,73 +25,67 @@ const VideoList: React.FC = () => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // Prepare form data for the file upload
     const formData = new FormData();
     formData.append("file", file);
 
     setIsUploading(true);
-    setUploadProgress(0); // Reset progress
+    setUploadProgress(0);
 
     try {
-      // Make the request to the backend for uploading
       const response = await axios.post("/api/upload", formData, {
         onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round(
+          const progress = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total!
           );
-          setUploadProgress(percentCompleted); // Update progress
-        },
-        headers: {
-          "Content-Type": "multipart/form-data",
+          setUploadProgress(progress);
         },
       });
 
-      // On success, update the video list
-      const uploadedVideo = {
-        id: response.data.videoId, // Assuming the response returns the video ID
+      const uploadedVideo: Video = {
+        id: response.data.videoId,
         title: file.name,
-        thumbnail: response.data.thumbnail, // Assuming the backend generates and returns a thumbnail URL
+        thumbnail: response.data.thumbnail,
+        videoUrl: response.data.videoUrl,
       };
 
       setVideos([...videos, uploadedVideo]);
     } catch (error) {
-      console.error("Upload failed", error);
+      console.error("Error uploading video:", error);
     } finally {
       setIsUploading(false);
     }
   };
 
   return (
-    <div>
-      <div className="video-list">
+    <div className="video-list-container">
+      <div className="video-grid">
         {videos.map((video) => (
-          <div key={video.id}>
+          <div
+            key={video.id}
+            className="video-thumbnail"
+            onClick={() => handleVideoClick(video.id)}
+          >
             <img src={video.thumbnail} alt={video.title} />
             <p>{video.title}</p>
           </div>
         ))}
-      </div>
-
-      {/* Upload Button at the Tail of the List */}
-      <div style={{ marginTop: "20px" }}>
-        <label htmlFor="video-upload" className="upload-button">
-          {isUploading ? "Uploading..." : "Upload Video"}
-          <input
-            id="video-upload"
-            type="file"
-            accept="video/*"
-            onChange={handleFileUpload}
-            style={{ display: "none" }} // Hide the input and use label as button
-          />
-        </label>
-
-        {/* Show Progress Bar if Uploading */}
-        {isUploading && (
-          <div>
-            <progress value={uploadProgress} max="100" />
-            <p>{uploadProgress}%</p>
-          </div>
-        )}
+        <div className="upload-new">
+          <label htmlFor="file-upload">
+            <div className="upload-box">+ Create New</div>
+            <input
+              type="file"
+              id="file-upload"
+              accept="video/*"
+              onChange={handleFileUpload}
+              style={{ display: "none" }}
+            />
+          </label>
+          {isUploading && (
+            <progress value={uploadProgress} max="100">
+              {uploadProgress}%
+            </progress>
+          )}
+        </div>
       </div>
     </div>
   );
