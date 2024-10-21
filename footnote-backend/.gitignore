@@ -1,0 +1,4 @@
+# Ignore environment variables
+.env
+ReadMe-alicia.md
+./node_modules/*
