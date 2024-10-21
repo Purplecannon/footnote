@@ -10,7 +10,7 @@
 
 CREATE TABLE USERS(
   username VARCHAR(100) PRIMARY KEY,
-  hashedPassword VARBINARY(256) NOT NULL
+  hashedPassword VARCHAR(256) NOT NULL
 );
 
 INSERT INTO USERS VALUES('mia', 'pw');
