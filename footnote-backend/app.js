@@ -24,6 +24,23 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/videos", videosRouter); // Place this BEFORE the 404 handler
 
+//////// Mia testing out createTables from users.js
+
+const { createTables } = require('./routes/users');
+
+async function initialize() {
+  try {
+    await createTables();
+    console.log('Database tables are initialized');
+  } catch (err) {
+    console.log('Error for database tables initialization: ', err);
+  }
+}
+
+initialize();
+
+////////
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

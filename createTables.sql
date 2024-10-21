@@ -9,12 +9,11 @@
 -- multiple annotations)
 
 CREATE TABLE USERS(
-  uid INT NOT NULL,
   username VARCHAR(100) PRIMARY KEY,
   hashedPassword VARBINARY(256) NOT NULL
 );
 
-INSERT INTO USERS VALUES(1, 'mia', 'pw');
+INSERT INTO USERS VALUES('mia', 'pw');
 
 -- pid: project id
 -- pid INT PRIMARY KEY AUTO_INCREMENT,
