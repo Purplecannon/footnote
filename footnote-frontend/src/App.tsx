@@ -5,7 +5,7 @@ import VideoPlayback from "./components/VideoPlayback/VideoPlayback";
 function App() {
   return (
     <div>
-      <VideoPlayback />
+      <LoginSignup />
     </div>
   );
 }
