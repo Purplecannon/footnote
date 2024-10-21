@@ -1,0 +1,7 @@
+Please write a short summary (5 sentences max) of what you did in Week 4.
+
+Mia:
+- Set up database configurations for DigitalOcean Cluster, connected the database
+to our js app.
+- implemented user creation with hashed password feature (userCreate() in users.js),
+defined the POST route.
