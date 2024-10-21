@@ -1,3 +1,5 @@
+-- Author: Mia
+
 -- All SQL setup statements are here.
 
 -- SQL Rules:
@@ -14,22 +16,20 @@ CREATE TABLE USERS(
 );
 
 -- pid: project id
--- pid INT PRIMARY KEY AUTO_INCREMENT,
 CREATE TABLE PROJECTS(
   pid INT PRIMARY KEY,
   projectName VARCHAR(100),
-  username VARCHAR(100) NOT NULL REFERENCES USERS(username)
+  username VARCHAR(100) NOT NULL,
+  FOREIGN KEY (username) REFERENCES USERS(username)
 );
 
 -- aid: annotation id
 -- timestamp: stored as an integer representing the number of seconds from the
 -- start of the video
---   aid INT PRIMARY KEY AUTO_INCREMENT,
 CREATE TABLE ANNOTATIONS(
   aid INT PRIMARY KEY,
   timestamp INT NOT NULL,
   note VARCHAR(2000),
-  pid INT REFERENCES PROJECTS(pid)
+  pid INT,
+  FOREIGN KEY (pid) REFERENCES PROJECTS(pid)
 );
-
-
