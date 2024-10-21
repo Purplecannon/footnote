@@ -4,13 +4,13 @@
  */
 
 // COPY THIS LINE INTO ANY FILES THAT NEED DB CONNECTION //
-const db = require('../database');
+const db = require("../database");
 
 // npm install bcrypt
-const bcrypt = require('bcrypt');  // for password hashing
+const bcrypt = require("bcrypt"); // for password hashing
 
 // defines all the routes related to user operations
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 /**
@@ -22,7 +22,7 @@ const router = express.Router();
  */
 async function userCreate(username, password) {
   // start a transaction
-  const conn = await db.getConnection();  // initialize the connection object
+  const conn = await db.getConnection(); // initialize the connection object
 
   try {
     await conn.beginTransaction();
@@ -59,37 +59,34 @@ async function userCreate(username, password) {
     // commit the transaction (end)
     await conn.commit();
     return "Created user " + username + "\n";
-
   } catch (error) {
     // handles error during user creation (eg. deadlock)
-    console.error('Error during user creation: ', error);
+    console.error("Error during user creation: ", error);
     await conn.rollback();
     return "Failed to create user\n";
-
   } finally {
-    conn.release();  // release the connection back to the pool
+    conn.release(); // release the connection back to the pool
   }
-};
+}
 
 // Handles the backend of a user login
 async function userLogin(username, password) {
   // TODO: FINISH THIS
   try {
     const [results] = await db.execute();
-
   } catch (error) {
-    console.error('Error querying from database: ', error);
+    console.error("Error querying from database: ", error);
   }
-
-};
+}
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get("/", function (req, res, next) {
+  res.send("respond with a resource");
 });
 
-module.exports = { router, userLogin, userCreate };
-
+module.exports = router;
+module.exports = userLogin;
+module.exports = userCreate;
 // NOTE //
 /**
  * to start, commit, rollback transactions:
