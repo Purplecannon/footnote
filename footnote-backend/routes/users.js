@@ -1,6 +1,5 @@
 // Author: Mia
 
-<<<<<<< HEAD
 const express = require('express');
 const conn = require('../services/database');
 const bcrypt = require('bcrypt');
@@ -15,28 +14,6 @@ router.get('/', function(req, res, next) {
 router.get('/create-user', async(req, res) => {
   const username = 'footnote';
   const password = 'yippie';
-=======
-// COPY THIS LINE INTO ANY FILES THAT NEED DB CONNECTION //
-const db = require("../database");
-
-// npm install bcrypt
-const bcrypt = require("bcrypt"); // for password hashing
-
-// defines all the routes related to user operations
-const express = require("express");
-const router = express.Router();
-
-/**
- * Creates an account from the given username and password. The password is
- * stored internally as a hashed password.
- * @param {*} username - the passed in username
- * @param {*} password - the passed in password
- * @returns
- */
-async function userCreate(username, password) {
-  // start a transaction
-  const conn = await db.getConnection(); // initialize the connection object
->>>>>>> 163a124aabcbe9e2abf8e9808ef2368865a8467a
 
   try {
     const result = await userCreate(username, password);
@@ -131,24 +108,11 @@ async function userCreate(username, password) {
     // insert the new user into the database
     await conn.promise().query(createUserSql, [usernameLower, hashedPassword]);
 
-<<<<<<< HEAD
     return "Created user " + usernameLower + "\n";
   } catch (err) {
     // handles error during user creation (eg. deadlock)
     console.error('Error during user creation: ', err);
     return 'Error during user creation';
-=======
-    // commit the transaction (end)
-    await conn.commit();
-    return "Created user " + username + "\n";
-  } catch (error) {
-    // handles error during user creation (eg. deadlock)
-    console.error("Error during user creation: ", error);
-    await conn.rollback();
-    return "Failed to create user\n";
-  } finally {
-    conn.release(); // release the connection back to the pool
->>>>>>> 163a124aabcbe9e2abf8e9808ef2368865a8467a
   }
 }
 
@@ -159,7 +123,6 @@ async function userLogin(username, password) {
   const checkExistingSql = 'SELECT * FROM USERS WHERE username = ?';
 
   try {
-<<<<<<< HEAD
     // check if username or password is empty
     if (!username || username.trim() === "" || !password) {
       return "Username or password is empty";
@@ -196,27 +159,3 @@ module.exports.createTables = createTables;
 module.exports.clearTables = clearTables;
 module.exports.userCreate = userCreate;
 module.exports.userLogin = userLogin;
-=======
-    const [results] = await db.execute();
-  } catch (error) {
-    console.error("Error querying from database: ", error);
-  }
-}
-
-/* GET users listing. */
-router.get("/", function (req, res, next) {
-  res.send("respond with a resource");
-});
-
-module.exports = router;
-module.exports = userLogin;
-module.exports = userCreate;
-// NOTE //
-/**
- * to start, commit, rollback transactions:
- * conn.beginTransaction(), conn.commit(), conn.rollback()
- *
- * to acquire a connection from the pool then release it
- * db.getConnection(), conn.release()
- */
->>>>>>> 163a124aabcbe9e2abf8e9808ef2368865a8467a
