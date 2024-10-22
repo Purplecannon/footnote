@@ -1,49 +1,104 @@
-/**
- * Author: Mia
- * Handle all user-related logic
- */
+// Author: Mia
 
-// COPY THIS LINE INTO ANY FILES THAT NEED DB CONNECTION //
-const db = require('../database');
-
-// npm install bcrypt
-const bcrypt = require('bcrypt');  // for password hashing
-
-// defines all the routes related to user operations
 const express = require('express');
+const conn = require('../services/database');
+const bcrypt = require('bcrypt');
 const router = express.Router();
 
-/**
- * Creates an account from the given username and password. The password is
- * stored internally as a hashed password.
- * @param {*} username - the passed in username
- * @param {*} password - the passed in password
- * @returns
- */
-async function userCreate(username, password) {
-  // start a transaction
-  const conn = await db.getConnection();  // initialize the connection object
+/* GET users listing. */
+router.get('/', function(req, res, next) {
+  res.send('respond with a resource');
+});
+
+// TODO: Path is set up. Get username and password from front end.
+router.get('/create-user', async(req, res) => {
+  const username = 'footnote';
+  const password = 'yippie';
 
   try {
-    await conn.beginTransaction();
+    const result = await userCreate(username, password);
+    res.send(result);
+  } catch (err) {
+    console.log('Error creating user: ', err);
+    res.status(500).send('Error creating user');
+  }
+});
 
+// TODO: Path is set up. Get username and password from front end.
+router.get('/login-user', async(req, res) => {
+  const username = 'footnote';
+  const password = 'yippie';
+
+  try {
+    const result = await userLogin(username, password);
+    res.send(result);
+  } catch (err) {
+    console.log('Error logging in user: ', err);
+    res.status(500).send('Error logging in user');
+  }
+});
+
+// Create all necessary tables in Digital Ocean database.
+async function createTables() {
+  const createTablesSql = `
+    CREATE TABLE IF NOT EXISTS USERS(
+      username VARCHAR(100) PRIMARY KEY,
+      hashedPassword VARCHAR(256) NOT NULL
+    );
+  `;
+
+  try {
+    await new Promise((resolve, reject) => {
+      conn.query(createTablesSql, (err, results) => {
+        if (err) return reject(err);
+        resolve(results);
+      });
+    });
+    console.log('Tables created successfully');
+  } catch (err) {
+    console.log('Error creating tables: ', err);
+  }
+}
+
+// Clear all necessary tables in Digital Ocean database.
+// Not the same as drop tables (this is clearing, not dropping).
+async function clearTables() {
+  const clearTablesSql = `DELETE FROM USERS`;
+
+  try {
+    await new Promise((resolve, reject) => {
+      conn.query(clearTablesSql, (err, results) => {
+        if (err) return reject(err);
+        resolve(results);
+      });
+    });
+    console.log('Successfully cleared tables');
+  } catch (err) {
+    console.log('Error clearing tables: ', err);
+  }
+}
+
+// Create a new user given a username and password.
+// The password stored is a hashed password.
+// Usernames should be unique and are not case-sensitive.
+async function userCreate(username, password) {
+  const checkExistingSql = 'SELECT * FROM USERS WHERE username = ?';
+  const createUserSql = 'INSERT INTO USERS(username, hashedPassword) VALUES(?, ?)';
+
+  try {
     // check if username or password is empty
     if (!username || username.trim() === "" || !password) {
-      await conn.rollback();
-      return "Failed to create user\n";
+      return "Username or password is empty";
     }
 
+    // usernames are not case-sensitive
     const usernameLower = username.toLowerCase();
 
-    // check if username already exists (not case-sensitive)
-    const [existingUser] = await conn.query(
-      "SELECT * FROM USERS WHERE username = ?",
-      [usernameLower]
-    );
+    // check if username already exists
+    const [existingUser] = await conn.promise().query(checkExistingSql, [usernameLower]);
 
     if (existingUser.length > 0) {
-      await conn.rollback();
-      return "Failed to create user\n";
+      return "Username already exists";
     }
 
     // hash the password with salt
@@ -51,50 +106,56 @@ async function userCreate(username, password) {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // insert the new user into the database
-    await conn.query(
-      "INSERT INTO USERS(username, hashedPassword) VALUES(?, ?)",
-      [usernameLower, hashedPassword]
-    );
+    await conn.promise().query(createUserSql, [usernameLower, hashedPassword]);
 
-    // commit the transaction (end)
-    await conn.commit();
-    return "Created user " + username + "\n";
-
-  } catch (error) {
+    return "Created user " + usernameLower + "\n";
+  } catch (err) {
     // handles error during user creation (eg. deadlock)
-    console.error('Error during user creation: ', error);
-    await conn.rollback();
-    return "Failed to create user\n";
-
-  } finally {
-    conn.release();  // release the connection back to the pool
+    console.error('Error during user creation: ', err);
+    return 'Error during user creation';
   }
 };
 
-// Handles the backend of a user login
+// Login an existing user given a username and password.
+// The password stored is a hashed password.
+// Usernames should be unique and are not case-sensitive.
 async function userLogin(username, password) {
-  // TODO: FINISH THIS
+  const checkExistingSql = 'SELECT * FROM USERS WHERE username = ?';
+
   try {
-    const [results] = await db.execute();
+    // check if username or password is empty
+    if (!username || username.trim() === "" || !password) {
+      return "Username or password is empty";
+    }
 
-  } catch (error) {
-    console.error('Error querying from database: ', error);
+    // usernames are not case-sensitive
+    const usernameLower = username.toLowerCase();
+
+    // check that username exists in database
+    const [existingUser] = await conn.promise().query(checkExistingSql, [usernameLower]);
+
+    if (existingUser.length === 0) {
+      return "Username doesn't exist";
+    }
+
+    // compare the provided password with the stored hashed password
+    const hashedPassword = existingUser[0].hashedPassword;  // the stored hashedPassword
+    const correctPassword = await bcrypt.compare(password, hashedPassword);
+
+    if (correctPassword) {
+      return "Login successful for user " + usernameLower;
+    } else {
+      return "Incorrect username or password";
+    }
+  } catch (err) {
+    console.error('Error during user login: ', err);
+    return 'Error during user login';
   }
+}
 
-};
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
-module.exports = { router, userLogin, userCreate };
-
-// NOTE //
-/**
- * to start, commit, rollback transactions:
- * conn.beginTransaction(), conn.commit(), conn.rollback()
- *
- * to acquire a connection from the pool then release it
- * db.getConnection(), conn.release()
- */
+// Exports
+module.exports = router;
+module.exports.createTables = createTables;
+module.exports.clearTables = clearTables;
+module.exports.userCreate = userCreate;
+module.exports.userLogin = userLogin;
