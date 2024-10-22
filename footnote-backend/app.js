@@ -32,12 +32,12 @@ const { createTables, clearTables } = require('./routes/users');
 async function initialize() {
   try {
     await createTables();
-    console.log('Database tables are initialized');
+    console.log('All tables are initialized');
 
     await clearTables();
-    console.log('Database tables are cleared');
+    console.log('All tables are cleared');
   } catch (err) {
-    console.log('Error for database tables initialization and clearing: ', err);
+    console.log('Error during tables initialization and clearing: ', err);
   }
 }
 
