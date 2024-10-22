@@ -38,23 +38,43 @@ router.get('/login-user', async(req, res) => {
   }
 });
 
+///////// THESE FUNCTIONS ARE USED TO CREATE AND CLEAR ALL NECESSARY TABLES:  /////////
+///////// INCLUDING USERS, PROJECTS, AND ANNOTATIONS                          /////////
+
 // Create all necessary tables in Digital Ocean database.
 async function createTables() {
-  const createTablesSql = `
+  const createUsersTableSql = `
     CREATE TABLE IF NOT EXISTS USERS(
       username VARCHAR(100) PRIMARY KEY,
       hashedPassword VARCHAR(256) NOT NULL
     );
   `;
+  const createProjectsTableSql = `
+    CREATE TABLE IF NOT EXISTS PROJECTS(
+      pid INT PRIMARY KEY,
+      projectName VARCHAR(100),
+      username VARCHAR(100) NOT NULL,
+      FOREIGN KEY (username) REFERENCES USERS(username)
+    );
+  `;
 
   try {
     await new Promise((resolve, reject) => {
-      conn.query(createTablesSql, (err, results) => {
+      conn.query(createUsersTableSql, (err, results) => {
         if (err) return reject(err);
         resolve(results);
       });
     });
-    console.log('Tables created successfully');
+    console.log('USERS table created successfully');
+
+    await new Promise((resolve, reject) => {
+      conn.query(createProjectsTableSql, (err, results) => {
+        if (err) return reject(err);
+        resolve(results);
+      });
+    });
+    console.log('PROJECTS table created successfully');
+
   } catch (err) {
     console.log('Error creating tables: ', err);
   }
@@ -63,20 +83,32 @@ async function createTables() {
 // Clear all necessary tables in Digital Ocean database.
 // Not the same as drop tables (this is clearing, not dropping).
 async function clearTables() {
-  const clearTablesSql = `DELETE FROM USERS`;
+  const clearUsersTableSql = `DELETE FROM USERS;`;
+  const clearProjectsTableSql = `DELETE FROM PROJECTS;`;
 
   try {
     await new Promise((resolve, reject) => {
-      conn.query(clearTablesSql, (err, results) => {
+      conn.query(clearUsersTableSql, (err, results) => {
         if (err) return reject(err);
         resolve(results);
       });
     });
-    console.log('Successfully cleared tables');
+    console.log('Successfully cleared USERS table');
+
+    await new Promise((resolve, reject) => {
+      conn.query(clearProjectsTableSql, (err, results) => {
+        if (err) return reject(err);
+        resolve(results);
+      });
+    });
+    console.log('Successfully cleared PROJECTS table');
   } catch (err) {
     console.log('Error clearing tables: ', err);
   }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 // Create a new user given a username and password.
 // The password stored is a hashed password.
