@@ -15,8 +15,6 @@ CREATE TABLE USERS(
   hashedPassword VARCHAR(256) NOT NULL
 );
 
-INSERT INTO USERS VALUES('mia', 'pw');
-
 -- pid: project id
 CREATE TABLE PROJECTS(
   pid INT PRIMARY KEY,
