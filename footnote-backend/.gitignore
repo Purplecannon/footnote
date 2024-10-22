@@ -1,0 +1,4 @@
+# Ignore environment variables
+.env
+README-mia.md
+services/ca-certificate.crt
