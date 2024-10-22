@@ -1,10 +1,4 @@
 # Ignore environment variables
-<<<<<<< HEAD
 .env
 README-mia.md
 services/ca-certificate.crt
-=======
-./.env
-./ReadMe-alicia.md
-node_modules
->>>>>>> 163a124aabcbe9e2abf8e9808ef2368865a8467a
