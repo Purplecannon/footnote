@@ -7,3 +7,8 @@ Mia:
 - Implemented createTables(), clearTables(), userCreate(), userLogin() in users.js
 - Initilize table set up in app.js
 
+Lauren
+- Implemented createAnnotation() that takes project ID and timestamp
+- Implemented editAnnotation() that takes project ID and timestamp
+- Implemented saveAnnotation() that takes project ID, note, and timestamp
+- Implemented deleteAnnotation() that takes project ID and timestamp
