@@ -7,3 +7,8 @@ Mia:
 - Implemented createTables(), clearTables(), userCreate(), userLogin() in users.js
 - Initilize table set up in app.js
 
+Cat:
+- Write unit tests for creating an account and logging in 
+- (won't run the unit tests until those functions are complete and a delete account function is implemented so we can remove any dummy accounts added during unit testing)
+- Set up testing branch
+- Started researching Javascript-specific testing frameworks
