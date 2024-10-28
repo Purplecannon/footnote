@@ -1,5 +1,6 @@
 # Ignore environment variables
 .env
 README-mia.md
+node_modules/
 services/ca-certificate.crt
 services/createTables.sql
