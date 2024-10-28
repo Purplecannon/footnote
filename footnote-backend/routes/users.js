@@ -1,14 +1,15 @@
 // Author: Mia
 
 const express = require('express');
-const conn = require('../services/database');
-const bcrypt = require('bcrypt');
 const router = express.Router();
 
+const conn = require('../services/database');
+const bcrypt = require('bcrypt');
+
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// router.get('/', function(req, res, next) {
+//   res.send('respond with a resource');
+// });
 
 // TODO: Path is set up. Get username and password from front end.
 router.get('/create-user', async(req, res) => {
@@ -16,7 +17,7 @@ router.get('/create-user', async(req, res) => {
   const password = 'yippie';
 
   try {
-    const result = await userCreate(username, password);
+    const result = await createUser(username, password);
     res.send(result);
   } catch (err) {
     console.log('Error creating user: ', err);
@@ -30,7 +31,7 @@ router.get('/login-user', async(req, res) => {
   const password = 'yippie';
 
   try {
-    const result = await userLogin(username, password);
+    const result = await loginUser(username, password);
     res.send(result);
   } catch (err) {
     console.log('Error logging in user: ', err);
@@ -51,8 +52,9 @@ async function createTables() {
   `;
   const createProjectsTableSql = `
     CREATE TABLE IF NOT EXISTS PROJECTS(
-      pid INT PRIMARY KEY,
+      pid INT PRIMARY KEY AUTO_INCREMENT,
       projectName VARCHAR(100),
+      videoUrl VARCHAR(2083),
       username VARCHAR(100) NOT NULL,
       FOREIGN KEY (username) REFERENCES USERS(username)
     );
@@ -87,6 +89,15 @@ async function clearTables() {
   const clearProjectsTableSql = `DELETE FROM PROJECTS;`;
 
   try {
+    // Clear in the order of ANNOTATIONS -> PROJECTS -> USERS due to foreign key constraints
+    await new Promise((resolve, reject) => {
+      conn.query(clearProjectsTableSql, (err, results) => {
+        if (err) return reject(err);
+        resolve(results);
+      });
+    });
+    console.log('Successfully cleared PROJECTS table');
+
     await new Promise((resolve, reject) => {
       conn.query(clearUsersTableSql, (err, results) => {
         if (err) return reject(err);
@@ -95,13 +106,6 @@ async function clearTables() {
     });
     console.log('Successfully cleared USERS table');
 
-    await new Promise((resolve, reject) => {
-      conn.query(clearProjectsTableSql, (err, results) => {
-        if (err) return reject(err);
-        resolve(results);
-      });
-    });
-    console.log('Successfully cleared PROJECTS table');
   } catch (err) {
     console.log('Error clearing tables: ', err);
   }
@@ -113,7 +117,7 @@ async function clearTables() {
 // Create a new user given a username and password.
 // The password stored is a hashed password.
 // Usernames should be unique and are not case-sensitive.
-async function userCreate(username, password) {
+async function createUser(username, password) {
   const checkExistingSql = 'SELECT * FROM USERS WHERE username = ?';
   const createUserSql = 'INSERT INTO USERS(username, hashedPassword) VALUES(?, ?)';
 
@@ -151,7 +155,7 @@ async function userCreate(username, password) {
 // Login an existing user given a username and password.
 // The password stored is a hashed password.
 // Usernames should be unique and are not case-sensitive.
-async function userLogin(username, password) {
+async function loginUser(username, password) {
   const checkExistingSql = 'SELECT * FROM USERS WHERE username = ?';
 
   try {
@@ -189,5 +193,5 @@ async function userLogin(username, password) {
 module.exports = router;
 module.exports.createTables = createTables;
 module.exports.clearTables = clearTables;
-module.exports.userCreate = userCreate;
-module.exports.userLogin = userLogin;
+module.exports.createUser = createUser;
+module.exports.loginUser = loginUser;
