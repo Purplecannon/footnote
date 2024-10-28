@@ -61,20 +61,10 @@ async function createTables() {
   `;
 
   try {
-    await new Promise((resolve, reject) => {
-      conn.query(createUsersTableSql, (err, results) => {
-        if (err) return reject(err);
-        resolve(results);
-      });
-    });
+    await conn.promise().query(createUsersTableSql);
     console.log('USERS table created successfully');
 
-    await new Promise((resolve, reject) => {
-      conn.query(createProjectsTableSql, (err, results) => {
-        if (err) return reject(err);
-        resolve(results);
-      });
-    });
+    await conn.promise().query(createProjectsTableSql);
     console.log('PROJECTS table created successfully');
 
   } catch (err) {
@@ -85,25 +75,19 @@ async function createTables() {
 // Clear all necessary tables in Digital Ocean database.
 // Not the same as drop tables (this is clearing, not dropping).
 async function clearTables() {
-  const clearUsersTableSql = `DELETE FROM USERS;`;
-  const clearProjectsTableSql = `DELETE FROM PROJECTS;`;
+  const clearUsersTableSql = 'DELETE FROM USERS;';
+  const clearProjectsTableSql = 'DELETE FROM PROJECTS;';
+  const resetProjectsTableSql= 'ALTER TABLE PROJECTS AUTO_INCREMENT = 1;';
 
   try {
     // Clear in the order of ANNOTATIONS -> PROJECTS -> USERS due to foreign key constraints
-    await new Promise((resolve, reject) => {
-      conn.query(clearProjectsTableSql, (err, results) => {
-        if (err) return reject(err);
-        resolve(results);
-      });
-    });
+    await conn.promise().query(clearProjectsTableSql);
     console.log('Successfully cleared PROJECTS table');
 
-    await new Promise((resolve, reject) => {
-      conn.query(clearUsersTableSql, (err, results) => {
-        if (err) return reject(err);
-        resolve(results);
-      });
-    });
+    await conn.promise().query(resetProjectsTableSql);
+    console.log('Successfully reset PROJECTS table pid autoincrement');
+
+    await conn.promise().query(clearUsersTableSql);
     console.log('Successfully cleared USERS table');
 
   } catch (err) {
