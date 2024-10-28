@@ -47,12 +47,40 @@ router.get('/create-project', async(req, res) => {
   }
 });
 
-// TODO: ENSURE WE CAN GET HERE ONLY AFTER LOGIN. IF NOT, NEED TO MAKE SURE USERNAME
-// EXIST IN DB BEFORE GETPORJECTS
+// TODO: Path is set up for testing purposes. Get pid and videoUrl from somewhere
+router.get('/add-url', async(req, res) => {
+  // TODO: FOR NOW, TO TEST, NEED TO MANUALLY SET THIS VALUE
+  const pid = '1';
+  const videoUrl = 'youtube.com';
+
+  try {
+    const result = await addUrl(pid, videoUrl);
+    res.send(result);
+  } catch (err) {
+    console.log('Error adding video URL: ', err);
+    res.status(500).send('Error adding video URL');
+  }
+});
+
+// TODO: Path is set up for testing purposes. Get pid from somewhere
+router.get('/delete-project', async(req, res) => {
+  // TODO: FOR NOW, TO TEST, NEED TO MANUALLY SET THIS VALUE
+  const pid = '1';
+
+  try {
+    const result = await deleteProject(pid);
+    res.send(result);
+  } catch (err) {
+    console.log('Error deleting project: ', err);
+    res.status(500).send('Error deleting project');
+  }
+});
 
 // Retrieve the list of existing projects under the given username
 // Returns an empty array (eg. []) or an array of strings (eg. ['Project A', 'Project B'])
 async function getProjects(username) {
+  // TODO: ENSURE WE CAN GET HERE ONLY AFTER LOGIN. IF NOT, NEED TO MAKE SURE USERNAME
+  // EXIST IN DB BEFORE GETPORJECTS
   const getProjectsSql = 'SELECT projectName FROM PROJECTS WHERE username = ?';
 
   try {
@@ -83,16 +111,16 @@ async function getProjects(username) {
   }
 }
 
-// TODO: ENSURE WE CAN GET HERE ONLY AFTER LOGIN. IF NOT, NEED TO MAKE SURE USERNAME
-// EXIST IN DB BEFORE GETPORJECTS
-// The foreign key constraint should automatically enforce us from inserting into
-// PROJECTS if there's no corresponding username in USERS
-
 // Create a new project and insert a new tuple with (projectName, username)
 // into the PROJECTS table. URL will be added later once the user uploads a video.
 // pid (Project ID) is autoincremented. Same project name can exist since pid is
 // the unique identifier.
 async function createProject(projectName, username) {
+  // TODO: ENSURE WE CAN GET HERE ONLY AFTER LOGIN. IF NOT, NEED TO MAKE SURE USERNAME
+  // EXIST IN DB BEFORE GETPORJECTS
+  // The foreign key constraint should automatically enforce us from inserting into
+  // PROJECTS if there's no corresponding username in USERS
+
   const createProjectSql = 'INSERT INTO PROJECTS(projectName, username) VALUES(?, ?)';
 
   try {
@@ -117,9 +145,47 @@ async function createProject(projectName, username) {
   }
 }
 
-// delete a project
+// Adds a video URL to a previously created project using the pid
+// Returns error message if there is no existing matching pid in PROJECTS
+async function addUrl(pid, videoUrl) {
+  const addUrlSql = 'UPDATE PROJECTS SET videoUrl = ? WHERE pid = ?;';
+
+  try {
+    const [result] = await conn.promise().query(addUrlSql, [videoUrl, pid]);
+
+    if (result.affectedRows === 0) {
+      return "No matching pid " + pid + " found in PROJECTS \n";
+    }
+
+    return "Updated video URL for project with pid " + pid + "\n";
+  } catch (err) {
+    console.error('Error during URL insertion: ', err);
+    return 'Error during URL insertion';
+  }
+}
+
+// Deletes a project with a given pid
+async function deleteProject(pid) {
+  const deleteProjectSql = 'DELETE FROM PROJECTS WHERE pid = ?';
+
+  try {
+    const [result] = await conn.promise().query(deleteProjectSql, [pid]);
+
+    if (result.affectedRows === 0) {
+      return "No matching pid " + pid + " found in PROJECTS \n";
+    }
+
+    return "Deleted project with pid " + pid + "\n";
+  } catch (err) {
+    console.error('Error during project deletion: ', err);
+    return 'Error during project deletion';
+  }
+}
 
 // Exports
 module.exports = router;
 module.exports.getProjects = getProjects;
+module.exports.createProject = createProject;
+module.exports.addUrl = addUrl;
+module.exports.deleteProject = deleteProject;
 
