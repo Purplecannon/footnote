@@ -7,6 +7,7 @@ var logger = require("morgan");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var videosRouter = require("./routes/videos"); // Import the video routes
+var projectsRouter = require("./routes/projects");
 
 var app = express();
 
@@ -23,10 +24,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/videos", videosRouter); // Place this BEFORE the 404 handler
+app.use("/projects", projectsRouter);  // app.post, app.get
 
 // Author: Mia
 // TODO: change the following initialize() portion once app actually storing real user
-// data. Currently, tables are being cleared upon initialization every time.
+// data. Currently, tables are ALWAYS cleared upon initialization.
 const { createTables, clearTables } = require('./routes/users');
 
 async function initialize() {
