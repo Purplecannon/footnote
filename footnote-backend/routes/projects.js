@@ -8,16 +8,6 @@ const router = express.Router();
 
 const conn = require('../services/database');
 
-/*
-PROJECTS(
-  pid INT PRIMARY KEY AUTO_INCREMENT,
-  projectName VARCHAR(100),
-  videoUrl VARCHAR(2083),
-  username VARCHAR(100) NOT NULL,
-  FOREIGN KEY (username) REFERENCES USERS(username)
-)
-*/
-
 // TODO: Path is set up. Get username from front-end
 router.get('/home', async(req, res) => {
   const username = 'footnote';
