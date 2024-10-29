@@ -6,8 +6,7 @@ import LoginSignup from "./components/LoginSignup/LoginSignup";
 const App: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<LoginSignup />} />
-      <Route path="/Home" element={<Homepage />} />
+      <Route path="/" element={<Homepage />} />
       <Route path="/projects/new" element={<CreateNewProject />} />
     </Routes>
   );
