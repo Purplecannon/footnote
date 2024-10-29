@@ -6,3 +6,4 @@ Mia:
 - Set up all USERS, PROJECTS, and ANNOTATIONS tables
 - Implemented createTables(), clearTables(), userCreate(), userLogin() in users.js
 - Initilize table set up in app.js
+
