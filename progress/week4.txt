@@ -1,0 +1,9 @@
+Please write a short summary (5 sentences max) of what you did in Week 4.
+
+Mia:
+- Set up database configurations for DigitalOcean Cluster
+- Connected the database in database.js
+- Set up all USERS, PROJECTS, and ANNOTATIONS tables
+- Implemented createTables(), clearTables(), userCreate(), userLogin() in users.js
+- Initilize table set up in app.js
+
