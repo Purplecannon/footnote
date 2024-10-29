@@ -55,6 +55,7 @@ async function createTables() {
       pid INT PRIMARY KEY AUTO_INCREMENT,
       projectName VARCHAR(100),
       videoUrl VARCHAR(2083),
+      thumbnailUrl VARCHAR(2083),
       username VARCHAR(100) NOT NULL,
       FOREIGN KEY (username) REFERENCES USERS(username)
     );
