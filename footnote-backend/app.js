@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/videos", videosRouter); // Place this BEFORE the 404 handler
-app.use("/projects", projectsRouter);
+app.use("/projects", projectsRouter);  // app.post, app.get
 
 // Author: Mia
 // TODO: change the following initialize() portion once app actually storing real user
