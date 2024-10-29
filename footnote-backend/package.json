@@ -9,6 +9,7 @@
     "@aws-sdk/client-s3": "^3.670.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.3.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.4.5",
@@ -18,7 +19,8 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
-    "mysql2": "^3.11.3"
+    "mysql2": "^3.11.3",
+    "react-bootstrap": "^2.10.5"
   },
   "main": "routes/users.js",
   "repository": {
