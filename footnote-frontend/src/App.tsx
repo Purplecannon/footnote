@@ -1,13 +1,16 @@
+import { Routes, Route } from "react-router-dom";
+import Homepage from "./components/Homepage/Homepage";
+import CreateNewProject from "./components/CreateNewProject/CreateNewProject";
 import LoginSignup from "./components/LoginSignup/LoginSignup";
-import VideoList from "./components/VideoList/VideoList";
-import VideoPlayback from "./components/VideoPlayback/VideoPlayback";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div>
-      <LoginSignup />
-    </div>
+    <Routes>
+      <Route path="/" element={<LoginSignup />} />
+      <Route path="/Home" element={<Homepage />} />
+      <Route path="/projects/new" element={<CreateNewProject />} />
+    </Routes>
   );
-}
+};
 
 export default App;
