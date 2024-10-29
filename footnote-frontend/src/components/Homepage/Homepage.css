@@ -1,0 +1,72 @@
+#homepage {
+  padding: 40px 0;
+  background-color: #f8f9fa;
+}
+
+.title-holder {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.title-holder h1 {
+  font-size: 3.5em;
+  color: #333;
+}
+
+.block.homepage-block .holder {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 300px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(181, 105, 232, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-img-top {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 20px;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 1.25em;
+  font-weight: bold;
+  color: #333;
+}
+
+.card-text {
+  font-size: 0.9em;
+  color: #666;
+  margin: 10px 0 20px 0;
+}
+
+.button {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.button:hover {
+  background-color: #0056b3;
+  color: white;
+}
