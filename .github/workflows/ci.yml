@@ -29,5 +29,9 @@ jobs:
     - name: "Install dependencies"
       working-directory: '/home/runner/work/footnote/footnote/footnote-backend'  
       run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - name: "Build project"
+      working-directory: '/home/runner/work/footnote/footnote/footnote-backend'
+      run: npm run build --if-present
+    - name: "Run tests"
+      working-directory: '/home/runner/work/footnote/footnote/footnote-backend'
+      run: npm test
