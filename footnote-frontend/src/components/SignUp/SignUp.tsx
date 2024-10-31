@@ -31,7 +31,7 @@ export const SignUp: React.FC = () => {
     setData({...data, [id]: value})
   }
 
-  const [message, setMessage] = useState<string>("")
+  // const [message, setMessage] = useState<string>("")
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
