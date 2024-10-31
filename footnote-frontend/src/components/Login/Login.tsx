@@ -29,7 +29,7 @@ export const Login: React.FC = () => {
     setData({...data, [id]: value})
   }
 
-  const [message, setMessage] = useState<string>("")
+  // const [message, setMessage] = useState<string>("")
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -74,8 +74,8 @@ export const Login: React.FC = () => {
         </div>
       </div>
 
-      {/* Display the message if it exists */}
-      {message && <div className="error-message">{message}</div>}
+      {/* Display the message if it exists
+      {message && <div className="error-message">{message}</div>} */}
 
       {/* Conditional "Forgot your password?" link, only in Login mode */}
         <div className="forgot-password">
