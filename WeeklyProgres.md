@@ -117,8 +117,12 @@ Testing Update.
 - Delegated tasks for Testing assignment and weekly timeline/deadline for team
 - Revised backend software design section
 - Set up GitHub Actions for CI with Catherine
-- Integrated front end and back end in app.js, users.js, SignUp.tsx, and Login.tsx
 - Improved database schema
+- CD:
+  - Integrated front end and back end in app.js, users.js, SignUp.tsx, and Login.tsx
+  - Added package.json to root directory to deploy through DigitalOcean, reorganized .gitignore
+  - Configured so that backend and frontend can run concurrently in one command from the root directory
+  - Troubleshooting footnote-frontend: installed dependencies, fixed TS errors
 
 #### Catherine Jin
 
