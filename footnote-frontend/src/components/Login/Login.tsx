@@ -41,7 +41,7 @@ export const Login: React.FC = () => {
     };
 
 
-    axios.post<ILoginModel>("http://localhost:3000/users/login", newUser)
+    axios.post<ILoginModel>("http://localhost:3000/users/login-user", newUser)
     .then((response: AxiosResponse<ILoginModel>) => {
       console.log(response.data)
     })
