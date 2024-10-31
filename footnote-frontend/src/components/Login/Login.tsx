@@ -74,6 +74,9 @@ export const Login: React.FC = () => {
         </div>
       </div>
 
+      {/* Display the message if it exists */}
+      {message && <div className="error-message">{message}</div>}
+
       {/* Conditional "Forgot your password?" link, only in Login mode */}
         <div className="forgot-password">
           Don't have an account? <Link to="/signup"> Click Here!</Link>
