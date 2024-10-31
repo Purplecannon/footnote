@@ -56,9 +56,9 @@ Software Design, Risk Assessment, Schedule update.
 
 - Set up database configurations for DigitalOcean Cluster
 - Connected the database in database.js
-- Set up all USERS, PROJECTS, and ANNOTATIONS tables
 - Implemented createTables(), clearTables(), userCreate(), userLogin() in users.js
-- Initilize table set up in app.js
+- Set up and initialized all USERS, PROJECTS, and ANNOTATIONS tables in app.js
+
 
 #### Catherine Jin
 
@@ -90,6 +90,12 @@ Testing Update.
 
 #### Mia Huynh
 
+- Delegated tasks for Design assignment and weekly timeline/deadline for team
+- Implemented getProjects(), createProject(), addUrl(), deleteProject() in projects.js
+- Improved database schema
+- Troubleshot database configurations and connectivity
+- Improved code quality for my previously written code
+
 #### Catherine Jin
 
 #### Elainie Kassa
@@ -107,6 +113,12 @@ Testing Update.
 #### Kirupa Gunaseelan
 
 #### Mia Huynh
+
+- Delegated tasks for Testing assignment and weekly timeline/deadline for team
+- Revised backend software design section
+- Set up GitHub Actions for CI with Catherine
+- Integrated front end and back end in app.js, users.js, SignUp.tsx, and Login.tsx
+- Improved database schema
 
 #### Catherine Jin
 
