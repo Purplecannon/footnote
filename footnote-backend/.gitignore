@@ -1,5 +1,0 @@
-# Ignore environment variables
-README-mia.md
-node_modules/
-services/ca-certificate.crt
-services/createTables.sql
