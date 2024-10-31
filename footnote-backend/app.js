@@ -6,13 +6,12 @@ var logger = require("morgan");
 var cors = require("cors");  // cors in backend to talk between port 5173 and 3000
 
 var indexRouter = require("./routes/index");
-var { createTables, clearTables } = require("./routes/users");
 var usersRouter = require("./routes/users");
+var { createTables, clearTables } = require("./routes/users");
 var videosRouter = require("./routes/videos"); // Import the video routes
 var projectsRouter = require("./routes/projects");
 
 var app = express();
-
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -28,7 +27,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/videos", videosRouter); // Place this BEFORE the 404 handler
-app.use("/projects", projectsRouter);  // app.post, app.get
+app.use("/projects", projectsRouter);
 
 // Author: Mia
 // TODO: change the following initialize() portion once app actually storing real user
