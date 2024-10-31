@@ -3,20 +3,24 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var cors = require("cors");  // cors in backend to talk between port 5173 and 3000
 
 var indexRouter = require("./routes/index");
+var { createTables, clearTables } = require("./routes/users");
 var usersRouter = require("./routes/users");
 var videosRouter = require("./routes/videos"); // Import the video routes
 var projectsRouter = require("./routes/projects");
 
 var app = express();
 
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
+app.use(cors());  // enable cors in backend: to allow frontend (port 5173) to communicate with backend (port 3000)
 app.use(logger("dev"));
-app.use(express.json());
+app.use(express.json());  // to parse JSON bodies
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
@@ -29,15 +33,14 @@ app.use("/projects", projectsRouter);  // app.post, app.get
 // Author: Mia
 // TODO: change the following initialize() portion once app actually storing real user
 // data. Currently, tables are ALWAYS cleared upon initialization.
-const { createTables, clearTables } = require('./routes/users');
 
 async function initialize() {
   try {
     await createTables();
     console.log('All tables are initialized');
 
-    await clearTables();
-    console.log('All tables are cleared');
+    // await clearTables();
+    // console.log('All tables are cleared');
   } catch (err) {
     console.log('Error during tables initialization and clearing: ', err);
   }
