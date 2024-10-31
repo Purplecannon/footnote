@@ -45,7 +45,8 @@ export const Login: React.FC = () => {
       axios.post("http://localhost:3000/users/login-user", data);
     }
     catch(e) {
-      console.log(e)
+      console.log(e);
+      setMessage("Login failed, please try again.");
     }
   }
 
@@ -72,6 +73,9 @@ export const Login: React.FC = () => {
           <input type="password" placeholder="password" id = "password" value = {data.password} onChange={handleInputChange}/>
         </div>
       </div>
+
+      {/* Display the message if it exists */}
+      {message && <div className="error-message">{message}</div>}
 
       {/* Conditional "Forgot your password?" link, only in Login mode */}
         <div className="forgot-password">
