@@ -8,6 +8,7 @@
     "start": "concurrently \"npm start --prefix footnote-backend\" \"npm run dev --prefix footnote-frontend\""
   },
   "devDependencies": {
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.0",
+    "typescript": "^5.6.3"
   }
 }
