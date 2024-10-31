@@ -6,7 +6,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 interface ILoginModel {
-  username: string; 
+  username: string;
   password: string;
 }
 
@@ -14,7 +14,7 @@ interface ILoginModel {
  * Login Component
  *
  * This component provides a form for logging up. It displays inputs for
- * username and password. 
+ * username and password.
  *
  * @returns {TSX.Element} The rendered Login form.
  */
@@ -39,10 +39,10 @@ export const Login: React.FC = () => {
       return;
     }
 
-    // If email exists ? 
+    // If email exists ?
 
     try {
-      await axios.post("http://localhost:5173/login", data);
+      axios.post("http://localhost:3000/users/login-user", data);
     }
     catch(e) {
       console.log(e)
