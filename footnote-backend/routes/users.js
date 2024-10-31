@@ -7,11 +7,6 @@ const router = express.Router();
 const conn = require('../services/database');
 const bcrypt = require('bcrypt');
 
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
-
 router.post('/create-user', async(req, res) => {
   const { username, password, confirmPassword } = req.body;
 
@@ -181,5 +176,5 @@ async function clearTables() {
 module.exports = router;
 module.exports.createTables = createTables;
 module.exports.clearTables = clearTables;
-module.exports.createUser = createUser;
-module.exports.loginUser = loginUser;
+// module.exports.createUser = createUser;
+// module.exports.loginUser = loginUser;
