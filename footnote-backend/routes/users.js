@@ -1,4 +1,5 @@
 // Author: Mia
+// Central file for backend handling of user authentication
 
 const express = require('express');
 const router = express.Router();
@@ -11,13 +12,11 @@ const bcrypt = require('bcrypt');
 //   res.send('respond with a resource');
 // });
 
-// TODO: Path is set up. Get username and password from front end.
-router.get('/create-user', async(req, res) => {
-  const username = 'footnote';
-  const password = 'yippie';
+router.post('/create-user', async(req, res) => {
+  const { username, password, confirmPassword } = req.body;
 
   try {
-    const result = await createUser(username, password);
+    const result = await createUser(username, password, confirmPassword);
     res.send(result);
   } catch (err) {
     console.log('Error creating user: ', err);
@@ -25,10 +24,8 @@ router.get('/create-user', async(req, res) => {
   }
 });
 
-// TODO: Path is set up. Get username and password from front end.
-router.get('/login-user', async(req, res) => {
-  const username = 'footnote';
-  const password = 'yippie';
+router.post('/login-user', async(req, res) => {
+  const { username, password } = req.body;
 
   try {
     const result = await loginUser(username, password);
@@ -39,77 +36,23 @@ router.get('/login-user', async(req, res) => {
   }
 });
 
-///////// THESE FUNCTIONS ARE USED TO CREATE AND CLEAR ALL NECESSARY TABLES:  /////////
-///////// INCLUDING USERS, PROJECTS, AND ANNOTATIONS                          /////////
-
-// Create all necessary tables in Digital Ocean database.
-async function createTables() {
-  const createUsersTableSql = `
-    CREATE TABLE IF NOT EXISTS USERS(
-      username VARCHAR(100) PRIMARY KEY,
-      hashedPassword VARCHAR(256) NOT NULL
-    );
-  `;
-  const createProjectsTableSql = `
-    CREATE TABLE IF NOT EXISTS PROJECTS(
-      pid INT PRIMARY KEY AUTO_INCREMENT,
-      projectName VARCHAR(100),
-      videoUrl VARCHAR(2083),
-      thumbnailUrl VARCHAR(2083),
-      username VARCHAR(100) NOT NULL,
-      FOREIGN KEY (username) REFERENCES USERS(username)
-    );
-  `;
-
-  try {
-    await conn.promise().query(createUsersTableSql);
-    console.log('USERS table created successfully');
-
-    await conn.promise().query(createProjectsTableSql);
-    console.log('PROJECTS table created successfully');
-
-  } catch (err) {
-    console.log('Error creating tables: ', err);
-  }
-}
-
-// Clear all necessary tables in Digital Ocean database.
-// Not the same as drop tables (this is clearing, not dropping).
-async function clearTables() {
-  const clearUsersTableSql = 'DELETE FROM USERS;';
-  const clearProjectsTableSql = 'DELETE FROM PROJECTS;';
-  const resetProjectsTableSql= 'ALTER TABLE PROJECTS AUTO_INCREMENT = 1;';
-
-  try {
-    // Clear in the order of ANNOTATIONS -> PROJECTS -> USERS due to foreign key constraints
-    await conn.promise().query(clearProjectsTableSql);
-    console.log('Successfully cleared PROJECTS table');
-
-    await conn.promise().query(resetProjectsTableSql);
-    console.log('Successfully reset PROJECTS table pid autoincrement');
-
-    await conn.promise().query(clearUsersTableSql);
-    console.log('Successfully cleared USERS table');
-
-  } catch (err) {
-    console.log('Error clearing tables: ', err);
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-
 // Create a new user given a username and password.
 // The password stored is a hashed password.
 // Usernames should be unique and are not case-sensitive.
-async function createUser(username, password) {
+async function createUser(username, password, confirmPassword) {
   const checkExistingSql = 'SELECT * FROM USERS WHERE username = ?';
   const createUserSql = 'INSERT INTO USERS(username, hashedPassword) VALUES(?, ?)';
 
   try {
-    // check if username or password is empty
+    // check if username, password, or confirmPassword is empty
     if (!username || username.trim() === "" || !password) {
-      return "Username or password is empty";
+      return "Username is empty";
+    }
+    if (!password || !confirmPassword) {
+      return "Password or confirm password is empty";
+    }
+    if (password !== confirmPassword) {
+      return "Password and confirm password don't match";
     }
 
     // usernames are not case-sensitive
@@ -173,6 +116,66 @@ async function loginUser(username, password) {
     return 'Error during user login';
   }
 }
+
+///////// THESE FUNCTIONS ARE USED TO CREATE AND CLEAR ALL NECESSARY TABLES:  /////////
+///////// INCLUDING USERS, PROJECTS, AND ANNOTATIONS                          /////////
+
+// Create all necessary tables in Digital Ocean database.
+async function createTables() {
+  const createUsersTableSql = `
+    CREATE TABLE IF NOT EXISTS USERS(
+      username VARCHAR(100) PRIMARY KEY,
+      hashedPassword VARCHAR(256) NOT NULL
+    );
+  `;
+  const createProjectsTableSql = `
+    CREATE TABLE IF NOT EXISTS PROJECTS(
+      pid INT PRIMARY KEY AUTO_INCREMENT,
+      projectName VARCHAR(100),
+      videoUrl VARCHAR(2083),
+      thumbnailUrl VARCHAR(2083),
+      username VARCHAR(100) NOT NULL,
+      FOREIGN KEY (username) REFERENCES USERS(username)
+    );
+  `;
+
+  try {
+    await conn.promise().query(createUsersTableSql);
+    console.log('USERS table created successfully');
+
+    await conn.promise().query(createProjectsTableSql);
+    console.log('PROJECTS table created successfully');
+
+  } catch (err) {
+    console.log('Error creating tables: ', err);
+  }
+}
+
+// Clear all necessary tables in Digital Ocean database.
+// Not the same as drop tables (this is clearing, not dropping).
+async function clearTables() {
+  const clearUsersTableSql = 'DELETE FROM USERS;';
+  const clearProjectsTableSql = 'DELETE FROM PROJECTS;';
+  const resetProjectsTableSql= 'ALTER TABLE PROJECTS AUTO_INCREMENT = 1;';
+
+  try {
+    // Clear in the order of ANNOTATIONS -> PROJECTS -> USERS due to foreign key constraints
+    await conn.promise().query(clearProjectsTableSql);
+    console.log('Successfully cleared PROJECTS table');
+
+    await conn.promise().query(resetProjectsTableSql);
+    console.log('Successfully reset PROJECTS table pid autoincrement');
+
+    await conn.promise().query(clearUsersTableSql);
+    console.log('Successfully cleared USERS table');
+
+  } catch (err) {
+    console.log('Error clearing tables: ', err);
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 // Exports
 module.exports = router;
