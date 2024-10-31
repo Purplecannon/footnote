@@ -6,7 +6,7 @@ import axios, { AxiosResponse } from "axios";
 import { Link } from "react-router-dom";
 
 interface IUserModel {
-  username: string; 
+  username: string;
   password: string;
   confirmPassword: string;
 }
@@ -38,22 +38,22 @@ export const SignUp: React.FC = () => {
     // console.log(data)
 
     const newUser: IUserModel = {
-      username: data.username, 
+      username: data.username,
       password: data.password,
       confirmPassword: data.confirmPassword
     };
-    
+
 
     axios.post<IUserModel>("http://localhost:3000/users/create-user", newUser)
     .then((response: AxiosResponse<IUserModel>) => {
       console.log(response.data)
     })
     .catch((err) => {
-      console.log(err)
+      console.log("Error on signup request: ", err);
     })
-    
+
     // make sure username, password, and confirm password is not empty
-    // check password and confirmPassword 
+    // check password and confirmPassword
 
 
   }
@@ -96,7 +96,7 @@ export const SignUp: React.FC = () => {
         {/* Button to switch to Sign Up mode */}
 
         {/* Button to switch to Login mode */}
-        <button>        
+        <button>
           <div
           className={"submit"}
           role="button"
