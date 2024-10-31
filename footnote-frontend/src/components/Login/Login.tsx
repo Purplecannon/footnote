@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import user_icon from "../Assets/person.png";
 import password_icon from "../Assets/password.png";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Link } from "react-router-dom";
 
 interface ILoginModel {
@@ -31,29 +31,29 @@ export const Login: React.FC = () => {
 
   const [message, setMessage] = useState<string>("")
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
+    // console.log(data)
 
-    if (data.username == "" || data.password == "") {
-      setMessage("Please fill the form right");
-      return;
-    }
+    const newUser: ILoginModel = {
+      username: data.username,
+      password: data.password,
+    };
 
-    // If email exists ?
 
-    try {
-      axios.post("http://localhost:3000/users/login-user", data);
-    }
-    catch(e) {
-      console.log(e);
-      setMessage("Login failed, please try again.");
-    }
+    axios.post<ILoginModel>("http://localhost:3000/users/login", newUser)
+    .then((response: AxiosResponse<ILoginModel>) => {
+      console.log(response.data)
+    })
+    .catch((err) => {
+      console.log("Error on login request: ", err);
+    })
   }
 
   return (
     <div className="container">
       {/* Header section with current action text and underline */}
-      <form action = "POST" onSubmit={handleSubmit}>
+      <form action = "POST">
       <div className="header">
         <div className="text">Login</div>
         <div className="underline" />
@@ -87,13 +87,16 @@ export const Login: React.FC = () => {
         {/* Button to switch to Sign Up mode */}
 
         {/* Button to switch to Login mode */}
-        <div
+        <button className="submit">
+          <div
           className={"submit"}
           role="button"
           tabIndex={0}
-        >
-          Submit
-        </div>
+          onClick={handleSubmit}
+          >
+            Submit
+            </div>
+          </button>
       </div>
       </form>
     </div>
