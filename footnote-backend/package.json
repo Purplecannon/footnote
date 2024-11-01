@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "mocha --reporter spec"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.670.0",
@@ -32,5 +33,8 @@
     "url": "https://github.com/miahuynhh/footnote/issues"
   },
   "homepage": "https://github.com/miahuynhh/footnote#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "mocha": "^10.8.1"
+  }
 }
