@@ -40,7 +40,7 @@ async function createUser(username, password, confirmPassword) {
 
   try {
     // check if username, password, or confirmPassword is empty
-    if (!username || username.trim() === "" || !password) {
+    if (!username || username.trim() === "") {
       return "Username is empty";
     }
     if (!password || !confirmPassword) {
@@ -176,5 +176,5 @@ async function clearTables() {
 module.exports = router;
 module.exports.createTables = createTables;
 module.exports.clearTables = clearTables;
-// module.exports.createUser = createUser;
-// module.exports.loginUser = loginUser;
+module.exports.createUser = createUser;
+module.exports.loginUser = loginUser;
