@@ -1,7 +1,7 @@
 //Author: Lauren
 
 import * as assert from 'assert';
-import {createUser, clearTables} from "../routes/users.js";
+import {createUser, clearTables, loginUser} from "../routes/users.js";
 
 describe('Successful createUser', () => {
     // TODO: Comment out clearTable
@@ -271,12 +271,13 @@ describe('Handles mismatched password or confirmPassword', () => {
     });
 });
 
-describe('Handles Existing Users', (done) => {
+describe('Handles Existing Users createUser', () => {
     // TODO: Comment out clearTable
     beforeEach(async () => {
         // Call your clearTables function here if needed
         await clearTables();
     });
+    
     it('handles existing user', async () => {
         const username = 'testUser';
         const password = 'password';
@@ -318,5 +319,148 @@ describe('Handles Existing Users', (done) => {
 
         const existingUserResult = await createUser(username, newPassword, newConfirmPassword);
         assert.strictEqual(existingUserResult, "Password and confirm password don't match");
+    });
+});
+
+describe('Successful login', () => {
+    // TODO: Comment out clearTable
+    beforeEach(async () => {
+        // Call your clearTables function here if needed
+        await clearTables();
+    });
+    it('handles existing user login', async () => {
+        const username = 'testUser';
+        const password = 'password';
+        const confirmPassword = password;
+        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+    
+        const result = await createUser(username, password, confirmPassword);
+        assert.strictEqual(result, expectedResult);
+
+        const loginResult = await loginUser(username, password);
+        assert.strictEqual(loginResult, "Login successful for user " + username.toLowerCase());
+    });
+    it('handles case-insensitive existing user login', async () => {
+        const username = 'testUser';
+        const password = 'password';
+        const confirmPassword = password;
+        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+    
+        const result = await createUser(username, password, confirmPassword);
+        assert.strictEqual(result, expectedResult);
+
+        const caseUsername = 'TeSTusER';
+
+        const loginResult = await loginUser(caseUsername, password);
+        assert.strictEqual(loginResult, "Login successful for user " + username.toLowerCase());
+    });
+});
+
+describe('empty username or password during login', () => {
+    // TODO: Comment out clearTable
+    beforeEach(async () => {
+        // Call your clearTables function here if needed
+        await clearTables();
+    });
+    it('empty username', async () => {
+        const username = 'testUser';
+        const password = 'password';
+        const confirmPassword = password;
+        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+
+        const result = await createUser(username, password, confirmPassword);
+        assert.strictEqual(result, expectedResult);
+
+        const expectedEmptyResult = "Username or password is empty";
+        const emptyUsername = '';
+
+        const loginResult = await loginUser(emptyUsername, password);
+        assert.strictEqual(loginResult, expectedEmptyResult);
+    });
+    it('space filled username', async () => {
+        const username = '     ';
+        const password = 'password';
+        const expectedResult = "Username or password is empty";
+
+        const loginResult = await loginUser(username, password);
+        assert.strictEqual(loginResult, expectedResult);
+    });
+    it('empty password', async () => {
+        const username = 'testUser';
+        const password = '';
+        const expectedResult = "Username or password is empty";
+
+        const loginResult = await loginUser(username, password);
+        assert.strictEqual(loginResult, expectedResult);
+    });
+});
+
+describe('user not existing during login', () => {
+    // TODO: Comment out clearTable
+    beforeEach(async () => {
+        // Call your clearTables function here if needed
+        await clearTables();
+    });
+    it('user not existing', async () => {
+        const username = 'testUser';
+        const password = 'password';
+        const expectedResult = "Username doesn't exist";
+
+        const loginResult = await loginUser(username, password);
+        assert.strictEqual(loginResult, expectedResult);
+    });
+    it('user created, deleted, then not existing', async () => {
+        const username = 'testUser';
+        const password = 'password';
+        const confirmPassword = password;
+        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+
+        const result = await createUser(username, password, confirmPassword);
+        assert.strictEqual(result, expectedResult);
+
+        await clearTables();
+
+        const expectedExistResult = "Username doesn't exist";
+
+        const loginResult = await loginUser(username, password);
+        assert.strictEqual(loginResult, expectedExistResult);
+    });
+});
+
+describe('incorrect password', () => {
+    // TODO: Comment out clearTable
+    beforeEach(async () => {
+        // Call your clearTables function here if needed
+        await clearTables();
+    });
+    it('incorrect password', async () => {
+        const username = 'testUser';
+        const password = 'password';
+        const confirmPassword = password;
+        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+
+        const result = await createUser(username, password, confirmPassword);
+        assert.strictEqual(result, expectedResult);
+
+        const wrongPassword = 'friedChicken';
+        const expectedIncorrectResult = "Incorrect username or password";
+
+        const loginResult = await loginUser(username, wrongPassword);
+        assert.strictEqual(loginResult, expectedIncorrectResult);
+    });
+    it('incorrect case-sensitive password', async () => {
+        const username = 'testUser';
+        const password = 'password';
+        const confirmPassword = password;
+        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+
+        const result = await createUser(username, password, confirmPassword);
+        assert.strictEqual(result, expectedResult);
+
+        const wrongPassword = 'PasSWoRd';
+        const expectedIncorrectResult = "Incorrect username or password";
+
+        const loginResult = await loginUser(username, wrongPassword);
+        assert.strictEqual(loginResult, expectedIncorrectResult);
     });
 });
