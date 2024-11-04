@@ -1,0 +1,14 @@
+{
+  "name": "footnote",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install-all": "npm install && npm install --prefix footnote-backend && npm install --prefix footnote-frontend",
+    "build": "npm run build --prefix footnote-frontend",
+    "start": "concurrently \"npm start --prefix footnote-backend\" \"npm run dev --prefix footnote-frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "typescript": "^5.6.3"
+  }
+}
