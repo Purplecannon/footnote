@@ -7,7 +7,7 @@ var cors = require("cors");  // cors in backend to talk between port 5173 and 30
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var { createTables, clearTables } = require("./routes/users");
+var { createTables, clearTables } = require("./services/tables");
 var videosRouter = require("./routes/videos"); // Import the video routes
 var projectsRouter = require("./routes/projects");
 
