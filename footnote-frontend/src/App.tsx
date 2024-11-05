@@ -10,13 +10,13 @@ const App: React.FC = () => {
   return (
     <div>
       <BrowserRouter>
-      <Routes>
-        <Route index element={<Login/>} />
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/signup" element={<SignUp/>}/>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/projects/new" element={<CreateNewProject />} />
-      </Routes>
+        <Routes>
+          <Route index element={<Login/>} />
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/signup" element={<SignUp/>}/>
+          <Route path="/projects" element={<Homepage />} />
+          <Route path="/projects/new" element={<CreateNewProject />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );
