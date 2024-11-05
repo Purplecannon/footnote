@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./Homepage.css";
+import "./UserHome.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -20,7 +20,7 @@ interface NewProject {
   text: string;
 }
 
-const Homepage: React.FC = () => {
+const UserHome: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -105,4 +105,4 @@ const Homepage: React.FC = () => {
   );
 };
 
-export default Homepage;
+export default UserHome;
