@@ -62,7 +62,8 @@ async function createUser(username, password, confirmPassword) {
     if (!username || username.trim() === "" || !password) {
       return "Username is empty";
     }
-    if (!password || !confirmPassword) {
+    if (!password || !confirmPassword ||
+        password.trim() === "" || confirmPassword.trim() === "") {
       return "Password or confirm password is empty";
     }
     if (password !== confirmPassword) {
@@ -102,7 +103,7 @@ async function loginUser(username, password) {
 
   try {
     // check if username or password is empty
-    if (!username || username.trim() === "" || !password) {
+    if (!username || username.trim() === "" || !password || password.trim() === "") {
       return "Username or password is empty";
     }
 
@@ -129,7 +130,7 @@ async function loginUser(username, password) {
 
       return "Login successful for user " + usernameLower;
     } else {
-      return "Incorrect username or password";
+      return "Incorrect password";
     }
   } catch (err) {
     console.error('Error during user login: ', err);
@@ -139,3 +140,5 @@ async function loginUser(username, password) {
 
 // Exports
 module.exports = router;
+module.exports.createUser = createUser;
+module.exports.loginUser = loginUser;
