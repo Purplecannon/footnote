@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer"); // Middleware for handling file uploads
-const { uploadToS3 } = require("../services/s3Service"); // Import the S3 upload function
+const { uploadToS3 } = require("../../services/s3Service"); // Import the S3 upload function
 
 const router = express.Router();
 
