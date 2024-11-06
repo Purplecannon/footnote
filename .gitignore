@@ -5,8 +5,7 @@ node_modules/
 README-mia.md
 
 # footnote-backend directory
-footnote-backend/node_modules/
+footnote-backend/node_modules
 footnote-backend/.env
-footnote-backend/services/ca-certificate.crt
-footnote-backend/services/createTables.sql
+footnote-backend/config/ca-certificate.crt
 
