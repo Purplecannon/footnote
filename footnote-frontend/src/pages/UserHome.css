@@ -1,4 +1,4 @@
-#homepage {
+#userHome {
   padding: 40px 0;
   background-color: #f8f9fa;
 }
@@ -13,7 +13,7 @@
   color: #333;
 }
 
-.block.homepage-block .holder {
+.block.userHome-block .holder {
   margin-bottom: 30px;
   display: flex;
   justify-content: center;
