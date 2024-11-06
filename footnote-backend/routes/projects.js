@@ -71,7 +71,7 @@ router.get('/delete-project', async(req, res) => {
 async function getProjects(username) {
   // TODO: ENSURE WE CAN GET HERE ONLY AFTER LOGIN. IF NOT, NEED TO MAKE SURE USERNAME
   // EXIST IN DB BEFORE GETPORJECTS
-  const getProjectsSql = 'SELECT projectName FROM PROJECTS WHERE username = ?';
+  const getProjectsSql = 'SELECT project_name FROM PROJECTS WHERE username = ?';
 
   try {
     // TODO: case where user is not loged in?
@@ -92,7 +92,7 @@ async function getProjects(username) {
       return [];
     } else {
       // extract just the project names: ['project A', 'project B']
-      return rows.map(row => row.projectName);
+      return rows.map(row => row.project_name);
     }
   } catch (err) {
     console.error('Error during projects retrieval: ', err);
@@ -111,7 +111,7 @@ async function createProject(projectName, username) {
   // The foreign key constraint should automatically enforce us from inserting into
   // PROJECTS if there's no corresponding username in USERS
 
-  const createProjectSql = 'INSERT INTO PROJECTS(projectName, username) VALUES(?, ?)';
+  const createProjectSql = 'INSERT INTO PROJECTS(project_name, username) VALUES(?, ?)';
 
   try {
     // check if projectName or username is empty
@@ -138,7 +138,7 @@ async function createProject(projectName, username) {
 // Adds a video URL to a previously created project using the pid
 // Returns error message if there is no existing matching pid in PROJECTS
 async function addUrl(pid, videoUrl) {
-  const addUrlSql = 'UPDATE PROJECTS SET videoUrl = ? WHERE pid = ?;';
+  const addUrlSql = 'UPDATE PROJECTS SET video_url = ? WHERE pid = ?;';
 
   try {
     const [result] = await conn.promise().query(addUrlSql, [videoUrl, pid]);

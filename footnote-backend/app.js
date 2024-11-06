@@ -1,17 +1,28 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var cors = require("cors");  // cors in backend to talk between port 5173 and 3000
+// Author: Mia
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var { createTables, clearTables } = require("./services/tables");
-var videosRouter = require("./routes/videos"); // Import the video routes
-var projectsRouter = require("./routes/projects");
+// Imports
+const express = require("express");
+const path = require("path");
+const createError = require("http-errors");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const cors = require("cors");  // cors in backend to talk between port 5173 and 3000
 
-var app = express();
+// session
+// const session = require("express-session");
+// const bodyParser = require("body-parser");
+// const MySQLStore = require("express-mysql-session")(session);
+// const conn = require('./services/database');
+// const sessionStore = new MySQLStore({}, conn);
+
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const videosRouter = require("./routes/videos"); // video routes
+const projectsRouter = require("./routes/projects");
+
+const { createTables, clearTables } = require("./services/tables");
+
+const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -24,22 +35,29 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// session
+// app.use(session({
+//   // key: "session_id",  // TODO: needed or not?
+//   secret: process.env.SESSION_SECRET, // TODO: replace with a strong secret key used to sign the session ID cookie
+//   store: sessionStore,  // to store in MySQL Digital Ocean database sessions table
+//   resave: false,  // save the session to the store even if it hasn't been modified
+//   saveUninitialized: false,  // save a new session that hasn't been modified yet
+//   cookie: { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }  // timeout: 1 day
+// }));
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/videos", videosRouter); // Place this BEFORE the 404 handler
 app.use("/projects", projectsRouter);
 
-// Author: Mia
-// TODO: change the following initialize() portion once app actually storing real user
-// data. Currently, tables are ALWAYS cleared upon initialization.
-
+// TODO: change the following initialize() portion once app actually storing real user data
 async function initialize() {
   try {
     await createTables();
     console.log('All tables are initialized');
 
-    // await clearTables();
-    // console.log('All tables are cleared');
+    await clearTables();
+    console.log('All tables are cleared');
   } catch (err) {
     console.log('Error during tables initialization and clearing: ', err);
   }
