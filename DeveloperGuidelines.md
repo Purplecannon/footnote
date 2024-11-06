@@ -4,6 +4,22 @@
 The source code of footnote can be found in its public [gitHub repository](https://github.com/miahuynhh/footnote).
 
 ## The layout of Footnote's directory structure
+### frontend
+app
+├── public - Reusable actions such as navigating, opening, creating entities
+├── pages - Website pages
+├── components - React components reusable across scenes
+├── hooks - Reusable React hooks
+└── routes - Route definitions
+
+### backend
+server
+├── routes - All API routes are contained within here
+│ ├── api - API routes
+│ └── auth - Authentication routes
+├── config - Database configuration
+├── services - Services such as s3
+└── test - Test helpers
 
 ## How to build the software
 First, clone the remote repository by running this command on the command line:
