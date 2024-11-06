@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "mocha --reporter spec"
+    "test": "mocha --reporter spec --exit"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.670.0",
