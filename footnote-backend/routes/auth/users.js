@@ -4,7 +4,7 @@
 const express = require('express');
 const router = express.Router();
 
-const conn = require('../services/database');
+const conn = require('../../config/database');
 const bcrypt = require('bcrypt');
 
 router.post('/create-user', async(req, res) => {
@@ -31,12 +31,31 @@ router.post('/login-user', async(req, res) => {
   }
 });
 
+// session
+// initialize the session middleware
+// router.get('/', (req, res) => {
+//   const sessionData = req.session;
+
+//   // access session data
+// });
+
+// session
+// router.get('/logout', (req, res) => {
+//   req.session.destroy((err) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       res.redirect('/login-user');
+//     }
+//   });
+// });
+
 // Create a new user given a username and password.
 // The password stored is a hashed password.
 // Usernames should be unique and are not case-sensitive.
 async function createUser(username, password, confirmPassword) {
   const checkExistingSql = 'SELECT * FROM USERS WHERE username = ?';
-  const createUserSql = 'INSERT INTO USERS(username, hashedPassword) VALUES(?, ?)';
+  const createUserSql = 'INSERT INTO USERS(username, hashed_password) VALUES(?, ?)';
 
   try {
     // check if username, password, or confirmPassword is empty
@@ -98,10 +117,16 @@ async function loginUser(username, password) {
     }
 
     // compare the provided password with the stored hashed password
-    const hashedPassword = existingUser[0].hashedPassword;  // the stored hashedPassword
+    const hashedPassword = existingUser[0].hashed_password;  // the stored hashedPassword
     const correctPassword = await bcrypt.compare(password, hashedPassword);
 
     if (correctPassword) {
+
+      // session
+      // store session data
+      // req.session.isLoggedIn = true;
+      // req.session.username = usernameLower;
+
       return "Login successful for user " + usernameLower;
     } else {
       return "Incorrect username or password";
