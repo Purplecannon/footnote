@@ -1,51 +1,30 @@
-# Overview
+# User Manual
 
-## User Documentation
+## A high-level description
+Footnote is a tool designed to help dancers and choreographers digitally notate, visualize, and
+share their routines with ease. Whether you’re a beginner or a seasoned dancer, Footnote makes it
+easy to organize and document choreography in a much more efficient way than traditional methods.
+Footnote's key feature allows a user to leave detailed notes on specific timestamps in their dance
+video.
 
-### Installation
+## How to install the software
+You need an internet connection and a web browser, Chrome is recommended. There are no further system prerequisites to use Footnote.
 
-### Starting the system
+## How to run the software
+Navigate to `https://footnote.us/` to use Footnote.
 
-### Software Usage
+## How to use the software
+The initial page will be a login page where you can enter your username and password if you have an account with Footnote already. If it is your first time using Footnote, you can click the 'Click Here!' to create an account. This will direct you to a page where you can create a username and a password and confirm your password. Once your account is created, you will be directed to the login page to log into your account you jsut made.
 
-### Reporting bugs
+After successfully giving your username and password, you will be directed to the projects home page. Here, you will be able to see all the different projects you have previously made displayed in a board view. If a previously made project is clicked on, it will open the project page for that project. You will also have the button to create a new projects. If the create new project button is clicked, you will be directed to a blank project page. 
 
-### Known bugs
+The project page has three main sections. 
+1. The top left quadrant includes the video, with the play/pause button and scrubber to move the current time in the video. 
+2. The botton left quadrant will include the annotation functions. This includes a text box where you can write the annotaitons for the video and the timestamp where the video is paused. There are also four buttons above the text box. This includes a plus button for creating a new annotation at the current timestamp, a pencil button to edit the currently selected annotation, a checkmark to save the current annotation at the selected timestamp, and lastly, a trash can to delete the selected annotation. 
+3. The right half of the screen will include a list of all of the previously made annotations in chronological order, displaying the timestamp and text for each annotation. This list will be blank when creating a new project and will populate with annotations as annotations are created and saved with the checkmark in the bottom left section of the screen. 
 
----
+At the intitial page when creating a new project, the annotation list on the right side and video section on the top left of the screen will be blank. The video screen on the left will have a button to upload a video, and when clicked, will take you to a pop-up screen to upload your desired dance video to annotate dance moves. 
 
-## Developer documentation
+## How to report a bug
 
-### Obtaining the source code
-
-The source code of footnote can be found in its public [gitHub repository](https://github.com/miahuynhh/footnote).
-
-### Directory Layout
-
-#### frontend
-
-app
-├── public - Reusable actions such as navigating, opening, creating entities
-├── pages - Website pages  
-├── components - React components reusable across scenes
-├── hooks - Reusable React hooks
-└── routes - Route definitions
-
-#### backend
-
-server
-├── routes - All API routes are contained within here
-│ ├── api - API routes
-│ └── auth - Authentication routes
-├── config - Database configuration
-├── middlewares - Middlewares
-├── services - Services such as s3
-└── test - Test helpers and fixtures, tests themselves are colocated
-
-### Build
-
-### Test
-
-### Adding New Tests
-
-### Build a release of the software
+## Known bugs
