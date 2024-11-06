@@ -4,7 +4,7 @@
 const express = require('express');
 const router = express.Router();
 
-const conn = require('../services/database');
+const conn = require('../../config/database');
 const bcrypt = require('bcrypt');
 
 router.post('/create-user', async(req, res) => {
