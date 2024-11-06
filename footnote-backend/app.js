@@ -15,12 +15,12 @@ const cors = require("cors");  // cors in backend to talk between port 5173 and 
 // const conn = require('./services/database');
 // const sessionStore = new MySQLStore({}, conn);
 
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-const videosRouter = require("./routes/videos"); // video routes
-const projectsRouter = require("./routes/projects");
+const indexRouter = require("./routes/api/index");
+const usersRouter = require("./routes/auth/users");
+const videosRouter = require("./routes/api/videos"); // video routes
+const projectsRouter = require("./routes/api/projects");
 
-const { createTables, clearTables } = require("./services/tables");
+const { createTables, clearTables } = require("./config/tables");
 
 const app = express();
 
