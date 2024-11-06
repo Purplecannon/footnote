@@ -25,22 +25,21 @@ The source code of footnote can be found in its public [gitHub repository](https
 #### frontend
 
 app
-├── public - Reusable actions such as navigating, opening, creating entities
-├── pages - Website pages  
-├── components - React components reusable across scenes
-├── hooks - Reusable React hooks
-└── routes - Route definitions
+├── public # Reusable actions, e.g., navigating, opening, creating entities
+├── pages # Website pages  
+├── components # Reusable React components across scenes
+├── hooks # Reusable React hooks
+└── routes # Route definitions
 
 #### backend
 
 server
-├── routes - All API routes are contained within here
-│ ├── api - API routes
-│ └── auth - Authentication routes
-├── config - Database configuration
-├── middlewares - Middlewares
-├── services - Services such as s3
-└── test - Test helpers and fixtures, tests themselves are colocated
+├── routes # All API routes
+│ ├── api # API endpoints
+│ └── auth # Authentication routes
+├── config # Database configuration
+├── services # Services (e.g., S3)
+└── test # Test helpers
 
 ### Build
 
