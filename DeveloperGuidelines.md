@@ -14,8 +14,20 @@ You should now see a local `footnote` directory. From that root `footnote` direc
 `npm start`            # to start the backend server (on port 3000) and the frontend app (on port 5173) concurrently
 
 ## How to test the software
+Ensure that all necessary packages are installed - i.e. run ```npm install-all``` from the root directory.
+For backend testing, ensure that the proper database configurations are in place - the correct .env file in the root directory, and the ca-certificate.crt file in the config directory in the footnote-backend directory.
+For backend testing - navigate to the footnote-backend directory.
+For frontend testing - navigate to the footnote-frontend directory.
+Ensure that the ```test``` folder is present within the directory, then run the following from the terminal:
+```
+npm test
+```
 
 ## How to add new tests
+Navigate to the ```test``` directory - either in footnote-backend or footnote-frontend - and write tests using [Mocha](https://mochajs.org/) and the default node ```assert``` library, either by adding to an existing file with the ``` .mjs ``` extension, or by creating a new one. For a new file, import the assertion library:
+```
+import * as assert from 'assert';
+```
 
 ## How to build a release of the software
 Run an appropriate command from the following to update the version:
