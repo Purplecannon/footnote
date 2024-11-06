@@ -38,9 +38,8 @@ server
 │ ├── api - API routes
 │ └── auth - Authentication routes
 ├── config - Database configuration
-├── middlewares - Middlewares
 ├── services - Services such as s3
-└── test - Test helpers and fixtures, tests themselves are colocated
+└── test - Test helpers
 
 ### Build
 
