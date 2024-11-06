@@ -1,3 +1,5 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "eslint.validate": ["javascript", "typescript"],
+    "eslint.alwaysShowStatus": true
 }
