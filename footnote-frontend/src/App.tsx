@@ -1,13 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SignUp from "./components/SignUp/SignUp";
-import Login from "./components/Login/Login";
-import Homepage from "./components/Homepage/Homepage";
-import CreateNewProject from "./components/CreateNewProject/CreateNewProject";
-// import VideoList from "./components/VideoList/VideoList";
-// import VideoPlayback from "./components/VideoPlayback/VideoPlayback";
+import Login from "./pages/Login";
 
-const App: React.FC = () => {
+function App() {
   return (
+<<<<<<< HEAD
     <div>
       <BrowserRouter>
         <Routes>
@@ -19,7 +14,12 @@ const App: React.FC = () => {
         </Routes>
       </BrowserRouter>
     </div>
+=======
+    <>
+      <Login />
+    </>
+>>>>>>> Documentation
   );
-};
+}
 
 export default App;
