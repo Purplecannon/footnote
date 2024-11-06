@@ -139,3 +139,5 @@ async function loginUser(username, password) {
 
 // Exports
 module.exports = router;
+module.exports.createUser = createUser;
+module.exports.loginUser = loginUser;
