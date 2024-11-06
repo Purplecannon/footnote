@@ -25,7 +25,7 @@ The source code of footnote can be found in its public [gitHub repository](https
 #### frontend
 
 ```
-app
+footnote-frontend
 ├── public # Reusable actions, e.g., navigating, opening, creating entities
 ├── pages # Website pages
 ├── components # Reusable React components across scenes
@@ -36,7 +36,7 @@ app
 #### backend
 
 ```
-server
+footnote-backend
 ├── routes # All API routes
 │ ├── api # API endpoints
 │ └── auth # Authentication routes
