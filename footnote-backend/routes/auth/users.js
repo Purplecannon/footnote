@@ -1,5 +1,5 @@
 // Author: Mia
-// Central file for backend handling of user authentication
+// Central file for backend handling of user authentication, includes session handling
 
 const express = require('express');
 const router = express.Router();
