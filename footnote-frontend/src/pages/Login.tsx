@@ -42,9 +42,14 @@ export const Login: React.FC = () => {
     };
 
     try {
-      const response: AxiosResponse<string> = await axios.post("http://localhost:3000/users/login-user", newUser);
+      const response: AxiosResponse<string> = await axios.post(
+        "http://localhost:3000/users/login-user",
+        newUser,
+        { withCredentials: true }  // to send cookies with the request
+      );
 
       if (response.data === "Login successful for user " + newUser.username.toLowerCase()) {
+        console.log(response.data); // Creation successful message
         navigate('/user-home'); // Redirect to home page
       } else {
         console.log(response.data); // Error message

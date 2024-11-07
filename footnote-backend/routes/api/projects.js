@@ -1,5 +1,3 @@
-// TODO: NEEDS A GLOBAL VARIABLE THAT KEEPS TRACK OF CURRENTLY LOGGED IN USERNAME
-
 // Author: Mia
 // file for project back end handling
 
@@ -17,6 +15,7 @@ router.get('/home', async(req, res) => {
 
   // const username = 'footnote';
   const username = req.session.username;
+  console.log(username);
 
   try {
     const result = await getProjects(username);

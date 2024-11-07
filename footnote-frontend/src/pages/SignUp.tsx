@@ -50,7 +50,13 @@ export const SignUp: React.FC = () => {
     };
 
     try {
-      const response: AxiosResponse<string> = await axios.post("http://localhost:3000/users/create-user", newUser);
+      const response: AxiosResponse<string> = await axios.post(
+        "http://localhost:3000/users/create-user",
+        newUser,
+        {
+          withCredentials: true  // to send cookies with the request
+        }
+      );
 
       if (response.data === "Created user " + newUser.username.toLowerCase()) {
         console.log(response.data); // Creation successful message
