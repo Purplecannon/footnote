@@ -39,9 +39,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(session({
   // key: "session_id",  // TODO: needed or not?
   secret: process.env.SESSION_SECRET, // TODO: replace with a strong secret key used to sign the session ID cookie
-  store: sessionStore,  // to store in MySQL Digital Ocean database sessions table
-  resave: false,  // save the session to the store even if it hasn't been modified
-  saveUninitialized: false,  // save a new session that hasn't been modified yet
+  store: sessionStore,  // store in sessions table
+  resave: false,  // save the session to store even if it hasn't been modified - set to false for performance
+  saveUninitialized: false,  // save a new session that hasn't been modified yet - set to false for performance
   cookie: { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }  // session timeout: 1 day
 }));
 
