@@ -4,6 +4,7 @@ import user_icon from "../assets/person.png";
 import password_icon from "../assets/password.png";
 import axios, { AxiosResponse } from "axios";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 interface ILoginModel {
   username: string;
@@ -19,6 +20,8 @@ interface ILoginModel {
  * @returns {TSX.Element} The rendered Login form.
  */
 export const Login: React.FC = () => {
+  const navigate = useNavigate();
+
   const [data, setData] = useState<ILoginModel>({ username: "", password: "" });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,21 +35,23 @@ export const Login: React.FC = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    // console.log(data)
 
     const newUser: ILoginModel = {
       username: data.username,
       password: data.password,
     };
 
-    axios
-      .post<ILoginModel>("http://localhost:3000/users/login-user", newUser)
-      .then((response: AxiosResponse<ILoginModel>) => {
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log("Error on login request: ", err);
-      });
+    try {
+      const response: AxiosResponse<string> = await axios.post("http://localhost:3000/users/login-user", newUser);
+
+      if (response.data === "Login successful for user " + newUser.username.toLowerCase()) {
+        navigate('/user-home'); // Redirect to home page
+      } else {
+        console.log(response.data); // Error message
+      }
+    } catch (err) {
+      console.log("Error on login request: ", err);
+    }
   };
 
   return (
