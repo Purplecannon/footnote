@@ -9,11 +9,11 @@ const logger = require("morgan");
 const cors = require("cors");  // cors in backend to talk between port 5173 and 3000
 
 // session
-// const session = require("express-session");
 // const bodyParser = require("body-parser");
-// const MySQLStore = require("express-mysql-session")(session);
-// const conn = require('./services/database');
-// const sessionStore = new MySQLStore({}, conn);
+const session = require("express-session");
+const MySQLStore = require("express-mysql-session")(session);
+const conn = require('./config/database');
+const sessionStore = new MySQLStore({}, conn);  // initialize MySQL session store
 
 const indexRouter = require("./routes/api/index");
 const usersRouter = require("./routes/auth/users");
@@ -36,14 +36,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // session
-// app.use(session({
-//   // key: "session_id",  // TODO: needed or not?
-//   secret: process.env.SESSION_SECRET, // TODO: replace with a strong secret key used to sign the session ID cookie
-//   store: sessionStore,  // to store in MySQL Digital Ocean database sessions table
-//   resave: false,  // save the session to the store even if it hasn't been modified
-//   saveUninitialized: false,  // save a new session that hasn't been modified yet
-//   cookie: { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }  // timeout: 1 day
-// }));
+app.use(session({
+  // key: "session_id",  // TODO: needed or not?
+  secret: process.env.SESSION_SECRET, // TODO: replace with a strong secret key used to sign the session ID cookie
+  store: sessionStore,  // to store in MySQL Digital Ocean database sessions table
+  resave: false,  // save the session to the store even if it hasn't been modified
+  saveUninitialized: false,  // save a new session that hasn't been modified yet
+  cookie: { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }  // session timeout: 1 day
+}));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
