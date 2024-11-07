@@ -56,15 +56,15 @@ router.post('/login-user', async(req, res) => {
 // });
 
 // session
-// router.get('/logout', (req, res) => {
-//   req.session.destroy((err) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.redirect('/login-user');
-//     }
-//   });
-// });
+router.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send('Error logging out');
+    }
+    // TODO: redirect to login page
+  });
+});
 
 // Create a new user given a username and password.
 // The password stored is a hashed password.
