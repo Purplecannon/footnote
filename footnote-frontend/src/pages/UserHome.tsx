@@ -36,7 +36,7 @@ const UserHome: React.FC = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const { data } = await axios.get("/api/projects");
+        const { data } = await axios.get("http://localhost:3000/projects/home");
         setProjects(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("Error fetching projects:", err);
