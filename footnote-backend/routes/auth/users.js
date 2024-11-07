@@ -17,7 +17,6 @@ router.post('/create-user', async(req, res) => {
       // session
       req.session.isLoggedIn = true;
       req.session.username = username.toLowerCase();
-      console.log(req.session);
     }
 
     res.send(result);  // TODO: wrap this in else block?
@@ -37,7 +36,6 @@ router.post('/login-user', async(req, res) => {
       // session
       req.session.isLoggedIn = true;
       req.session.username = username.toLowerCase();
-      console.log(req.session);
     }
 
     res.send(result);  // TODO: wrap this in else block?
@@ -47,24 +45,17 @@ router.post('/login-user', async(req, res) => {
   }
 });
 
+// TODO: logout
 // session
-// initialize the session middleware
-// router.get('/', (req, res) => {
-//   const sessionData = req.session;
-
-//   // access session data
+// router.get('/logout', (req, res) => {
+//   req.session.destroy((err) => {
+//     if (err) {
+//       console.log(err);
+//       return res.status(500).send('Error logging out');
+//     }
+//     // TODO: redirect to login page
+//   });
 // });
-
-// session
-router.get('/logout', (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).send('Error logging out');
-    }
-    // TODO: redirect to login page
-  });
-});
 
 // Create a new user given a username and password.
 // The password stored is a hashed password.
