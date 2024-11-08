@@ -1,5 +1,5 @@
 // Author: Mia
-// Central file for backend handling of user authentication
+// Central file for backend handling of user authentication, includes session handling
 
 const express = require('express');
 const router = express.Router();
@@ -66,7 +66,7 @@ async function createUser(username, password, confirmPassword) {
 
   try {
     // check if username, password, or confirmPassword is empty
-    if (!username || username.trim() === "" || !password) {
+    if (!username || username.trim() === "") {
       return "Username is empty";
     }
     if (!password || !confirmPassword ||
