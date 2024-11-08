@@ -1,5 +1,3 @@
-// TODO: NEEDS A GLOBAL VARIABLE THAT KEEPS TRACK OF CURRENTLY LOGGED IN USERNAME
-
 // Author: Mia
 // file for project back end handling
 
@@ -10,7 +8,14 @@ const conn = require('../../config/database');
 
 // TODO: Path is set up. Get username from front-end
 router.get('/home', async(req, res) => {
-  const username = 'footnote';
+  // session
+  if (!req.session.isLoggedIn || !req.session.username) {
+    return res.status(401).send('Unauthorized, please log in');
+  }
+
+  // const username = 'footnote';
+  const username = req.session.username;
+  console.log(username);
 
   try {
     const result = await getProjects(username);
@@ -25,8 +30,14 @@ router.get('/home', async(req, res) => {
 // TODO: Should definitely decouple the create project from the path:
 // example: if someone refreshes, doing it this way creates a new project
 router.get('/create-project', async(req, res) => {
+  // session
+  if (!req.session.isLoggedIn || !req.session.username) {
+    return res.status(401).send('Unauthorized, please log in');
+  }
+
   const projectName = 'eta newjeans';
-  const username = 'footnote';
+  // const username = 'footnote';
+  const username = req.session.username;
 
   try {
     const result = await createProject(projectName, username);
@@ -54,6 +65,11 @@ router.get('/add-url', async(req, res) => {
 
 // TODO: Path is set up for testing purposes. Get pid from somewhere
 router.get('/delete-project', async(req, res) => {
+  // session
+  if (!req.session.isLoggedIn || !req.session.username) {
+    return res.status(401).send('Unauthorized, please log in');
+  }
+
   // TODO: FOR NOW, TO TEST, NEED TO MANUALLY SET THIS VALUE
   const pid = '1';
 
@@ -74,8 +90,6 @@ async function getProjects(username) {
   const getProjectsSql = 'SELECT project_name FROM PROJECTS WHERE username = ?';
 
   try {
-    // TODO: case where user is not loged in?
-
     // usernames are not case-sensitive
     const usernameLower = username.toLowerCase();
 
