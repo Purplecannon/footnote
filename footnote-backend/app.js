@@ -9,7 +9,6 @@ const logger = require("morgan");
 const cors = require("cors");  // cors in backend to talk between port 5173 and 3000
 
 // session
-// const bodyParser = require("body-parser");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 const conn = require('./config/database');
