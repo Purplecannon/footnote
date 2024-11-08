@@ -14,10 +14,6 @@ const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 const conn = require('./config/database');
 const sessionStore = new MySQLStore({}, conn);  // initialize MySQL session store
-const session = require("express-session");
-const MySQLStore = require("express-mysql-session")(session);
-const conn = require('./config/database');
-const sessionStore = new MySQLStore({}, conn);  // initialize MySQL session store
 
 const indexRouter = require("./routes/api/index");
 const usersRouter = require("./routes/auth/users");
