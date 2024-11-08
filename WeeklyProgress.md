@@ -172,13 +172,14 @@ Testing Update.
 
 ## Week 7
 
-## Assignment
+## Assignment:
 
 #### Kirupa Gunaseelan
 
 - Worked on navigation: making sure that the Sign in page and Log in pages navigated to the home page successfully.
 
 #### Mia Huynh
+
 - Delegated tasks: for Documentations, Beta release, Demo presentation and weekly timeline/deadline for team
 - Merged homepage frontend: debugged front and back end and resolved conflicts
 - Revised tables: Refactored tables creation code into services/tables.js, changed naming conventions
@@ -196,6 +197,15 @@ Testing Update.
 #### Lauren Yarrington
 
 #### Alicia Z.
+
+- Editing top level README.md
+- Modularized userHome
+  - Making card a reusable component
+  - Implementing a customized hook to fetch project data from backend
+  - Making mock data for display when backend returns error || no data
+  - Changed styling of all the above
+- Started implementation of Annotation component
+- Draft architecture diagram for presentation
 
 ---
 
