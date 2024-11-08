@@ -15,7 +15,7 @@ describe('Successful createUser', () => {
         const username = 'testUser';
         const password = 'testPassword';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
     
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -26,7 +26,7 @@ describe('Successful createUser', () => {
         const confirmPassword = password;
       
         const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, 'Created user testuser\n');
+        assert.strictEqual(result, 'Created user testuser');
     });
 });
 
@@ -104,7 +104,7 @@ describe('Handles Existing Users createUser', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
     
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -116,7 +116,7 @@ describe('Handles Existing Users createUser', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
     
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -131,7 +131,7 @@ describe('Handles Existing Users createUser', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
     
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -154,7 +154,7 @@ describe('Successful login', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
     
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -166,7 +166,7 @@ describe('Successful login', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
     
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -188,7 +188,7 @@ describe('empty username or password during login', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
 
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -235,7 +235,7 @@ describe('user not existing during login', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
 
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -259,7 +259,7 @@ describe('incorrect password', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
 
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -274,7 +274,7 @@ describe('incorrect password', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
 
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);

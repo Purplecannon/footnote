@@ -19,6 +19,7 @@
     "express": "~4.16.1",
     "express-mysql-session": "^3.0.3",
     "express-session": "^1.18.1",
+    "footnote": "file:..",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
