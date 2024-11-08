@@ -6,7 +6,6 @@ const router = express.Router();
 
 const conn = require('../../config/database');
 
-// TODO: Path is set up. Get username from front-end
 router.get('/home', async(req, res) => {
   // session
   if (!req.session.isLoggedIn || !req.session.username) {
