@@ -1,5 +1,5 @@
 // Author: Mia
-// Central file for backend handling of user authentication
+// Central file for backend handling of user authentication, includes session handling
 
 const express = require('express');
 const router = express.Router();
@@ -12,7 +12,14 @@ router.post('/create-user', async(req, res) => {
 
   try {
     const result = await createUser(username, password, confirmPassword);
-    res.send(result);
+
+    if (result === "Created user " + username.toLowerCase()) {
+      // session
+      req.session.isLoggedIn = true;
+      req.session.username = username.toLowerCase();
+    }
+
+    res.send(result);  // TODO: wrap this in else block?
   } catch (err) {
     console.log('Error creating user: ', err);
     res.status(500).send('Error creating user');
@@ -24,29 +31,29 @@ router.post('/login-user', async(req, res) => {
 
   try {
     const result = await loginUser(username, password);
-    res.send(result);
+
+    if (result === "Login successful for user " + username.toLowerCase()) {
+      // session
+      req.session.isLoggedIn = true;
+      req.session.username = username.toLowerCase();
+    }
+
+    res.send(result);  // TODO: wrap this in else block?
   } catch (err) {
     console.log('Error logging in user: ', err);
     res.status(500).send('Error logging in user');
   }
 });
 
-// session
-// initialize the session middleware
-// router.get('/', (req, res) => {
-//   const sessionData = req.session;
-
-//   // access session data
-// });
-
+// TODO: logout
 // session
 // router.get('/logout', (req, res) => {
 //   req.session.destroy((err) => {
 //     if (err) {
 //       console.log(err);
-//     } else {
-//       res.redirect('/login-user');
+//       return res.status(500).send('Error logging out');
 //     }
+//     // TODO: redirect to login page
 //   });
 // });
 
@@ -59,7 +66,7 @@ async function createUser(username, password, confirmPassword) {
 
   try {
     // check if username, password, or confirmPassword is empty
-    if (!username || username.trim() === "" || !password) {
+    if (!username || username.trim() === "") {
       return "Username is empty";
     }
     if (!password || !confirmPassword ||
@@ -87,7 +94,7 @@ async function createUser(username, password, confirmPassword) {
     // insert the new user into the database
     await conn.promise().query(createUserSql, [usernameLower, hashedPassword]);
 
-    return "Created user " + usernameLower + "\n";
+    return "Created user " + usernameLower;
   } catch (err) {
     // handles error during user creation (eg. deadlock)
     console.error('Error during user creation: ', err);
@@ -122,12 +129,6 @@ async function loginUser(username, password) {
     const correctPassword = await bcrypt.compare(password, hashedPassword);
 
     if (correctPassword) {
-
-      // session
-      // store session data
-      // req.session.isLoggedIn = true;
-      // req.session.username = usernameLower;
-
       return "Login successful for user " + usernameLower;
     } else {
       return "Incorrect password";
