@@ -1,8 +1,7 @@
 # Ignore node modules, environment variables
 
 # root directory
-node_modules/
-README-mia.md
+*/node_modules/
 
 # footnote-backend directory
 footnote-backend/node_modules
