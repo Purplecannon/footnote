@@ -5,9 +5,9 @@ name: ci
 
 on:
   push:
-    branches: [ "main", "testing" ]
+    branches: "*"
   pull_request:
-    branches: [ "main" ]
+    branches: "main"
 
 jobs:
   build:
@@ -20,12 +20,29 @@ jobs:
     steps:
     - name: "checkout repository"
       uses: actions/checkout@v4
+      
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         cache-dependency-path: '/home/runner/work/footnote/footnote/footnote-backend'
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+
+    - name: "Create SSL certificate file"
+      run: |
+        echo "${{ secrets.DB_SSL__CA }}" | base64 -d > /home/runner/work/footnote/footnote/footnote-backend/config/ca-certificate.crt
+
+
+    - name: "Create .env file"
+      run: |
+        echo "DB_HOST=${{ secrets.DB_HOST }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+        echo "DB_USER=${{ secrets.DB_USER }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+        echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+        echo "DB_PORT=${{ secrets.DB_PORT }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+        echo "DB_SSL__CA=config/ca-certificate.crt" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+        echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+   
     - name: "Install dependencies"
       working-directory: '/home/runner/work/footnote/footnote/footnote-backend'  
       run: npm ci
