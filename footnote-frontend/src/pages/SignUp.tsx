@@ -4,6 +4,7 @@ import user_icon from "../assets/person.png";
 import password_icon from "../assets/password.png";
 import axios, { AxiosResponse } from "axios";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 interface IUserModel {
   username: string;
@@ -21,6 +22,8 @@ interface IUserModel {
  * @returns {TSX.Element} The rendered Login/Signup form.
  */
 export const SignUp: React.FC = () => {
+  const navigate = useNavigate();
+
   const [data, setData] = useState<IUserModel>({
     username: "",
     password: "",
@@ -46,17 +49,22 @@ export const SignUp: React.FC = () => {
       confirmPassword: data.confirmPassword,
     };
 
-    axios
-      .post<IUserModel>("http://localhost:3000/users/create-user", newUser)
-      .then((response: AxiosResponse<IUserModel>) => {
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log("Error on signup request: ", err);
-      });
+    try {
+      const response: AxiosResponse<string> = await axios.post(
+        "http://localhost:3000/users/create-user",
+        newUser,
+        { withCredentials: true }  // to send cookies with the request
+      );
 
-    // make sure username, password, and confirm password is not empty
-    // check password and confirmPassword
+      if (response.data === "Created user " + newUser.username.toLowerCase()) {
+        console.log(response.data); // Creation successful message
+        navigate('/user-home'); // Redirect to home page
+      } else {
+        console.log(response.data); // Error message
+      }
+    } catch (err) {
+      console.log("Error on signup request: ", err);
+    }
   };
 
   return (
