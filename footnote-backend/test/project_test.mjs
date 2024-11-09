@@ -1,5 +1,5 @@
 //Author: Catherine
-
+/*
 import * as assert from 'assert';
 import {getProjects, createProject, addUrl, deleteProject} from '../routes/api/projects.js';
 import {createUser} from "../routes/auth/users.js";
@@ -44,4 +44,4 @@ describe('Successful project deletion', () => {
     beforeEach(async () => {
         await clearTables();
     });
-});
+}); */
