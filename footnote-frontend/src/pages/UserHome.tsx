@@ -1,105 +1,74 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import "./UserHome.css";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-
-interface Project {
-  pid: string;
-  thumbnailUrl: string;
-  title: string;
-}
-
-interface NewProject {
-  title: string;
-  image: string;
-  text: string;
-}
+import Stack from "react-bootstrap/Stack";
+import ProjectCard from "../components/ProjectCard";
+import useProject from "../hooks/useProject";
+import { ProjectData } from "../types/types";
+import mockProjects from "../data/mockProjects";
 
 const UserHome: React.FC = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { projects, loading, error } = useProject();
   const navigate = useNavigate();
 
-  const newProject: NewProject = {
+  const newProject: ProjectData = {
+    id: 0,
     title: "Create a New Project",
-    image:
+    thumbnailURL:
       "https://cdn.discordapp.com/attachments/1264335829665448039/1300599343371391018/file-hu0jIFPQTu4pGA4RKhIGQqCY.png?ex=67216d07&is=67201b87&hm=b3503a7e15a556693dce560d57da88ea67e125791855aa812570a7bc96bca2c4&",
-    text: "Start a new Footnote project Here!",
+    videoURL: "",
   };
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const { data } = await axios.get("/api/projects");
-        setProjects(Array.isArray(data) ? data : []);
-      } catch (err) {
-        console.error("Error fetching projects:", err);
-        setError("Failed to load projects.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProjects();
-  }, []);
 
   const handleCreateNewProject = () => {
-    navigate("/projects/new");
+    navigate("/create-new");
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  const shouldShowMockProjects = !loading && (error || projects.length === 0);
 
   return (
     <section id="homepage" className="block homepage-block">
       <Container>
         <div className="title-holder">
-          <h1>Project Home</h1>
+          <h1 className="text-center mb-4">Project Home</h1>
         </div>
-        <Row>
-          <Col sm={4}>
-            <div className="holder">
-              <Card>
-                <Card.Img variant="top" src={newProject.image} />
-                <Card.Body>
-                  <Card.Title>{newProject.title}</Card.Title>
-                  <Card.Text>{newProject.text}</Card.Text>
-                  <Button variant="primary" onClick={handleCreateNewProject}>
-                    Create New Project
-                  </Button>
-                </Card.Body>
-              </Card>
-            </div>
-          </Col>
-          {projects.map((project) => (
-            <Col sm={4} key={project.pid}>
-              <div className="holder">
-                <Card>
-                  <Card.Img variant="top" src={project.thumbnailUrl} />
-                  <Card.Body>
-                    <Card.Title>{project.title}</Card.Title>
-                    <Card.Text>
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </Card.Text>
-                    <Button
-                      variant="primary"
-                      onClick={() => navigate(`/projects/${project.pid}`)}
-                    >
-                      View Project
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </div>
-            </Col>
-          ))}
-        </Row>
+        {error && (
+          <p className="text-center text-danger">
+            Unable to fetch projects. Showing mock projects instead.
+          </p>
+        )}
+        <Stack
+          direction="horizontal"
+          gap={3}
+          className="justify-content-center"
+          style={{ width: "100%", flexWrap: "nowrap" }}
+        >
+          <div>
+            <ProjectCard
+              project={newProject}
+              buttonText="Create New Project"
+              onClick={handleCreateNewProject}
+            />
+          </div>
+          {shouldShowMockProjects
+            ? mockProjects.map((project) => (
+                <div key={project.id}>
+                  <ProjectCard
+                    project={project}
+                    buttonText="View Project"
+                    onClick={() => navigate(`/projects/${project.id}`)}
+                  />
+                </div>
+              ))
+            : projects.map((project) => (
+                <div key={project.id}>
+                  <ProjectCard
+                    project={project}
+                    buttonText="View Project"
+                    onClick={() => navigate(`/projects/${project.id}`)}
+                  />
+                </div>
+              ))}
+        </Stack>
       </Container>
     </section>
   );
