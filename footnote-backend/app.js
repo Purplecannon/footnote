@@ -16,8 +16,9 @@ const sessionStore = new MySQLStore({}, conn);  // initialize MySQL session stor
 
 const indexRouter = require("./routes/api/index");
 const usersRouter = require("./routes/auth/users");
-const videosRouter = require("./routes/api/videos"); // video routes
 const projectsRouter = require("./routes/api/projects");
+const videosRouter = require("./routes/api/videos"); // video routes
+const videosRouter = require("./routes/api/annotations"); // video routes
 
 const { createTables, clearTables } = require("./config/tables");
 
