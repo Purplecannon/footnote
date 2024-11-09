@@ -18,4 +18,8 @@ const mockProjects: ProjectData[] = [
   },
 ];
 
+<<<<<<< HEAD
 export default mockProjects;
+=======
+export default mockProjects;
+>>>>>>> 6a2f4fb55f2b6e1021d4b427e2f8f664ccda3a9b
