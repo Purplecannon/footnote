@@ -172,7 +172,7 @@ Testing Update.
 
 ## Week 7
 
-## Assignment
+## Assignment:
 
 #### Kirupa Gunaseelan
 
@@ -196,6 +196,14 @@ Testing Update.
 #### Lauren Yarrington
 
 #### Alicia Z.
+- Editing top level README.md
+- Modularized userHome
+  - Making card a reusable component
+  - Implementing a customized hook to fetch project data from backend
+  - Making mock data for display when backend returns error || no data
+  - Changed styling of all the above
+- Started implementation of Annotation component
+- Draft architecture diagram for presentation
 
 ---
 
