@@ -22,10 +22,11 @@ Requirements & Team Policies. Mainly an overview of the project and user-cases.
 - Generated sprint boot for backend.
 - Start to learn spring.
 
-#### Kirupa G. 
+#### Kirupa G.
+
 - Wrote user-cases. Discussed with the team to make sure we didn't have overlapping use cases
 - Discussed with Mia to get a better understanding of the product
-- Did research on frontend tools (HTML/CSS/React) as well as Figma 
+- Did research on frontend tools (HTML/CSS/React) as well as Figma
 - Started working on screens on Figma for Sign in, Login, and the Project page (video + annotations)
 
 ---
@@ -42,10 +43,10 @@ Software Architecture Update.
 - Implemented video uploading logic in the backend and tested successfully with postman.
 - Wrote software architecture for software architecture. Shared with team and asked for their feedback.
 
-#### Kirupa G. 
+#### Kirupa G.
 
-- Finished up Figma screens and showed my work to the team. 
-- Created HTML/CSS for the Sign in and Login Screens 
+- Finished up Figma screens and showed my work to the team.
+- Created HTML/CSS for the Sign in and Login Screens
 - Showed team during weekly meeting and gathered feedback on the screens (getting rid of forgot password)
 
 ---
@@ -57,9 +58,10 @@ Software Architecture Update.
 Software Design, Risk Assessment, Schedule update.
 
 #### Kirupa Gunaseelan
+
 - Worked on learning typescript and shifted existing code to typescript (vite React)
-- Split signin/login into two components in order to keep track of data more efficiently. 
-- Made interfaces to keep track of username, password, and confirm password for Sign in page and Login page. 
+- Split signin/login into two components in order to keep track of data more efficiently.
+- Made interfaces to keep track of username, password, and confirm password for Sign in page and Login page.
 
 #### Mia Huynh
 
@@ -102,11 +104,11 @@ Software Design, Risk Assessment, Schedule update.
 Testing Update.
 
 #### Kirupa Gunaseelan
-- Was able to change and update the state of variables (username, password, confirm password) in the input fields. 
-- Created handleSubmit function that sends this data via a POST request. 
-- Was able to console.log(data) but had to conduct more research in order to figure out how to link this to the 
-backend for the sign up page. 
 
+- Was able to change and update the state of variables (username, password, confirm password) in the input fields.
+- Created handleSubmit function that sends this data via a POST request.
+- Was able to console.log(data) but had to conduct more research in order to figure out how to link this to the
+  backend for the sign up page.
 
 #### Mia Huynh
 
@@ -135,12 +137,13 @@ backend for the sign up page.
 ## Assignment
 
 #### Kirupa Gunaseelan
-- Was able to finish up the code for Sign in 
-- Worked with Mia to try to figure out how to link the frontend and backend, but ran into issues with 
-my computer architecture. 
+
+- Was able to finish up the code for Sign in
+- Worked with Mia to try to figure out how to link the frontend and backend, but ran into issues with
+  my computer architecture.
 - Mia was able to get the code to work on her computer, so I created a handleSubmit function for Login
-(similar to how I implemented this for the Sign in component) in order to pass that information to that 
-backend as well. 
+  (similar to how I implemented this for the Sign in component) in order to pass that information to that
+  backend as well.
 
 #### Mia Huynh
 
@@ -162,16 +165,29 @@ backend as well.
 
 #### Alicia Z.
 
+- Wrote my assignment part of the documentation.
+- Restructured the frontend with team.
+
 ---
 
 ## Week 7
 
-## Assignment
+## Assignment:
 
 #### Kirupa Gunaseelan
-- Worked on navigation: making sure that the Sign in page and Log in pages navigated to the home page successfully. 
+
+- Worked on navigation: making sure that the Sign in page and Log in pages navigated to the home page successfully.
 
 #### Mia Huynh
+- Delegated tasks: for Documentations, Beta release, Demo presentation and weekly timeline/deadline for team
+- Merged homepage frontend: debugged front and back end and resolved conflicts
+- Revised tables: Refactored tables creation code into services/tables.js, changed naming conventions
+- Documentation assignment: set up version update automation, contributed to user manual (description, install the software, run the software) and developer guidelines (build the software, build a release)
+- Living document: revised CI set up on GitHub Actions and incorporate TA feedback
+- Restructured backend directory
+- Helped teammates with database configurations
+- Integrated homepage front and back end: with Kirupa and Alicia
+- Implemented full-stack session handling for login, signup, homepage
 
 #### Catherine Jin
 
@@ -180,6 +196,14 @@ backend as well.
 #### Lauren Yarrington
 
 #### Alicia Z.
+- Editing top level README.md
+- Modularized userHome
+  - Making card a reusable component
+  - Implementing a customized hook to fetch project data from backend
+  - Making mock data for display when backend returns error || no data
+  - Changed styling of all the above
+- Started implementation of Annotation component
+- Draft architecture diagram for presentation
 
 ---
 
