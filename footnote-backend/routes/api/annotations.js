@@ -1,16 +1,24 @@
+// Author: Mia, Lauren
+// Central file for backend handling of annotation retrieval, creation, deletion.
+
 var express = require('express');
 var router = express.Router();
-const db = require('./database')
-const Annotation = require('../createTables.sql'); // Using Annotation model from createTables.sql
+const conn = require('../../config/database');
 
+router.get('/annotations', async(req, res) => {
+  // TODO: session handling?
+  // const pid = req.session.pid;
+  const pid = 1;
 
-// const express = require('express');
-// const conn = require('../services/database');
-// const bcrypt = require('bcrypt');
-// const router = express.Router();
+  try {
+    const result = await getAnnotations(pid);
+    res.send(result);
+  } catch (err) {
+    console.log('Error retrieving existing annotations: ', err);
+    res.status(500).send('Error retrieving existing annotations');
+  }
+});
 
-
-// Author: Lauren
 // Create a new blank annotation
 const createAnnotation = (req, res) => {
     try {
@@ -23,7 +31,7 @@ const createAnnotation = (req, res) => {
         };
 
         // Create a new annotation instance
-        // the new aid should be 
+        // the new aid should be
         const newAnnotation = new Annotation({
             aid: nextAid,
             timestamp,
@@ -56,23 +64,23 @@ const createAnnotation = (req, res) => {
 async function annotationCreate(pid, timestamp) {
     const checkExistingSql = 'SELECT * FROM ANNOTATIONS WHERE pid = ? AND timestamp = ?';
     const createAnnotationSql = 'INSERT INTO ANNOTATIONS(pid, timestamp, note) VALUES(?, ?, ?)';
-  
+
     try {
       // check if annotation already exists
       const [existingAnnotation] = await conn.promise().query(checkExistingSql, [pid, timestamp]);
-  
+
       if (existingAnnotation.length > 0) {
         return "Annotation already exists at this time";
       }
-  
+
       // get the last annotation ID
       const [lastAnnotation] = await conn.promise().query('SELECT MAX(aid) AS last_aid FROM ANNOTATIONS');
       const lastAid = lastAnnotation[0].last_aid || 0; // if no annotations exist, lastAid will be 0
-  
+
       // create a new annotation
       const newAid = lastAid + 1;
       await conn.promise().query(createAnnotationSql, [pid, timestamp, '']);
-  
+
       return "Created annotation " + newAid + "\n";
     } catch (err) {
       console.error('Error during annotation creation: ', err);
@@ -83,11 +91,11 @@ async function annotationCreate(pid, timestamp) {
 // Edit a blank annotation
 async function annotationEdit(pid, timestamp) {
     const checkExistingSql = 'SELECT note FROM ANNOTATIONS WHERE pid = ? AND timestamp = ?';
-  
+
     try {
       // check if annotation already exists
       const [existingAnnotation] = await conn.promise().query(checkExistingSql, [pid, timestamp]);
-  
+
       if (existingAnnotation.length > 0) {
         return existingAnnotation[0].note;
       } else {
@@ -103,11 +111,11 @@ async function annotationEdit(pid, timestamp) {
 // Save the annotation to the db
 async function annotationSave(pid, timestamp, note) {
     const updateAnnotationSql = 'UPDATE ANNOTATIONS SET note = ? WHERE pid = ? AND timestamp = ?';
-  
+
     try {
       // update the existing annotation
       const [result] = await conn.promise().query(updateAnnotationSql, [note, pid, timestamp]);
-  
+
       if (result.affectedRows > 0) {
         return "Annotation saved";
       } else {
@@ -123,11 +131,11 @@ async function annotationSave(pid, timestamp, note) {
 // Deletes the annotation at the given timestamp with the given PID
 async function annotationDelete(pid, timestamp) {
     const deleteAnnotationSql = 'DELETE FROM ANNOTATIONS WHERE pid = ? AND timestamp = ?';
-  
+
     try {
       // delete the existing annotation
       const [result] = await conn.promise().query(deleteAnnotationSql, [pid, timestamp]);
-  
+
       if (result.affectedRows > 0) {
         return "Annotation deleted";
       } else {
@@ -139,13 +147,8 @@ async function annotationDelete(pid, timestamp) {
     }
   }
 
-
-
 module.exports.annotationCreate = annotationCreate;
 module.exports.annotationEdit = annotationEdit;
 module.exports.annotationSave = annotationSave;
 module.exports.annotationDelete = annotationDelete;
-
-
-
 module.exports = { createAnnotation, router };
