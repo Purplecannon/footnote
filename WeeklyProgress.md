@@ -172,7 +172,7 @@ Testing Update.
 
 ## Week 7
 
-## Assignment
+## Assignment:
 
 #### Kirupa Gunaseelan
 
