@@ -18,7 +18,7 @@ const indexRouter = require("./routes/api/index");
 const usersRouter = require("./routes/auth/users");
 const projectsRouter = require("./routes/api/projects");
 const videosRouter = require("./routes/api/videos"); // video routes
-const videosRouter = require("./routes/api/annotations"); // video routes
+const annotationsRouter = require("./routes/api/annotations"); // video routes
 
 const { createTables, clearTables } = require("./config/tables");
 
