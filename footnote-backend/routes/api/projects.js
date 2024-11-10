@@ -144,7 +144,7 @@ async function createProject(projectName, username) {
 
     await conn.promise().query(createProjectSql, [projectName, usernameLower]);
 
-    return "Created project " + projectName + "for user " + usernameLower + "\n";
+    return "Created project " + projectName + "for user " + usernameLower;
   } catch (err) {
     console.error('Error during project creation: ', err);
     return 'Error during project creation';
@@ -160,10 +160,10 @@ async function addUrl(pid, videoUrl) {
     const [result] = await conn.promise().query(addUrlSql, [videoUrl, pid]);
 
     if (result.affectedRows === 0) {
-      return "No matching pid " + pid + " found in PROJECTS \n";
+      return "No matching pid " + pid + " found in PROJECTS";
     }
 
-    return "Updated video URL for project with pid " + pid + "\n";
+    return "Updated video URL for project with pid " + pid;
   } catch (err) {
     console.error('Error during URL insertion: ', err);
     return 'Error during URL insertion';
@@ -178,10 +178,10 @@ async function deleteProject(pid) {
     const [result] = await conn.promise().query(deleteProjectSql, [pid]);
 
     if (result.affectedRows === 0) {
-      return "No matching pid " + pid + " found in PROJECTS \n";
+      return "No matching pid " + pid + " found in PROJECTS";
     }
 
-    return "Deleted project with pid " + pid + "\n";
+    return "Deleted project with pid " + pid;
   } catch (err) {
     console.error('Error during project deletion: ', err);
     return 'Error during project deletion';

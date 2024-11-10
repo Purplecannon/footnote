@@ -55,12 +55,16 @@ async function clearTables() {
   const clearProjectsTableSql = 'DELETE FROM PROJECTS;';
   const resetProjectsTableSql= 'ALTER TABLE PROJECTS AUTO_INCREMENT = 1;';
   const clearAnnotationsTableSql = 'DELETE FROM ANNOTATIONS;';
+  const resetAnnotationsTableSql= 'ALTER TABLE ANNOTATIONS AUTO_INCREMENT = 1;';
   const clearSessionsTableSql = 'DELETE FROM sessions;';
 
   try {
     // Clear in the order of ANNOTATIONS -> PROJECTS -> USERS due to foreign key constraints
     await conn.promise().query(clearAnnotationsTableSql);
     console.log('ANNOTATIONS table cleared');
+
+    await conn.promise().query(resetAnnotationsTableSql);
+    console.log('ANNOTATIONS table pid autoincrement reset');
 
     await conn.promise().query(clearProjectsTableSql);
     console.log('PROJECTS table cleared');
