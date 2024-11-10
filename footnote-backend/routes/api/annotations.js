@@ -20,7 +20,20 @@ router.get('/all', async(req, res) => {
   }
 });
 
+// endpoint: "http://localhost:3000/annotations/add"
+router.post('/add', async(req, res) => {
+  // TODO: session handling?
+  // const pid = req.session.pid;
+  const pid = 1;
 
+  try {
+    const result = await addAnnotation(req.body.timestamp, req.body.text, pid);
+    res.send(result);
+  } catch (err) {
+    console.log('Error adding annotation: ', err);
+    res.status(500).send('Error adding annotation');
+  }
+});
 
 // Retrieve the list of existing annotations under the given pid (project id)
 // Returns: an array of Annotations objects like follows
@@ -37,7 +50,7 @@ router.get('/all', async(req, res) => {
 async function getAnnotations(pid) {
   const getAnnotationsSql = 'SELECT aid, timestamp, text FROM ANNOTATIONS WHERE pid = ?';
   // const mockProjectSql = "INSERT INTO PROJECTS (project_name, username) VALUES ('eta newjeans', 'footnote');";
-  // const mockAnnotationSql = "INSERT INTO ANNOTATIONS (timestamp, text, pid) VALUES ('00:00', 'first annotation', 1), ('01:32', 'second annotation', 1);"
+  // const mockAnnotationSql = "INSERT INTO ANNOTATIONS (timestamp, text, pid) VALUES ('00:00', 'first annotation', 1), ('01:32', 'second annotation', 1);";
 
   try {
     // conn.promise().query(mockProjectSql);
@@ -58,6 +71,27 @@ async function getAnnotations(pid) {
   } catch (err) {
     console.error('Error during annotations retrieval: ', err);
     // throw an error, can consider other error handling returns
+    throw err;
+  }
+}
+
+async function addAnnotation(timestamp, text, pid) {
+  const addAnnotationSql = "INSERT INTO ANNOTATIONS (timestamp, text, pid) VALUES (?, ?, ?);";
+
+  try {
+    const [result] = await conn.promise().query(addAnnotationSql, [timestamp, text, pid]);
+
+    if (result.affectedRows > 0) {
+      return {
+        id: result.insertId,  // equivalent to aid
+        timestamp: timestamp,
+        text: text,
+      };
+    } else {
+      throw new Error('Annotation not added');
+    }
+  } catch (err) {
+    console.error('Error adding annotation: ', err);
     throw err;
   }
 }
