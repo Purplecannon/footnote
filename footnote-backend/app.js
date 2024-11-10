@@ -18,7 +18,7 @@ const indexRouter = require("./routes/api/index");
 const usersRouter = require("./routes/auth/users");
 const projectsRouter = require("./routes/api/projects");
 const videosRouter = require("./routes/api/videos"); // video routes
-const annotationsRouter = require("./routes/api/annotations"); // video routes
+const annotationsRouter = require("./routes/api/annotations");
 
 const { createTables, clearTables } = require("./config/tables");
 
@@ -59,15 +59,16 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/videos", videosRouter); // Place this BEFORE the 404 handler
 app.use("/projects", projectsRouter);
+app.use("/annotations", annotationsRouter);
 
 // TODO: change the following initialize() portion once app actually storing real user data
 async function initialize() {
   try {
     await createTables();
-    console.log('All tables are initialized');
+    console.log('All tables initialized');
 
     await clearTables();
-    console.log('All tables are cleared');
+    console.log('All tables cleared');
   } catch (err) {
     console.log('Error during tables initialization and clearing: ', err);
   }
