@@ -175,7 +175,7 @@ async function deleteProject(pid) {
   const deleteProjectSql = 'DELETE FROM PROJECTS WHERE pid = ?';
 
   try {
-    const [result] = await conn.promise().query(deleteProjectSql, [pid]);
+    const [result] = await conn.promise().query(deleteProjectSql, pid);
 
     if (result.affectedRows === 0) {
       return "No matching pid " + pid + " found in PROJECTS";
@@ -183,8 +183,8 @@ async function deleteProject(pid) {
 
     return "Deleted project with pid " + pid;
   } catch (err) {
-    console.error('Error during project deletion: ', err);
-    return 'Error during project deletion';
+    console.error('Error deleting project: ', err);
+    return 'Error deleting project';
   }
 }
 
