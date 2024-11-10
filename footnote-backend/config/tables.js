@@ -24,13 +24,25 @@ async function createTables() {
     );
   `;
 
+  const createAnnotationsTableSql = `
+    CREATE TABLE IF NOT EXISTS ANNOTATIONS(
+      aid INT PRIMARY KEY AUTO_INCREMENT,
+      timestamp VARCHAR(256),
+      text VARCHAR(1000),
+      pid INT NOT NULL,
+      FOREIGN KEY (pid) REFERENCES PROJECTS(pid)
+    );
+  `;
+
   try {
     await conn.promise().query(createUsersTableSql);
-    console.log('USERS table created successfully');
+    console.log('USERS table created');
 
     await conn.promise().query(createProjectsTableSql);
-    console.log('PROJECTS table created successfully');
+    console.log('PROJECTS table created');
 
+    await conn.promise().query(createAnnotationsTableSql);
+    console.log('ANNOTATIONS table created');
   } catch (err) {
     console.log('Error creating tables: ', err);
   }
@@ -42,21 +54,25 @@ async function clearTables() {
   const clearUsersTableSql = 'DELETE FROM USERS;';
   const clearProjectsTableSql = 'DELETE FROM PROJECTS;';
   const resetProjectsTableSql= 'ALTER TABLE PROJECTS AUTO_INCREMENT = 1;';
+  const clearAnnotationsTableSql = 'DELETE FROM ANNOTATIONS;';
   const clearSessionsTableSql = 'DELETE FROM sessions;';
 
   try {
     // Clear in the order of ANNOTATIONS -> PROJECTS -> USERS due to foreign key constraints
+    await conn.promise().query(clearAnnotationsTableSql);
+    console.log('ANNOTATIONS table cleared');
+
     await conn.promise().query(clearProjectsTableSql);
-    console.log('Successfully cleared PROJECTS table');
+    console.log('PROJECTS table cleared');
 
     await conn.promise().query(resetProjectsTableSql);
-    console.log('Successfully reset PROJECTS table pid autoincrement');
+    console.log('PROJECTS table pid autoincrement reset');
 
     await conn.promise().query(clearUsersTableSql);
-    console.log('Successfully cleared USERS table');
+    console.log('USERS table cleared');
 
     await conn.promise().query(clearSessionsTableSql);
-    console.log('Successfully cleared sessions table');
+    console.log('sessions table cleared');
 
   } catch (err) {
     console.log('Error clearing tables: ', err);

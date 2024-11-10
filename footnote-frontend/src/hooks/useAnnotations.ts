@@ -12,7 +12,7 @@ export const useAnnotations = () => {
     const loadAnnotations = async () => {
       try {
         const response = await axios.get<AnnotationData[]>(
-          "http://localhost:3000/annotations"
+          "http://localhost:3000/annotations/all"
         ); // Update with your actual endpoint
         setAnnotations(
           response.data.length > 0 ? response.data : mockAnnotations
