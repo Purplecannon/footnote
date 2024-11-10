@@ -5,7 +5,8 @@ var express = require('express');
 var router = express.Router();
 const conn = require('../../config/database');
 
-router.get('/annotations', async(req, res) => {
+// endpoint: "http://localhost:3000/annotations/all"
+router.get('/all', async(req, res) => {
   // TODO: session handling?
   // const pid = req.session.pid;
   const pid = 1;
@@ -18,6 +19,49 @@ router.get('/annotations', async(req, res) => {
     res.status(500).send('Error retrieving existing annotations');
   }
 });
+
+
+
+// Retrieve the list of existing annotations under the given pid (project id)
+// Returns: an array of Annotations objects like follows
+// [
+//   { id: 1
+//     timestamp: "00:31",
+//     text: "this is an annotation"
+//   },
+//   { id: 2
+//     timestamp: "00:31",
+//     text: "this is another annotation"
+//   },
+// ]
+async function getAnnotations(pid) {
+  const getAnnotationsSql = 'SELECT aid, timestamp, text FROM ANNOTATIONS WHERE pid = ?';
+  // const mockProjectSql = "INSERT INTO PROJECTS (project_name, username) VALUES ('eta newjeans', 'footnote');";
+  // const mockAnnotationSql = "INSERT INTO ANNOTATIONS (timestamp, text, pid) VALUES ('00:00', 'first annotation', 1), ('01:32', 'second annotation', 1);"
+
+  try {
+    // conn.promise().query(mockProjectSql);
+    // conn.promise().query(mockAnnotationSql);
+
+    const [rows] = await conn.promise().query(getAnnotationsSql, [pid]);
+
+    if (rows.length === 0) {
+      return [];
+    } else {
+      // extract the aid, timestamp, and text
+      return rows.map(row => ({
+        id: row.aid,
+        timestamp: row.timestamp,
+        text: row.text
+      }));
+    }
+  } catch (err) {
+    console.error('Error during annotations retrieval: ', err);
+    // throw an error, can consider other error handling returns
+    throw err;
+  }
+}
+
 
 // Create a new blank annotation
 const createAnnotation = (req, res) => {
@@ -147,8 +191,10 @@ async function annotationDelete(pid, timestamp) {
     }
   }
 
-module.exports.annotationCreate = annotationCreate;
-module.exports.annotationEdit = annotationEdit;
-module.exports.annotationSave = annotationSave;
-module.exports.annotationDelete = annotationDelete;
-module.exports = { createAnnotation, router };
+
+module.exports = router;
+// module.exports.annotationCreate = annotationCreate;
+// module.exports.annotationEdit = annotationEdit;
+// module.exports.annotationSave = annotationSave;
+// module.exports.annotationDelete = annotationDelete;
+// module.exports = { createAnnotation, router };
