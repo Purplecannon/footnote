@@ -5,6 +5,7 @@ const express = require('express');
 const router = express.Router();
 const conn = require('../../config/database');
 
+// endpoint: "http://localhost:3000/projects/home"
 router.get('/home', async(req, res) => {
   // session
   if (!req.session.isLoggedIn || !req.session.username) {
@@ -27,6 +28,7 @@ router.get('/home', async(req, res) => {
 // TODO: Path is set up. Get projectName and username from front-end
 // TODO: Should definitely decouple the create project from the path:
 // example: if someone refreshes, doing it this way creates a new project
+// endpoint: "http://localhost:3000/projects/create-project"
 router.get('/create-project', async(req, res) => {
   // session
   if (!req.session.isLoggedIn || !req.session.username) {
@@ -46,6 +48,7 @@ router.get('/create-project', async(req, res) => {
   }
 });
 
+// endpoint: "http://localhost:3000/projects/add-url"
 // TODO: Path is set up for testing purposes. Get pid and videoUrl from somewhere
 router.get('/add-url', async(req, res) => {
   // TODO: FOR NOW, TO TEST, NEED TO MANUALLY SET THIS VALUE
@@ -61,6 +64,7 @@ router.get('/add-url', async(req, res) => {
   }
 });
 
+// endpoint: "http://localhost:3000/projects/delete-project"
 // TODO: Path is set up for testing purposes. Get pid from somewhere
 router.get('/delete-project', async(req, res) => {
   // session
