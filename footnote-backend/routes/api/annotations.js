@@ -49,6 +49,24 @@ router.put('/edit', async(req, res) => {
   }
 });
 
+// endpoint: "http://localhost:3000/annotations/delete"
+router.delete('/delete', async(req, res) => {
+  // TODO: session handling?
+  const aid = 1;
+
+  try {
+    const result = await deleteAnnotation(aid);
+    if (result === "Annotation deleted") {
+      res.status(200).send({ message: result });
+    } else {
+      res.status(404).send({ message: result });
+    }
+  } catch (err) {
+    console.log('Error deleting annotation: ', err);
+    res.status(500).send('Error deleting annotation');
+  }
+});
+
 // Retrieve the list of existing annotations under the given pid (project id)
 // Returns: an array of Annotations objects like follows
 // [
@@ -142,6 +160,26 @@ async function editAnnotation(timestamp, text, aid) {
     return 'Error editing annotation';
   }
 }
+
+// deletes an annotation, given the annotation id
+// returns a success or failure message
+async function deleteAnnotation(aid) {
+  const deleteAnnotationSql = 'DELETE FROM ANNOTATIONS WHERE aid = ?';
+
+  try {
+    const [result] = await conn.promise().query(deleteAnnotationSql, aid);
+
+    if (result.affectedRows === 0) {
+      return "Annotation not found or not deleted";
+    } else {
+      return "Annotation deleted";
+    }
+  } catch (err) {
+    console.error('Error deleting annotation: ', err);
+    return 'Error deleting annotation';
+  }
+}
+
 
 // Lauren's code:
 
