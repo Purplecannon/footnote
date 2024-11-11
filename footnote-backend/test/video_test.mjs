@@ -15,7 +15,7 @@ app.use('/', router);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-describe('Video upload', () => {
+describe('Video upload failure', () => {
     it('Empty file upload should fail', async () => {
         const response = await request(app)
             .post('/upload-video')
@@ -31,7 +31,9 @@ describe('Video upload', () => {
 
         assert.strictEqual(response.status, 400);
     });
+});
 
+describe('Video upload success', () => {
     it('Non-empty file upload should succeed', async () => {
         const videoPath = join(__dirname, 'test-videos/test-video-1.mp4');
 
@@ -43,4 +45,4 @@ describe('Video upload', () => {
 
         assert.strictEqual(response.status, 200);
     });
-});
+})
