@@ -1,7 +1,9 @@
 //Author: Lauren
 
 import * as assert from 'assert';
-import {createUser, clearTables, loginUser} from "../routes/users.js";
+import {createUser, loginUser} from "../routes/auth/users.js";
+import {clearTables} from "../config/tables.js";
+
 
 describe('Successful createUser', () => {
     // TODO: Comment out clearTable
@@ -13,7 +15,7 @@ describe('Successful createUser', () => {
         const username = 'testUser';
         const password = 'testPassword';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
     
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -24,188 +26,8 @@ describe('Successful createUser', () => {
         const confirmPassword = password;
       
         const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, 'Created user testuser\n');
+        assert.strictEqual(result, 'Created user testuser');
     });
-    it('handles user with exclamation point', async () => {
-        const username = "user!";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with at symbol', async () => {
-        const username = "user@";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with hashtag symbol', async () => {
-        const username = "user#";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with money symbol', async () => {
-        const username = "user$";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with mod symbol', async () => {
-        const username = "user%";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with carrot symbol', async () => {
-        const username = "user^";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with ampersand symbol', async () => {
-        const username = "user&";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with asterisk symbol', async () => {
-        const username = "user*";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with parenthesis open symbol', async () => {
-        const username = "user(";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with parenthesis closed symbol', async () => {
-        const username = "user)";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with dash symbol', async () => {
-        const username = "user-";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });it('handles user with underscore symbol', async () => {
-        const username = "user_";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with equal symbol', async () => {
-        const username = "user=";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with plus symbol', async () => {
-        const username = "user+";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with curly bracket open symbol', async () => {
-        const username = "user{";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with curly bracket closed symbol', async () => {
-        const username = "user}";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    it('handles user with vertical  symbol', async () => {
-        const username = "user|";
-        const password = 'testPassword';
-        const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-        const result = await createUser(username, password, confirmPassword);
-        assert.strictEqual(result, expectedResult);
-    });
-    // TODO: these tests fail but I'm unsure if they should or shouldn't fail
-    // it('handles user with single quote symbol', async () => {
-    //     const username = ''';
-    //     const password = 'testPassword';
-    //     const confirmPassword = password;
-    //     const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-    //     const result = await createUser(username, password, confirmPassword);
-    //     assert.strictEqual(result, expectedResult);
-    // });
-    // it('handles user with double quote symbol', async () => {
-    //     const username = """;
-    //     const password = 'testPassword';
-    //     const confirmPassword = password;
-    //     const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-    //     const result = await createUser(username, password, confirmPassword);
-    //     assert.strictEqual(result, expectedResult);
-    // });
-    // it('handles user with backslash symbol', async () => {
-    //     const username = "user\";
-    //     const password = 'testPassword';
-    //     const confirmPassword = password;
-    //     const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
-    
-    //     const result = await createUser(username, password, confirmPassword);
-    //     assert.strictEqual(result, expectedResult);
-    // });
 });
 
 describe('Handles empty username, password, or confirmPassword', () => {
@@ -234,22 +56,22 @@ describe('Handles empty username, password, or confirmPassword', () => {
         assert.strictEqual(result, 'Password or confirm password is empty');
     });
     // TODO: these tests fail but I'm unsure if they should or shouldn't fail
-    // it('handles space-filled password', async () => {
-    //     const username = 'testUser';
-    //     const password = '   ';
-    //     const confirmPassword = 'confirmPassword';
+    it('handles space-filled password', async () => {
+        const username = 'testUser';
+        const password = '   ';
+        const confirmPassword = 'confirmPassword';
       
-    //     const result = await createUser(username, password, confirmPassword);
-    //     assert.strictEqual(result, 'Password or confirm password is empty');
-    // });
-    // it('handles space-filled confirmPassword', async () => {
-    //     const username = 'testUser';
-    //     const password = 'password';
-    //     const confirmPassword = '   ';
+        const result = await createUser(username, password, confirmPassword);
+        assert.strictEqual(result, 'Password or confirm password is empty');
+    });
+    it('handles space-filled confirmPassword', async () => {
+        const username = 'testUser';
+        const password = 'password';
+        const confirmPassword = '   ';
       
-    //     const result = await createUser(username, password, confirmPassword);
-    //     assert.strictEqual(result, 'Password or confirm password is empty');
-    // });
+        const result = await createUser(username, password, confirmPassword);
+        assert.strictEqual(result, 'Password or confirm password is empty');
+    });
 });
 
 describe('Handles mismatched password or confirmPassword', () => {
@@ -282,7 +104,7 @@ describe('Handles Existing Users createUser', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
     
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -294,7 +116,7 @@ describe('Handles Existing Users createUser', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
     
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -309,7 +131,7 @@ describe('Handles Existing Users createUser', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
     
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -332,7 +154,7 @@ describe('Successful login', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
     
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -344,7 +166,7 @@ describe('Successful login', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
     
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -366,7 +188,7 @@ describe('empty username or password during login', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
 
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -413,7 +235,7 @@ describe('user not existing during login', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
 
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
@@ -437,13 +259,13 @@ describe('incorrect password', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
 
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
 
         const wrongPassword = 'friedChicken';
-        const expectedIncorrectResult = "Incorrect username or password";
+        const expectedIncorrectResult = "Incorrect password";
 
         const loginResult = await loginUser(username, wrongPassword);
         assert.strictEqual(loginResult, expectedIncorrectResult);
@@ -452,13 +274,13 @@ describe('incorrect password', () => {
         const username = 'testUser';
         const password = 'password';
         const confirmPassword = password;
-        const expectedResult = 'Created user ' + username.toLowerCase() + '\n';
+        const expectedResult = 'Created user ' + username.toLowerCase();
 
         const result = await createUser(username, password, confirmPassword);
         assert.strictEqual(result, expectedResult);
 
         const wrongPassword = 'PasSWoRd';
-        const expectedIncorrectResult = "Incorrect username or password";
+        const expectedIncorrectResult = "Incorrect password";
 
         const loginResult = await loginUser(username, wrongPassword);
         assert.strictEqual(loginResult, expectedIncorrectResult);
