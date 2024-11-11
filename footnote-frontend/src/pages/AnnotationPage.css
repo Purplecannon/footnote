@@ -1,0 +1,144 @@
+/* General Page Styles */
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 200px;
+    width: 600px;
+    background: #ffffff;
+    padding-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Header Styles */
+  .header-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+  }
+  
+  .header-placeholder h1 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #3c009d;  /* Main color */
+  }
+  
+  /* Underline beneath header */
+  .underline {
+    width: 61px;
+    height: 6px;
+    background: #3c009d;
+    border-radius: 9px;
+  }
+  
+  /* Main content section */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  /* Left Half - Placeholder for Video Player */
+  .left-half {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 20px;
+    border-right: 2px solid #eaeaea;
+  }
+  
+  .placeholder-video {
+    text-align: center;
+    background: #eaeaea;
+    padding: 40px;
+    border-radius: 12px;
+    width: 100%;
+  }
+  
+  .placeholder-video h2 {
+    font-size: 24px;
+    color: #3c009d;
+  }
+  
+  .placeholder-video p {
+    color: #797979;
+    font-size: 16px;
+  }
+  
+  /* Right Half - Annotation Section */
+  .right-half {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 20px;
+  }
+  
+  /* Annotation wrapper (Right Column) */
+  .annotation-wrapper {
+    width: 100%;
+    padding: 30px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+  }
+  
+  .annotation-wrapper .annotation {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .annotation-wrapper .annotation h3 {
+    font-size: 22px;
+    color: #3c009d;
+    font-weight: 700;
+  }
+  
+  .annotation-wrapper .annotation p {
+    color: #797979;
+    font-size: 16px;
+  }
+  
+  /* Flex utility classes */
+  .d-flex {
+    display: flex;
+  }
+  
+  .justify-content-center {
+    justify-content: center;
+  }
+  
+  .align-items-center {
+    align-items: center;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .border-end {
+    border-right: 2px solid #eaeaea;
+  }
+  
+  /* Optional: Styling for responsive behavior */
+  @media (max-width: 768px) {
+    .container-fluid {
+      width: 90%;
+      margin-top: 100px;
+    }
+  
+    .left-half,
+    .right-half {
+      width: 100%;
+      padding: 15px;
+    }
+  }
+  
