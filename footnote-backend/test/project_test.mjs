@@ -25,7 +25,7 @@ describe('Successful project creation', () => {
         //project creation
         const projectName = 'Project1'
         const createResult = await(createProject(projectName, username));
-        const expectedResult = "Created project " + projectName + "for user " + username.toLowerCase() + "\n";
+        const expectedResult = "Created project " + projectName + "for user " + username.toLowerCase();
         assert.deepStrictEqual(createResult, expectedResult);
 
         //TODO: Add video upload (addUrl Tests)
@@ -36,7 +36,7 @@ describe('Successful project creation', () => {
         //project creation
         const projectName = 'Insert Project Name Here'
         const createResult = await(createProject(projectName, username));
-        const expectedResult = "Created project " + projectName + "for user " + username.toLowerCase() + "\n";
+        const expectedResult = "Created project " + projectName + "for user " + username.toLowerCase();
         assert.deepStrictEqual(createResult, expectedResult);
 
         //TODO: Add video upload (addUrl Tests)     
@@ -68,10 +68,10 @@ describe('Successful get projects', () => {
         //create project
         const projectName = 'Project1'
         const createResult = await(createProject(projectName, username));
-        const projectResult = "Created project " + projectName + "for user " + username.toLowerCase() + "\n";
+        const projectResult = "Created project " + projectName + "for user " + username.toLowerCase();
         assert.deepStrictEqual(createResult, projectResult);
 
-        const expectedResult = ["Project1"];
+        const expectedResult = [{id: 1, title:"Project1"}];
         const actualResult = await(getProjects(username));
         assert.deepStrictEqual(actualResult, expectedResult);
     });
@@ -79,18 +79,18 @@ describe('Successful get projects', () => {
         //create projects
         const project2 = 'Project2'
         const create2 = await(createProject(project2, username));
-        const result2 = "Created project " + project2 + "for user " + username.toLowerCase() + "\n";
+        const result2 = "Created project " + project2 + "for user " + username.toLowerCase();
         assert.deepStrictEqual(create2, result2);
         const project3 = 'Project3'
         const create3 = await(createProject(project3, username));
-        const result3 = "Created project " + project3 + "for user " + username.toLowerCase() + "\n";
+        const result3 = "Created project " + project3 + "for user " + username.toLowerCase();
         assert.deepStrictEqual(create3, result3);
         const project4 = 'Project4'
         const create4 = await(createProject(project4, username));
-        const result4 = "Created project " + project4 + "for user " + username.toLowerCase() + "\n";
+        const result4 = "Created project " + project4 + "for user " + username.toLowerCase();
         assert.deepStrictEqual(create4, result4);
 
-        const expectedResult = ['Project1', 'Project2', 'Project3', 'Project4'];
+        const expectedResult = [{id: 1, title:'Project1'}, {id: 2, title: 'Project2'}, {id: 3, title: 'Project3'}, {id: 4, title: 'Project4'}];
         const actualResult = await(getProjects(username));
         assert.deepStrictEqual(actualResult, expectedResult);
     });
@@ -160,12 +160,12 @@ describe('Successful project deletion', () => {
         //create project
         const projectName = 'Project1'
         const createResult = await(createProject(projectName, username));
-        const projectResult = "Created project " + projectName + "for user " + username.toLowerCase() + "\n";
+        const projectResult = "Created project " + projectName + "for user " + username.toLowerCase();
         assert.deepStrictEqual(createResult, projectResult);
         
         //delete project
         const pid = 1;
-        const expectedResult = "Deleted project with pid " + pid + "\n";
+        const expectedResult = "Deleted project with pid " + pid;
         const actualResult = await(deleteProject(pid));
         assert.deepStrictEqual(expectedResult, actualResult);
 
@@ -179,33 +179,33 @@ describe('Successful project deletion', () => {
         //create projects
         const project1 = 'Project1';
         const create1 = await(createProject(project1, username));
-        const expected1 = "Created project " + project1 + "for user " + username.toLowerCase() + "\n";
+        const expected1 = "Created project " + project1 + "for user " + username.toLowerCase();
         assert.deepStrictEqual(create1, expected1);
         const project2 = 'Project2'
         const create2 = await(createProject(project2, username));
-        const result2 = "Created project " + project2 + "for user " + username.toLowerCase() + "\n";
+        const result2 = "Created project " + project2 + "for user " + username.toLowerCase();
         assert.deepStrictEqual(create2, result2);
         const project3 = 'Project3'
         const create3 = await(createProject(project3, username));
-        const result3 = "Created project " + project3 + "for user " + username.toLowerCase() + "\n";
+        const result3 = "Created project " + project3 + "for user " + username.toLowerCase();
         assert.deepStrictEqual(create3, result3);
         const project4 = 'Project4'
         const create4 = await(createProject(project4, username));
-        const result4 = "Created project " + project4 + "for user " + username.toLowerCase() + "\n";
+        const result4 = "Created project " + project4 + "for user " + username.toLowerCase();
         assert.deepStrictEqual(create4, result4);
         const project5 = 'Project5'
         const create5 = await(createProject(project5, username));
-        const result5 = "Created project " + project5 + "for user " + username.toLowerCase() + "\n";
+        const result5 = "Created project " + project5 + "for user " + username.toLowerCase();
         assert.deepStrictEqual(create5, result5);
 
         //delete project
         const pid = 3;
-        const expectedResult = "Deleted project with pid " + pid + "\n";
+        const expectedResult = "Deleted project with pid " + pid;
         const actualResult = await(deleteProject(pid));
         assert.deepStrictEqual(expectedResult, actualResult);
 
         const getResult = await(getProjects(username));
-        const getExpected = ['Project1', 'Project2', 'Project4', 'Project5'];
+        const getExpected = [{id: 1, title:'Project1'}, {id: 2, title: 'Project2'}, {id: 4, title:'Project4'}, {id: 5, title: 'Project5'}];
         assert.deepStrictEqual(getResult, getExpected);
     })
 });
@@ -239,26 +239,26 @@ describe('Failed project deletion', () => {
     */
     it('Project ID that does not exist should fail', async () => {
         const pid = 1;
-        const expectedResult = "No matching pid " + pid + " found in PROJECTS \n";
+        const expectedResult = "No matching pid " + pid + " found in PROJECTS";
         const actualResult = await(deleteProject(pid));
         assert.deepStrictEqual(actualResult, expectedResult)
     });
     it('Project ID that does not exist should fail', async () => {
         const project1 = 'Project1';
         const create1 = await(createProject(project1, username));
-        const expected1 = "Created project " + project1 + "for user " + username.toLowerCase() + "\n";
+        const expected1 = "Created project " + project1 + "for user " + username.toLowerCase();
         assert.deepStrictEqual(create1, expected1);
         const project2 = 'Project2'
         const create2 = await(createProject(project2, username));
-        const result2 = "Created project " + project2 + "for user " + username.toLowerCase() + "\n";
+        const result2 = "Created project " + project2 + "for user " + username.toLowerCase();
         assert.deepStrictEqual(create2, result2);
         const project3 = 'Project3'
         const create3 = await(createProject(project3, username));
-        const result3 = "Created project " + project3 + "for user " + username.toLowerCase() + "\n";
+        const result3 = "Created project " + project3 + "for user " + username.toLowerCase();
         assert.deepStrictEqual(create3, result3);
 
         const pid = 5;
-        const expectedResult = "No matching pid " + pid + " found in PROJECTS \n";
+        const expectedResult = "No matching pid " + pid + " found in PROJECTS";
         const actualResult = await(deleteProject(pid));
         assert.deepStrictEqual(actualResult, expectedResult)
     });
