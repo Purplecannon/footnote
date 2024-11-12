@@ -47,7 +47,6 @@ jobs:
         echo "DO_SPACES_SECRET=${{ secrets.DO_SPACES_SECRET }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
         echo "DO_SPACES_BUCKET=${{ secrets.DO_SPACES_BUCKET }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
 
-
     - name: "Install dependencies"
       working-directory: '/home/runner/work/footnote/footnote/footnote-backend'
       run: npm ci
