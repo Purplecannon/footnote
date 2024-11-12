@@ -1,6 +1,7 @@
 # Ignore node modules, environment variables
 
 # root directory
+.env
 node_modules/
 */node_modules/
 .DS_Store
