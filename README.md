@@ -29,5 +29,3 @@ For detailed instructions on using Footnote, please refer to the [user manual](.
 # Developer Guidelines
 
 For technical details on Footnote's layout, installation, and testing procedures, please consult the [Developer Guidelines](./DeveloperGuidelines.md).
-
-# Troubleshooting
