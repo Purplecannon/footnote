@@ -3,7 +3,7 @@ require("dotenv").config();
 
 // Initialize the S3 client (configured for DigitalOcean Spaces)
 const s3Client = new S3Client({
-  region: "sfo3",
+  region: "us-east-1",
   endpoint: process.env.DO_SPACES_ENDPOINT,
   credentials: {
     accessKeyId: process.env.DO_SPACES_KEY,
