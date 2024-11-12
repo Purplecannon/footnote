@@ -235,6 +235,7 @@ Testing Update.
 
 - Draft architecture diagram for presentation
 - Restructured documents and added a template for bug reports.
+- Integrated annotation component with backend.
 
 ---
 

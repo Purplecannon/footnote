@@ -7,10 +7,9 @@ import EditIcon from "../../assets/pencil-square.svg";
 
 interface AnnotationItemProps {
   annotation: AnnotationData;
-  onEditSave: (id: number, newText: string) => void;
-  onDeleteClick: (id: number) => void;
+  onEditSave: (id: number, newText: string, projectId: number) => void;
+  onDeleteClick: (id: number, projectId: number) => void;
 }
-
 const AnnotationItem: React.FC<AnnotationItemProps> = ({
   annotation,
   onEditSave,
@@ -21,8 +20,7 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
 
   const handleEditSave = () => {
     if (editText.trim()) {
-      onEditSave(annotation.id, editText);
-      setIsEditing(false);
+      onEditSave(annotation.id, editText, annotation.projectID);
     }
   };
 
@@ -64,7 +62,7 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
           </Button>
           <Button
             variant="link"
-            onClick={() => onDeleteClick(annotation.id)}
+            onClick={() => onDeleteClick(annotation.id, annotation.projectID)}
             className="p-0"
           >
             <img src={TrashIcon} alt="Delete" width={16} height={16} />

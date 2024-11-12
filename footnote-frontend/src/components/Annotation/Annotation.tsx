@@ -2,7 +2,11 @@ import React from "react";
 import { useAnnotations } from "../../hooks/useAnnotations";
 import AnnotationList from "./AnnotationList";
 
-const Annotation: React.FC = () => {
+interface AnnotationProps {
+  projectId: number; // Assuming projectId is passed as a prop
+}
+
+const Annotation: React.FC<AnnotationProps> = ({ projectId }) => {
   const {
     annotations,
     isLoading,
@@ -10,7 +14,7 @@ const Annotation: React.FC = () => {
     addAnnotation,
     editAnnotation,
     deleteAnnotation,
-  } = useAnnotations();
+  } = useAnnotations(projectId); // Pass projectId to useAnnotations
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -24,6 +28,7 @@ const Annotation: React.FC = () => {
         onEditSave={editAnnotation}
         onDeleteClick={deleteAnnotation}
         onAddAnnotation={addAnnotation}
+        projectId={0}
       />
     </>
   );
