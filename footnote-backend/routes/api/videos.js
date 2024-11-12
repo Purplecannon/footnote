@@ -20,6 +20,8 @@ const upload = multer({ storage: multer.memoryStorage() });
  * @param {callback} middleware - Middleware to handle file uploads using multer.
  * @param {callback} callback - Async function that handles the request and response.
  */
+
+// endpoint: http://localhost:3000/videos/upload-video
 router.post("/upload-video", upload.single("video"), async (req, res) => {
   try {
     const file = req.file; // Retrieve the uploaded file from the request
@@ -44,3 +46,4 @@ router.post("/upload-video", upload.single("video"), async (req, res) => {
 });
 
 module.exports = router;
+//export default router
