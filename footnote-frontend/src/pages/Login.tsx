@@ -50,7 +50,7 @@ export const Login: React.FC = () => {
 
       if (response.data === "Login successful for user " + newUser.username.toLowerCase()) {
         console.log(response.data); // Creation successful message
-        navigate('/user-home'); // Redirect to home page
+        navigate('/home'); // Redirect to home page
       } else {
         console.log(response.data); // Error message
       }

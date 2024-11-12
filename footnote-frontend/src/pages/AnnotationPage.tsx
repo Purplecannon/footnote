@@ -4,19 +4,21 @@ import Annotation from "../components/Annotation";
 import ReactPlayer from "react-player";
 import video from "../assets/dog.mp4"; // Default video (can be replaced after upload)
 import { ChangeEvent } from "react";
+import axios from "axios";
 
 const AnnotationPage: React.FC = () => {
+
   const playerRef = useRef<ReactPlayer>(null);
 
-  const [title, setTitle] = useState<string>("Header Placeholder");
-  const [timestamp, setTimestamp] = useState<number>(0); 
+  const [title, setTitle] = useState<string>("Untitled");
+  const [timestamp, setTimestamp] = useState<number>(0);
   const [videoUrl, setVideoUrl] = useState<string>(video); // State to hold the video URL
   const [isVideoUploaded, setIsVideoUploaded] = useState<boolean>(false); // Track if video is uploaded
 
   const handlePause = () => {
     if (playerRef.current) {
       const currentTime = playerRef.current.getCurrentTime();
-      setTimestamp(currentTime); 
+      setTimestamp(currentTime);
       console.log('Video paused at:', timestamp);
     }
   };
@@ -29,8 +31,8 @@ const AnnotationPage: React.FC = () => {
     const file = event.target.files?.[0];
     if (file && file.type === "video/mp4") {
       const fileUrl = URL.createObjectURL(file); // Create a URL for the video file
-      setVideoUrl(fileUrl); 
-      setIsVideoUploaded(true); 
+      setVideoUrl(fileUrl);
+      setIsVideoUploaded(true);
     } else {
       alert("Please upload a valid MP4 file.");
     }
