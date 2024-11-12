@@ -5,6 +5,8 @@ import SignUp from "../pages/SignUp/SignUp";
 import AnnotationPage from "../pages/AnnotationPage";
 // import CreateNewProject from "../pages/CreateNewProject";
 // import HorizontalExample from "../pages/toy";
+// import CreateNewProject from "../pages/CreateNewProject";
+// import HorizontalExample from "../pages/toy";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },

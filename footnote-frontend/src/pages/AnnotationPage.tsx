@@ -4,7 +4,7 @@ import Annotation from "../components/Annotation/Annotation";
 import ReactPlayer from "react-player";
 import video from "../assets/dog.mp4"; // Default video (can be replaced after upload)
 import { ChangeEvent } from "react";
-
+import axios from "axios";
 
 const AnnotationPage: React.FC = () => {
   const playerRef = useRef<ReactPlayer>(null);
