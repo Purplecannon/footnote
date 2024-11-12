@@ -6,6 +6,7 @@ import ProjectCard from "../components/ProjectCard";
 import useProject from "../hooks/useProject";
 import { ProjectData } from "../types/types";
 import mockProjects from "../data/mockProjects";
+import axios from "axios";
 
 const UserHome: React.FC = () => {
   const { projects, loading, error } = useProject();
@@ -19,8 +20,18 @@ const UserHome: React.FC = () => {
     videoURL: "",
   };
 
-  const handleCreateNewProject = () => {
-    navigate("/create-new");
+  const handleCreateNewProject = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/projects/create-project",
+        { withCredentials: true }
+      );
+      const newPid = response.data.pid;
+      console.log(newPid);
+      navigate(`/project/${newPid}`);
+    } catch (error) {
+      console.error("Error creating a new project:", error);
+    }
   };
 
   const shouldShowMockProjects = !loading && (error || projects.length === 0);
@@ -55,7 +66,7 @@ const UserHome: React.FC = () => {
                   <ProjectCard
                     project={project}
                     buttonText="View Project"
-                    onClick={() => navigate(`/projects/${project.id}`)}
+                    onClick={() => navigate(`/project/${project.id}`)}
                   />
                 </div>
               ))
@@ -64,7 +75,7 @@ const UserHome: React.FC = () => {
                   <ProjectCard
                     project={project}
                     buttonText="View Project"
-                    onClick={() => navigate(`/projects/${project.id}`)}
+                    onClick={() => navigate(`/project/${project.id}`)}
                   />
                 </div>
               ))}
