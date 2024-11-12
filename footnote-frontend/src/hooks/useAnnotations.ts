@@ -44,7 +44,7 @@ export const useAnnotations = () => {
     } else {
       try {
         // Only proceed with an API call if we’re using real data
-        const response = await axios.post(`${API_BASE_URL}/annotations`, {
+        const response = await axios.post(`${API_BASE_URL}/annotations/add`, {
           text,
         });
         if (response.data && response.data.id) {
@@ -73,7 +73,10 @@ export const useAnnotations = () => {
     );
 
     try {
-      await axios.put(`${API_BASE_URL}/annotations`, { id, text: newText });
+      await axios.put(`${API_BASE_URL}/annotations/edit`, {
+        id,
+        text: newText,
+      });
     } catch (err) {
       console.error("Error adding annotation:", err);
       setError("Failed to edit annotation.");
@@ -85,7 +88,9 @@ export const useAnnotations = () => {
     setAnnotations((prev) => prev.filter((annotation) => annotation.id !== id));
 
     try {
-      await axios.delete(`${API_BASE_URL}/annotations`, { data: { id } });
+      await axios.delete(`${API_BASE_URL}/annotations/delete`, {
+        data: { id },
+      });
     } catch (err) {
       console.error("Error adding annotation:", err);
       setError("Failed to delete annotation.");
