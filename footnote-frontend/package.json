@@ -17,8 +17,6 @@
     "bootstrap": "^5.3.3",
     "footnote": "file:..",
     "mysql2": "^3.11.3",
-    "bootstrap": "^5.3.3",
-    "footnote": "file:..",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.5",
     "react-dom": "^18.3.1",
