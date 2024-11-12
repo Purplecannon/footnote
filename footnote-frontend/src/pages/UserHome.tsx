@@ -24,7 +24,7 @@ const UserHome: React.FC = () => {
   const handleCreateNewProject = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/projects/create-project",
+        `${API_BASE_URL}/projects/create-project`,
         { withCredentials: true }
       );
       const newPid = response.data.pid;
