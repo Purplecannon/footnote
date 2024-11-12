@@ -37,13 +37,13 @@ First, clone the remote repository by running this command on the command line:
 
 You should now see a local `footnote` directory. From that root `footnote` directory, run the following commands:
 
-`npm run install-all` # to install all dependencies in the `footnote`, `footnote-backend`, and `footnote-frontend` folders
+`npm run install-all`  to install all dependencies in the `footnote`, `footnote-backend`, and `footnote-frontend` folders
 
-`npm run build` # to build the frontend; this command is commonly used for deployment, can skip this command during development
+`npm run build`  to build the frontend; this command is commonly used for deployment, can skip this command during development
 
 For the backend to properly build, you will need to navigate to create a `.env` file in the `footnote-backend directory` and a file named `ca-certificate.crt` in the `footnote-backend/config` directory. Email miahuynh@cs.washington.edu for the content of these files. Once you have the files content, make sure to save, navigate back to the root `footnote` directory, and run:
 
-`npm start` # to start the server (on port 3000) and the app (on port 5173) concurrently
+`npm start`  to start the server (on port 3000) and the app (on port 5173) concurrently
 
 If the build was successful, you should see a build log that looks something like this:
 
