@@ -20,7 +20,7 @@ jobs:
     steps:
     - name: "checkout repository"
       uses: actions/checkout@v4
-      
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
@@ -47,7 +47,7 @@ jobs:
         echo "DO_SPACES_BUCKET=${{ secrets.DO_SPACES_BUCKET }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
 
     - name: "Install dependencies"
-      working-directory: '/home/runner/work/footnote/footnote/footnote-backend'  
+      working-directory: '/home/runner/work/footnote/footnote/footnote-backend'
       run: npm ci
     - name: "Build project"
       working-directory: '/home/runner/work/footnote/footnote/footnote-backend'
