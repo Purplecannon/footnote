@@ -53,14 +53,12 @@ export const SignUp: React.FC = () => {
       const response: AxiosResponse<string> = await axios.post(
         "http://localhost:3000/users/create-user",
         newUser,
-        {
-          withCredentials: true  // to send cookies with the request
-        }
+        { withCredentials: true }  // to send cookies with the request
       );
 
       if (response.data === "Created user " + newUser.username.toLowerCase()) {
         console.log(response.data); // Creation successful message
-        navigate('/user-home'); // Redirect to home page
+        navigate('/home'); // Redirect to home page
       } else {
         console.log(response.data); // Error message
       }
