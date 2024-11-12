@@ -1,5 +1,5 @@
 // Author: Mia
-// Central file for backend handling of user authentication
+// Central file for backend handling of user authentication, includes session handling
 
 const express = require('express');
 const router = express.Router();
@@ -7,6 +7,7 @@ const router = express.Router();
 const conn = require('../../config/database');
 const bcrypt = require('bcrypt');
 
+// endpoint: "http://localhost:3000/users/create-user"
 router.post('/create-user', async(req, res) => {
   const { username, password, confirmPassword } = req.body;
 
@@ -26,6 +27,7 @@ router.post('/create-user', async(req, res) => {
   }
 });
 
+// endpoint: "http://localhost:3000/users/login-user"
 router.post('/login-user', async(req, res) => {
   const { username, password } = req.body;
 
