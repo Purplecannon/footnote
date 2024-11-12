@@ -20,7 +20,7 @@ jobs:
     steps:
     - name: "checkout repository"
       uses: actions/checkout@v4
-      
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
@@ -42,9 +42,14 @@ jobs:
         echo "DB_PORT=${{ secrets.DB_PORT }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
         echo "DB_SSL__CA=config/ca-certificate.crt" >> /home/runner/work/footnote/footnote/footnote-backend/.env
         echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
-   
+        echo "DO_SPACES_ENDPOINT=${{ secrets.DO_SPACES_ENDPOINT }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+        echo "DO_SPACES_KEY=${{ secrets.DO_SPACES_KEY }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+        echo "DO_SPACES_SECRET=${{ secrets.DO_SPACES_SECRET }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+        echo "DO_SPACES_BUCKET=${{ secrets.DO_SPACES_BUCKET }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+
+
     - name: "Install dependencies"
-      working-directory: '/home/runner/work/footnote/footnote/footnote-backend'  
+      working-directory: '/home/runner/work/footnote/footnote/footnote-backend'
       run: npm ci
     - name: "Build project"
       working-directory: '/home/runner/work/footnote/footnote/footnote-backend'
