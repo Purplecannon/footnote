@@ -2,10 +2,11 @@
 
 # root directory
 node_modules/
+*/node_modules/
+.DS_Store
 README-mia.md
 
 # footnote-backend directory
-footnote-backend/node_modules
 footnote-backend/.env
 footnote-backend/config/ca-certificate.crt
 
