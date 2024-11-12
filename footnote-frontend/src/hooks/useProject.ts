@@ -12,9 +12,7 @@ const useProject = () => {
       try {
         const { data } = await axios.get(
           "http://localhost:3000/projects/home",
-          {
-            withCredentials: true,
-          }
+          { withCredentials: true }
         );
         setProjects(Array.isArray(data) ? data : []);
       } catch (err) {
