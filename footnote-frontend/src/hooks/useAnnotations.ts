@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { AnnotationData } from "../types/types";
+import { API_BASE_URL } from "../config";
 import { mockAnnotations } from "../data/mockAnnotations";
 
 export const useAnnotations = () => {
@@ -12,8 +13,8 @@ export const useAnnotations = () => {
     const loadAnnotations = async () => {
       try {
         const response = await axios.get<AnnotationData[]>(
-          "http://localhost:3000/annotations/all"
-        ); // Update with your actual endpoint
+          `${API_BASE_URL}/annotations/all`
+        );
         setAnnotations(
           response.data.length > 0 ? response.data : mockAnnotations
         );

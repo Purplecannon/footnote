@@ -7,6 +7,7 @@ import useProject from "../hooks/useProject";
 import { ProjectData } from "../types/types";
 import mockProjects from "../data/mockProjects";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 const UserHome: React.FC = () => {
   const { projects, loading, error } = useProject();
@@ -23,8 +24,10 @@ const UserHome: React.FC = () => {
   const handleCreateNewProject = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/projects/create-project",
-        { withCredentials: true }
+        `${API_BASE_URL}/projects/create-project`,
+        {
+          withCredentials: true,
+        }
       );
       const newPid = response.data.pid;
       console.log(newPid);
