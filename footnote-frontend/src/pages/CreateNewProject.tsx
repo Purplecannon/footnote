@@ -29,7 +29,7 @@ const CreateNewProject: React.FC = () => {
     try {
       // Update with your actual backend server URL
       const response = await axios.post(
-        "http://localhost:5000/upload-video",
+        "http://localhost:3000/projects/create-project",
         formData,
         {
           headers: {
