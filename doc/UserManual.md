@@ -52,4 +52,5 @@ After reporting the bug, it’s important to follow up so that this is addressed
 
 ## Known bugs
 
-We will be documenting our “known bugs” in our Readme.md file in our github repository. This will include a section called “Troubleshooting,” which will list common bugs and their behavior as well as the exact steps to fix the bug.
+We will be documenting our “known bugs” in our README.md file in our GitHub repository. This will include a section called “Troubleshooting,” which will list common bugs and their behavior as well as the exact steps to fix the bug.
+
