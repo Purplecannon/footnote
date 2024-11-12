@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { ListGroup, Button, FormControl, InputGroup } from "react-bootstrap";
+import { Button, FormControl, InputGroup } from "react-bootstrap";
+import AnnotationBaseItem from "./AnnotationBaseItem";
 import { AnnotationData } from "../../types/types";
 import TrashIcon from "../../assets/trash3-fill.svg";
 import EditIcon from "../../assets/pencil-square.svg";
@@ -18,15 +19,11 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(annotation.text);
 
-  const handleEditStart = () => {
-    setIsEditing(true);
-  };
-
   const handleEditSave = () => {
     if (editText.trim()) {
       onEditSave(annotation.id, editText);
+      setIsEditing(false);
     }
-    setIsEditing(false);
   };
 
   const handleEditCancel = () => {
@@ -35,9 +32,9 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
   };
 
   return (
-    <ListGroup.Item
-      as="li"
-      className="d-flex justify-content-between align-items-center"
+    <AnnotationBaseItem
+      timestamp={annotation.timestamp}
+      onTimestampClick={() => {}}
     >
       {isEditing ? (
         <InputGroup>
@@ -54,17 +51,15 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
           />
         </InputGroup>
       ) : (
-        <div>
-          <Button variant="link" onClick={() => {}} className="p-0">
-            <strong>{annotation.timestamp}</strong>
-          </Button>
-          : {annotation.text}
-        </div>
+        <span>{annotation.text}</span>
       )}
-
       {!isEditing && (
         <div>
-          <Button variant="link" onClick={handleEditStart} className="p-0 mx-2">
+          <Button
+            variant="link"
+            onClick={() => setIsEditing(true)}
+            className="p-0 mx-2"
+          >
             <img src={EditIcon} alt="Edit" width={16} height={16} />
           </Button>
           <Button
@@ -76,7 +71,7 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
           </Button>
         </div>
       )}
-    </ListGroup.Item>
+    </AnnotationBaseItem>
   );
 };
 
