@@ -1,6 +1,6 @@
 import React from "react";
 import { ListGroup } from "react-bootstrap";
-import { AnnotationData } from "../types/types";
+import { AnnotationData } from "../../types/types";
 import AnnotationItem from "./AnnotationItem";
 import NewAnnotationItem from "./NewAnnotationItem";
 

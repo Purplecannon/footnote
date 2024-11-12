@@ -4,7 +4,7 @@ import user_icon from "../assets/person.png";
 import password_icon from "../assets/password.png";
 import axios, { AxiosResponse } from "axios";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 interface ILoginModel {
   username: string;
@@ -45,15 +45,12 @@ export const Login: React.FC = () => {
       const response: AxiosResponse<string> = await axios.post(
         "http://localhost:3000/users/login-user",
         newUser,
-        { withCredentials: true } // to send cookies with the request
+        { withCredentials: true }  // to send cookies with the request
       );
 
-      if (
-        response.data ===
-        "Login successful for user " + newUser.username.toLowerCase()
-      ) {
+      if (response.data === "Login successful for user " + newUser.username.toLowerCase()) {
         console.log(response.data); // Creation successful message
-        navigate("/home"); // Redirect to home page
+        navigate('/home'); // Redirect to home page
       } else {
         console.log(response.data); // Error message
       }
@@ -102,7 +99,7 @@ export const Login: React.FC = () => {
       {message && <div className="error-message">{message}</div>} */}
 
         {/* Conditional "Forgot your password?" link, only in Login mode */}
-        <div className="forgot-password text-center">
+        <div className="forgot-password">
           Don't have an account? <Link to="/signup"> Click Here!</Link>
         </div>
 

@@ -1,23 +1,24 @@
 import React, { useState, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import Annotation from "../components/Annotation";
+import Annotation from "../components/Annotation/Annotation";
 import ReactPlayer from "react-player";
 import video from "../assets/dog.mp4"; // Default video (can be replaced after upload)
 import { ChangeEvent } from "react";
+import axios from "axios";
 
 const AnnotationPage: React.FC = () => {
   const playerRef = useRef<ReactPlayer>(null);
 
-  const [title, setTitle] = useState<string>("Header Placeholder");
-  const [timestamp, setTimestamp] = useState<number>(0); 
+  const [title, setTitle] = useState<string>("Untitled");
+  const [timestamp, setTimestamp] = useState<number>(0);
   const [videoUrl, setVideoUrl] = useState<string>(video); // State to hold the video URL
   const [isVideoUploaded, setIsVideoUploaded] = useState<boolean>(false); // Track if video is uploaded
 
   const handlePause = () => {
     if (playerRef.current) {
       const currentTime = playerRef.current.getCurrentTime();
-      setTimestamp(currentTime); 
-      console.log('Video paused at:', timestamp);
+      setTimestamp(currentTime);
+      console.log("Video paused at:", timestamp);
     }
   };
 
@@ -29,8 +30,8 @@ const AnnotationPage: React.FC = () => {
     const file = event.target.files?.[0];
     if (file && file.type === "video/mp4") {
       const fileUrl = URL.createObjectURL(file); // Create a URL for the video file
-      setVideoUrl(fileUrl); 
-      setIsVideoUploaded(true); 
+      setVideoUrl(fileUrl);
+      setIsVideoUploaded(true);
     } else {
       alert("Please upload a valid MP4 file.");
     }
@@ -45,7 +46,12 @@ const AnnotationPage: React.FC = () => {
             value={title}
             onChange={handleTitleChange}
             className="form-control text-center"
-            style={{ fontSize: "2rem", backgroundColor: "transparent", border: "none", color: "white" }}
+            style={{
+              fontSize: "2rem",
+              backgroundColor: "transparent",
+              border: "none",
+              color: "white",
+            }}
           />
         </Col>
       </Row>
@@ -60,7 +66,7 @@ const AnnotationPage: React.FC = () => {
               backgroundColor: "#f0f0f0", // Grey background
               border: "2px dashed #ccc", // Dashed border for the placeholder
               cursor: "pointer",
-              position: "relative"
+              position: "relative",
             }}
             onClick={() => document.getElementById("file-input")?.click()} // Trigger file input on click
           >
@@ -71,7 +77,7 @@ const AnnotationPage: React.FC = () => {
                   style={{
                     fontSize: "3rem",
                     color: "#888",
-                    position: "absolute"
+                    position: "absolute",
                   }}
                 >
                   +

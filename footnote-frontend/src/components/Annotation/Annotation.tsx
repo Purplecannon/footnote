@@ -1,5 +1,5 @@
 import React from "react";
-import { useAnnotations } from "../hooks/useAnnotations";
+import { useAnnotations } from "../../hooks/useAnnotations";
 import AnnotationList from "./AnnotationList";
 
 const Annotation: React.FC = () => {
