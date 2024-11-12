@@ -29,7 +29,7 @@ describe('Successful project creation', () => {
         assert.deepStrictEqual(createResult, expectedResult);
 
         //TODO: Add video upload (addUrl Tests)
-        
+
     });
 
     it('Handles basic creation and video upload (2)', async () => {
@@ -39,8 +39,8 @@ describe('Successful project creation', () => {
         const expectedResult = "Created project " + projectName + "for user " + username.toLowerCase();
         assert.deepStrictEqual(createResult, expectedResult);
 
-        //TODO: Add video upload (addUrl Tests)     
-        
+        //TODO: Add video upload (addUrl Tests)
+
     });
 });
 
@@ -111,7 +111,7 @@ describe('Create project failure', () => {
     after(async () => {
         await clearTables();
     });
-    
+
     it('Empty username should fail', async() => {
         const projectName = 'Project1';
         const createResult = await(createProject(projectName, ""));
@@ -138,7 +138,7 @@ describe('Create project failure', () => {
         const expectedResult = "Project name is empty";
         assert.deepStrictEqual(createResult, expectedResult);
     });
-    
+
 });
 
 describe('Successful project deletion', () => {
@@ -162,7 +162,7 @@ describe('Successful project deletion', () => {
         const createResult = await(createProject(projectName, username));
         const projectResult = "Created project " + projectName + "for user " + username.toLowerCase();
         assert.deepStrictEqual(createResult, projectResult);
-        
+
         //delete project
         const pid = 1;
         const expectedResult = "Deleted project with pid " + pid;
