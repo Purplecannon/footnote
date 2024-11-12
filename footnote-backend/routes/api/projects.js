@@ -39,7 +39,7 @@ router.get('/create-project', async(req, res) => {
   }
 });
 
-// endpoint: "http://localhost:3000/projects/update-project-name"
+// endpoint: "http://localhost:3000/projects/edit-project-name"
 router.put('/edit-project-name', async(req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send('Unauthorized, please log in');
@@ -243,4 +243,3 @@ module.exports.getProjects = getProjects;
 module.exports.createProject = createProject;
 module.exports.addUrl = addUrl;
 module.exports.deleteProject = deleteProject;
-
