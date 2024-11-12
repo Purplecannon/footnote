@@ -42,7 +42,11 @@ jobs:
         echo "DB_PORT=${{ secrets.DB_PORT }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
         echo "DB_SSL__CA=config/ca-certificate.crt" >> /home/runner/work/footnote/footnote/footnote-backend/.env
         echo "SESSION_SECRET=${{ secrets.SESSION_SECRET }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
-   
+        echo "DO_SPACES_ENDPOINT=${{ secrets.DO_SPACES_ENDPOINT }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+        echo "DO_SPACES_KEY=${{ secrets.DO_SPACES_KEY }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+        echo "DO_SPACES_SECRET=${{ secrets.DO_SPACES_SECRET }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+        echo "DO_SPACES_BUCKET=${{ secrets.DO_SPACES_BUCKET }}" >> /home/runner/work/footnote/footnote/footnote-backend/.env
+
     - name: "Install dependencies"
       working-directory: '/home/runner/work/footnote/footnote/footnote-backend'  
       run: npm ci
