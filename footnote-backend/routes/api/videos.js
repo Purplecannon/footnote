@@ -46,3 +46,4 @@ router.post("/upload-video", upload.single("video"), async (req, res) => {
 });
 
 module.exports = router;
+//export default router
