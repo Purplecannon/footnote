@@ -13,10 +13,14 @@ If you are not currently a collaborator and want to obtain the source code, plea
 ```
 footnote-frontend
 ├── public # Reusable actions, e.g., navigating, opening, creating entities
-├── pages # Website pages
-├── components # Reusable React components across scenes
-├── hooks # Reusable React hooks
-└── routes # Route definitions
+├── src # Source code
+│  ├── pages # Website pages
+│  ├── components # Reusable React components across scenes
+│  ├── hooks # Reusable React hooks
+│  ├── data # Data that we use in components
+│  ├── types # Data structure types
+│  ├── assets # Styling assets such as icons
+│  └── routes # Route definitions
 ```
 
 ### Backend
