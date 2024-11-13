@@ -1,7 +1,7 @@
 export const mockAnnotations = [
   {
-    projectID: 0,
-    id: 0,
+    projectID: -1,
+    id: -1,
     timestamp: "00:00",
     text: "This is an example annotation content",
   },
