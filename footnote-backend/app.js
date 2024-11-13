@@ -67,8 +67,8 @@ async function initialize() {
     await createTables();
     console.log('All tables initialized');
 
-    await clearTables();
-    console.log('All tables cleared');
+    // await clearTables();
+    // console.log('All tables cleared');
   } catch (err) {
     console.log('Error during tables initialization and clearing: ', err);
   }
