@@ -128,3 +128,13 @@ import * as assert from 'assert';
     ```
 
 ## Troubleshooting
+For database connection troubleshooting, refer to Digital Ocean Cluster documentation:
+* [Access denied](https://docs.digitalocean.com/support/when-connecting-to-mysql-i-get-an-access-denied-error/)
+* [Unsupported auth mode](https://docs.digitalocean.com/support/when-connecting-to-mysql-i-get-an-authentication-error/)
+* [Connection timed out](https://docs.digitalocean.com/support/when-connecting-to-my-database-i-get-a-connection-timed-out-error/)
+* [Unknown host](https://docs.digitalocean.com/support/when-connecting-to-mysql-i-get-an-unknown-host-error/)
+* [Lost connection during query](https://docs.digitalocean.com/support/when-issuing-a-query-on-mysql-i-get-a-lost-connection-error/)
+* [Unknown database](https://docs.digitalocean.com/support/when-connecting-to-mysql-i-get-an-unknown-database-error/)
+* [Host blocked by too many connection errors](https://docs.digitalocean.com/support/when-connecting-to-mysql-i-get-a-host-is-blocked-error/)
+
+For any issues that require admin access, please email <miahuynh@cs.washington.edu>.
