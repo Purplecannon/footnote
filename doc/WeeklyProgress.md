@@ -33,6 +33,12 @@ Requirements & Team Policies. Mainly an overview of the project and user-cases.
 - Wrote user-cases. Discussed with team for feedback.
 - Researched Figma app for initial frontend design.
 
+#### Lauren Y.
+- Wrote and discussed user-cases
+- Did research on video components and displays using video.js
+- Discussed database implementation with Mia about project and annotation fields
+- Drew out our UI for home page and the main project page
+
 ---
 
 ## Week 3
@@ -56,6 +62,10 @@ Software Architecture Update.
 #### Elainie K.
 - Took a break from research/implementation due to personal reasons
 - Communicated clearly with team and re-assigned roles temporarily
+
+#### Lauren Y.
+- Updated Schedule and divided schedule by person
+- Further clarified project page UI and button orders
 
 ---
 
@@ -90,10 +100,11 @@ Software Design, Risk Assessment, Schedule update.
 
 #### Lauren Yarrington
 
-- Implemented createAnnotation() that takes project ID and timestamp
-- Implemented editAnnotation() that takes project ID and timestamp
-- Implemented saveAnnotation() that takes project ID, note, and timestamp
-- Implemented deleteAnnotation() that takes project ID and timestamp
+- Created annotation branch to work on annotation implementation
+- Implemented createAnnotation(), editAnnotation(), saveAnnotation(), and deleteAnnotation()
+- Wrote a Risk assessment for the doc
+- Wrote Coding Guidelines, determining which company’s guidelines to follow that best suite our needs
+- Wrote our test plans for Usability testing 
 
 #### Alicia Z.
 
@@ -133,6 +144,11 @@ Testing Update.
 - Stayed up to date with current implementation
 
 #### Lauren Yarrington
+- Wrote the unit tests for the user creation and logging in 
+- Learned how to use mocha for our testing purposes
+- Implemented createUser() tests and loginUser() tests
+- Used the clearTable function for our tests but needs to be removed for final testing to not destroy user data
+- Updated the variable for username, password, and confirm password for our tests
 
 #### Alicia Z.
 
@@ -174,6 +190,10 @@ Testing Update.
 - Integrated command line to lint check all files
 
 #### Lauren Yarrington
+- Wrote the How to use the software portion of the User Documentation markdown file
+- Switched to frontend side to work with Kirupa on editing the video component on the project page
+- Worked on learning React to better understand how to implement the video component
+- Sent a pull request to main for unit testing
 
 #### Alicia Z.
 
@@ -216,6 +236,12 @@ Testing Update.
 - Revising testing commands for frontend/backend testing.
 
 #### Lauren Yarrington
+- Editing a project page front end with Kirupa to implement the video player component
+- Testing video file types that are compatible with our code
+- Integrate back and front end with Kirupa and Mia
+- Ensured we had a full test suite for each - login, signup, homepage, video upload with Cat
+- Added issue to github issues page
+- Working to add a video upload post feature for the Annotation page
 
 #### Alicia Z.
 
