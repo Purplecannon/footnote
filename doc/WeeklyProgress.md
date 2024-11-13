@@ -178,12 +178,12 @@ Testing Update.
 
 - Worked on navigation: making sure that the Sign in page and Login pages navigated to the home page successfully.
 - Started working on the page layout
-  - Worked on making the title and input format so that users could edit it 
+  - Worked on making the title and input format so that users could edit it
 - Worked with Lauren to conduct research on video players and find the one that was most compatible with our existing code
-- Researched react-player and replaced the video placeholder with an actual video  
+- Researched react-player and replaced the video placeholder with an actual video
   - turned on controls so that the video player had play, pause, speed adjustment, volume adjustment, and scrubber capabilities
-- Kept track of the timestamp (# of seconds played) when a user paused the video as well as the title. 
-- Created the video upload functionality so users could directly upload mp4 files to our website. 
+- Kept track of the timestamp (# of seconds played) when a user paused the video as well as the title.
+- Created the video upload functionality so users could directly upload mp4 files to our website.
 
 #### Mia Huynh
 
