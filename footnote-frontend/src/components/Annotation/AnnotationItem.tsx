@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { ListGroup, Button, FormControl, InputGroup } from "react-bootstrap";
 import { AnnotationData } from "../../types/types";
-import TrashIcon from "../assets/trash3-fill.svg";
-import EditIcon from "../assets/pencil-square.svg";
+import TrashIcon from "../../assets/trash3-fill.svg";
+import EditIcon from "../../assets/pencil-square.svg";
 
 interface AnnotationItemProps {
   annotation: AnnotationData;

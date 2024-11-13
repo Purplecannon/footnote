@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { ProjectData } from "../types/types";
+import { API_BASE_URL } from "../config";
 
 const useProject = () => {
   const [projects, setProjects] = useState<ProjectData[]>([]);
