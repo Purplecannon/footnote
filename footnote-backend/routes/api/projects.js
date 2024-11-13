@@ -40,7 +40,7 @@ router.get('/create-project', async(req, res) => {
 });
 
 // endpoint: "http://localhost:3000/projects/edit-project-name"
-router.put('/edit-project-name', async(req, res) => {
+router.put("/edit-project-name", async(req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send('Unauthorized, please log in');
   }
@@ -55,7 +55,8 @@ router.put('/edit-project-name', async(req, res) => {
   try {
     // Check if the user owns the project
     const projectCheckSql = 'SELECT username FROM PROJECTS WHERE pid = ?';
-    const [project] = await conn.promise().query(projectCheckSql, [pid]);
+    const [rows] = await conn.promise().query(projectCheckSql, [pid]);
+    const project = rows[0];
 
     if (!project || project.username !== req.session.username) {
       return res.status(403).send('Forbidden, you are not the owner of this project');
