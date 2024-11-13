@@ -29,6 +29,18 @@ Requirements & Team Policies. Mainly an overview of the project and user-cases.
 - Did research on frontend tools (HTML/CSS/React) as well as Figma
 - Started working on screens on Figma for Sign in, Login, and the Project page (video + annotations)
 
+#### Elainie K.
+
+- Wrote user-cases. Discussed with team for feedback.
+- Researched Figma app for initial frontend design.
+
+#### Lauren Y.
+
+- Wrote and discussed user-cases
+- Did research on video components and displays using video.js
+- Discussed database implementation with Mia about project and annotation fields
+- Drew out our UI for home page and the main project page
+
 ---
 
 ## Week 3
@@ -48,6 +60,16 @@ Software Architecture Update.
 - Finished up Figma screens and showed my work to the team.
 - Created HTML/CSS for the Sign in and Login Screens
 - Showed team during weekly meeting and gathered feedback on the screens (getting rid of forgot password)
+
+#### Elainie K.
+
+- Took a break from research/implementation due to personal reasons
+- Communicated clearly with team and re-assigned roles temporarily
+
+#### Lauren Y.
+
+- Updated Schedule and divided schedule by person
+- Further clarified project page UI and button orders
 
 ---
 
@@ -79,12 +101,15 @@ Software Design, Risk Assessment, Schedule update.
 
 #### Elainie Kassa
 
+- Stayed up to date with current implementation
+
 #### Lauren Yarrington
 
-- Implemented createAnnotation() that takes project ID and timestamp
-- Implemented editAnnotation() that takes project ID and timestamp
-- Implemented saveAnnotation() that takes project ID, note, and timestamp
-- Implemented deleteAnnotation() that takes project ID and timestamp
+- Created annotation branch to work on annotation implementation
+- Implemented createAnnotation(), editAnnotation(), saveAnnotation(), and deleteAnnotation()
+- Wrote a Risk assessment for the doc
+- Wrote Coding Guidelines, determining which company’s guidelines to follow that best suite our needs
+- Wrote our test plans for Usability testing
 
 #### Alicia Z.
 
@@ -122,7 +147,15 @@ Testing Update.
 
 #### Elainie Kassa
 
+- Stayed up to date with current implementation
+
 #### Lauren Yarrington
+
+- Wrote the unit tests for the user creation and logging in
+- Learned how to use mocha for our testing purposes
+- Implemented createUser() tests and loginUser() tests
+- Used the clearTable function for our tests but needs to be removed for final testing to not destroy user data
+- Updated the variable for username, password, and confirm password for our tests
 
 #### Alicia Z.
 
@@ -161,10 +194,19 @@ Testing Update.
 
 #### Elainie Kassa
 
+- Designed linting based on Airbnb style guide
+- Integrated command line to lint check all files
+
 #### Lauren Yarrington
+
+- Wrote the How to use the software portion of the User Documentation markdown file
+- Switched to frontend side to work with Kirupa on editing the video component on the project page
+- Worked on learning React to better understand how to implement the video component
+- Sent a pull request to main for unit testing
 
 #### Alicia Z.
 
+- Improved userHome page, by adding mocking projects while backend is offline.
 - Wrote my assignment part of the documentation.
 - Restructured the frontend with team.
 
@@ -201,7 +243,16 @@ Testing Update.
 
 #### Elainie Kassa
 
+- Revising testing commands for frontend/backend testing.
+
 #### Lauren Yarrington
+
+- Editing a project page front end with Kirupa to implement the video player component
+- Testing video file types that are compatible with our code
+- Integrate back and front end with Kirupa and Mia
+- Ensured we had a full test suite for each - login, signup, homepage, video upload with Cat
+- Added issue to github issues page
+- Working to add a video upload post feature for the Annotation page
 
 #### Alicia Z.
 
@@ -214,6 +265,10 @@ Testing Update.
 - Started implementation of Annotation component
   - Drafted Annotation component that has a few other supporting files.
   - Created toy page for a demo of the annotation component
+- Draft architecture diagram for presentation
+- Add my stuff in the bug report and for github issue.
+- Integrated Annotation component with backend.
+- Adding mocking data to display annotation component even if the backend is not present.
 
 ---
 

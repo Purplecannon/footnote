@@ -1,9 +1,11 @@
 import React, { useState, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import Annotation from "../components/Annotation/Annotation";
 import ReactPlayer from "react-player";
 import video from "../assets/dog.mp4"; // Default video (can be replaced after upload)
 import { ChangeEvent } from "react";
+import axios from "axios";
 
 const AnnotationPage: React.FC = () => {
   const playerRef = useRef<ReactPlayer>(null);
@@ -12,6 +14,10 @@ const AnnotationPage: React.FC = () => {
   const [timestamp, setTimestamp] = useState<number>(0);
   const [videoUrl, setVideoUrl] = useState<string>(video); // State to hold the video URL
   const [isVideoUploaded, setIsVideoUploaded] = useState<boolean>(false); // Track if video is uploaded
+
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null); // debouncing the POST request
+
+  let { pid } = useParams<"pid">();
 
   const handlePause = () => {
     if (playerRef.current) {
@@ -23,6 +29,32 @@ const AnnotationPage: React.FC = () => {
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
+
+    // Clear the previous timeout if any
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+
+    // Set a new timeout to update the debounced title after 1000ms
+    debounceTimeout.current = setTimeout(() => {
+      if (pid) {
+        updateProjectName(event.target.value, pid); // Use projectId to update the project title
+      }
+    }, 1000);
+  };
+
+  // Send request to backend to update project name
+  const updateProjectName = async (newTitle: string, pid: string) => {
+    try {
+      console.log(newTitle);
+      await axios.put(
+        `http://localhost:3000/projects/edit-project-name`,
+        { projectName: newTitle, pid: pid },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.error("Error updating project name: ", error);
+    }
   };
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -104,7 +136,7 @@ const AnnotationPage: React.FC = () => {
             style={{ display: "none" }} // Hide the file input element
           />
         </Col>
-            // TODO: the projectID should be retreived from the project page
+        // TODO: the projectID should be retreived from the project page
         <Col md={6}>
           <div className="w-100">
             <Annotation projectID={0} />

@@ -30,10 +30,7 @@ const AnnotationPage: React.FC = () => {
         {/* Right Half - Annotation Component */}
         <Col md={6} className="d-flex">
           <div className="w-100">
-            // TODO: the project page need to have a field of project ID, and we
-            will pass that id to annotation component, so we are pulling up the
-            cooresponding annotation component
-            <Annotation projectID={0} />
+            <Annotation />
           </div>
         </Col>
       </Row>

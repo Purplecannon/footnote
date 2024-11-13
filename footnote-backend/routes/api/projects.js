@@ -55,7 +55,8 @@ router.put("/edit-project-name", async (req, res) => {
   try {
     // Check if the user owns the project
     const projectCheckSql = "SELECT username FROM PROJECTS WHERE pid = ?";
-    const [project] = await conn.promise().query(projectCheckSql, [pid]);
+    const [rows] = await conn.promise().query(projectCheckSql, [pid]);
+    const project = rows[0];
 
     if (!project || project.username !== req.session.username) {
       return res
