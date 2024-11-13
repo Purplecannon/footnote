@@ -29,6 +29,10 @@ Requirements & Team Policies. Mainly an overview of the project and user-cases.
 - Did research on frontend tools (HTML/CSS/React) as well as Figma
 - Started working on screens on Figma for Sign in, Login, and the Project page (video + annotations)
 
+#### Elainie K.
+- Wrote user-cases. Discussed with team for feedback.
+- Researched Figma app for initial frontend design.
+
 ---
 
 ## Week 3
@@ -48,6 +52,10 @@ Software Architecture Update.
 - Finished up Figma screens and showed my work to the team.
 - Created HTML/CSS for the Sign in and Login Screens
 - Showed team during weekly meeting and gathered feedback on the screens (getting rid of forgot password)
+
+#### Elainie K.
+- Took a break from research/implementation due to personal reasons
+- Communicated clearly with team and re-assigned roles temporarily
 
 ---
 
@@ -78,6 +86,7 @@ Software Design, Risk Assessment, Schedule update.
 - Started researching Javascript-specific testing frameworks
 
 #### Elainie Kassa
+- Stayed up to date with current implementation
 
 #### Lauren Yarrington
 
@@ -121,6 +130,7 @@ Testing Update.
 #### Catherine Jin
 
 #### Elainie Kassa
+- Stayed up to date with current implementation
 
 #### Lauren Yarrington
 
@@ -160,6 +170,8 @@ Testing Update.
 #### Catherine Jin
 
 #### Elainie Kassa
+- Designed linting based on Airbnb style guide
+- Integrated command line to lint check all files
 
 #### Lauren Yarrington
 
@@ -201,6 +213,7 @@ Testing Update.
 #### Catherine Jin
 
 #### Elainie Kassa
+- Revising testing commands for frontend/backend testing.
 
 #### Lauren Yarrington
 
