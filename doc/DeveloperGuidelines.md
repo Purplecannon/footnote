@@ -96,11 +96,22 @@ npm test
 
 ## How to add new tests
 
-Navigate to the `test` directory - either in footnote-backend or footnote-frontend - and write tests using [Mocha](https://mochajs.org/) and the default node `assert` library, either by adding to an existing file with the `.mjs` extension, or by creating a new one. For a new file, import the assertion library:
+Navigate to the `test` directory - either in footnote-backend or footnote-frontend - and write tests using [Mocha](https://mochajs.org/) and the default node [assert](https://nodejs.org/api/assert.html) library, either by adding to an existing file with the `.mjs` extension, or by creating a new one. For a new file, import the assertion library:
 
 ```
 import * as assert from 'assert';
 ```
+If your tests involve testing and making `http` requests, import the [Supertest](https://www.npmjs.com/package/supertest) library and the [express](https://expressjs.com/) library, and import and set up the router from the `.js` file to be tested:
+```
+import request from 'supertest';
+import express from 'express';
+import router from '../routes/api/app.js'; //app.js can be replaced with the relevant .js file that is meant to make the http requests
+
+const app = express();
+app.use('/', router);
+```
+
+If the new test you add involves testing a file upload (ex: Testing the code for uploading videos) and you need to upload fake files, navigate to the directory within the `test` directory titled `test-<insert-file-type-here>` and add the file within the new directory (ex: the `test-videos` directory). If no suitable directory exists, create one within the `test` directory. 
 
 ## How to build a release of the software
 
