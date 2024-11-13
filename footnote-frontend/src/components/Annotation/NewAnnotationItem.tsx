@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ListGroup, Button, InputGroup, FormControl } from "react-bootstrap";
-import CheckIcon from "../assets/check-square-fill.svg";
+import CheckIcon from "../../assets/check-square-fill.svg";
 
 interface NewAnnotationItemProps {
   onAddAnnotation: (text: string) => void;

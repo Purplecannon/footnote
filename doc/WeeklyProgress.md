@@ -30,10 +30,12 @@ Requirements & Team Policies. Mainly an overview of the project and user-cases.
 - Started working on screens on Figma for Sign in, Login, and the Project page (video + annotations)
 
 #### Elainie K.
+
 - Wrote user-cases. Discussed with team for feedback.
 - Researched Figma app for initial frontend design.
 
 #### Lauren Y.
+
 - Wrote and discussed user-cases
 - Did research on video components and displays using video.js
 - Discussed database implementation with Mia about project and annotation fields
@@ -60,10 +62,12 @@ Software Architecture Update.
 - Showed team during weekly meeting and gathered feedback on the screens (getting rid of forgot password)
 
 #### Elainie K.
+
 - Took a break from research/implementation due to personal reasons
 - Communicated clearly with team and re-assigned roles temporarily
 
 #### Lauren Y.
+
 - Updated Schedule and divided schedule by person
 - Further clarified project page UI and button orders
 
@@ -96,6 +100,7 @@ Software Design, Risk Assessment, Schedule update.
 - Started researching Javascript-specific testing frameworks
 
 #### Elainie Kassa
+
 - Stayed up to date with current implementation
 
 #### Lauren Yarrington
@@ -104,7 +109,7 @@ Software Design, Risk Assessment, Schedule update.
 - Implemented createAnnotation(), editAnnotation(), saveAnnotation(), and deleteAnnotation()
 - Wrote a Risk assessment for the doc
 - Wrote Coding Guidelines, determining which company’s guidelines to follow that best suite our needs
-- Wrote our test plans for Usability testing 
+- Wrote our test plans for Usability testing
 
 #### Alicia Z.
 
@@ -141,10 +146,12 @@ Testing Update.
 #### Catherine Jin
 
 #### Elainie Kassa
+
 - Stayed up to date with current implementation
 
 #### Lauren Yarrington
-- Wrote the unit tests for the user creation and logging in 
+
+- Wrote the unit tests for the user creation and logging in
 - Learned how to use mocha for our testing purposes
 - Implemented createUser() tests and loginUser() tests
 - Used the clearTable function for our tests but needs to be removed for final testing to not destroy user data
@@ -186,10 +193,12 @@ Testing Update.
 #### Catherine Jin
 
 #### Elainie Kassa
+
 - Designed linting based on Airbnb style guide
 - Integrated command line to lint check all files
 
 #### Lauren Yarrington
+
 - Wrote the How to use the software portion of the User Documentation markdown file
 - Switched to frontend side to work with Kirupa on editing the video component on the project page
 - Worked on learning React to better understand how to implement the video component
@@ -197,6 +206,7 @@ Testing Update.
 
 #### Alicia Z.
 
+- Improved userHome page, by adding mocking projects while backend is offline.
 - Improved userHome page, by adding mocking projects while backend is offline.
 - Wrote my assignment part of the documentation.
 - Restructured the frontend with team.
@@ -233,9 +243,11 @@ Testing Update.
 #### Catherine Jin
 
 #### Elainie Kassa
+
 - Revising testing commands for frontend/backend testing.
 
 #### Lauren Yarrington
+
 - Editing a project page front end with Kirupa to implement the video player component
 - Testing video file types that are compatible with our code
 - Integrate back and front end with Kirupa and Mia
@@ -258,6 +270,9 @@ Testing Update.
 - Add my stuff in the bug report and for github issue.
 - Integrated Annotation component with backend.
 - Adding mocking data to display annotation component even if the backend is not present.
+- Add my stuff in the bug report and for github issue.
+- Integrated Annotation component with backend.
+- Adding mocking data to display annotation component even if the backend is not present.
 
 ---
 
@@ -276,6 +291,10 @@ Testing Update.
 #### Lauren Yarrington
 
 #### Alicia Z.
+
+- Draft architecture diagram for presentation
+- Restructured documents and added a template for bug reports.
+- Integrated annotation component with backend.
 
 ---
 
