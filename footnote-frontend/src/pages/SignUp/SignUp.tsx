@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-import user_icon from "../assets/person.png";
-import password_icon from "../assets/password.png";
+import user_icon from "../../assets/person.png";
+import password_icon from "../../assets/password.png";
 import axios, { AxiosResponse } from "axios";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 interface IUserModel {
   username: string;
@@ -53,12 +53,12 @@ export const SignUp: React.FC = () => {
       const response: AxiosResponse<string> = await axios.post(
         "http://localhost:3000/users/create-user",
         newUser,
-        { withCredentials: true }  // to send cookies with the request
+        { withCredentials: true } // to send cookies with the request
       );
 
       if (response.data === "Created user " + newUser.username.toLowerCase()) {
         console.log(response.data); // Creation successful message
-        navigate('/home'); // Redirect to home page
+        navigate("/home"); // Redirect to home page
       } else {
         console.log(response.data); // Error message
       }
@@ -114,7 +114,7 @@ export const SignUp: React.FC = () => {
         </div>
 
         {/* Conditional "Forgot your password?" link, only in Login mode */}
-        <div className="forgot-password">
+        <div className="forgot-password text-center">
           Already have an account? <Link to="/"> Click Here!</Link>
         </div>
 
