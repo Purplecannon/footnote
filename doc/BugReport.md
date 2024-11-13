@@ -2,6 +2,8 @@
 
 ## Known Bugs
 
+A list of known bugs can be found in [Known Bugs](./KnownBugs.md).
+
 ## Report New Bug
 
 Please email the bug report to miahuynh@cs.washington.edu
