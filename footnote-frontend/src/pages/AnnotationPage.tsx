@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from "react-bootstrap";
 import Annotation from "../components/Annotation";
 import ReactPlayer from "react-player";
@@ -15,6 +16,12 @@ const AnnotationPage: React.FC = () => {
   const [videoUrl, setVideoUrl] = useState<string>(video); // State to hold the video URL
   const [isVideoUploaded, setIsVideoUploaded] = useState<boolean>(false); // Track if video is uploaded
 
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);  // debouncing the POST request
+
+
+  let { pid } = useParams<"pid">();
+
+
   const handlePause = () => {
     if (playerRef.current) {
       const currentTime = playerRef.current.getCurrentTime();
@@ -25,6 +32,34 @@ const AnnotationPage: React.FC = () => {
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
+
+        // Clear the previous timeout if any
+        if (debounceTimeout.current) {
+          clearTimeout(debounceTimeout.current);
+        }
+    
+        // Set a new timeout to update the debounced title after 1000ms
+        debounceTimeout.current = setTimeout(() => {
+          if (pid) {
+            updateProjectName(event.target.value, pid); // Use projectId to update the project title
+          }
+        }, 1000);
+      };
+    
+      // Send request to backend to update project name
+      const updateProjectName = async (newTitle: string, pid: string) => {
+        try {
+          console.log(newTitle);
+          await axios.put(
+            `http://localhost:3000/projects/update-project-name/${pid}`,
+            { projectName: newTitle,
+              pid: pid
+            },
+            { withCredentials: true }
+          );
+        } catch (error) {
+          console.error("Error updating project name: ", error);
+        }
   };
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
