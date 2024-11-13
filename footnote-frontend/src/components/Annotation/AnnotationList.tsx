@@ -5,10 +5,10 @@ import NewAnnotationItem from "./NewAnnotationItem";
 
 interface AnnotationListProps {
   annotations: AnnotationData[];
-  onEditSave: (id: number, newText: string, projectId: number) => void;
-  onDeleteClick: (id: number, projectId: number) => void;
-  onAddAnnotation: (newText: string, projectId: number) => void;
-  projectId: number;
+  onEditSave: (id: number, newText: string, projectID: number) => void;
+  onDeleteClick: (id: number, projectID: number) => void;
+  onAddAnnotation: (newText: string, projectID: number) => void;
+  projectID: number;
 }
 
 const AnnotationList: React.FC<AnnotationListProps> = ({
@@ -16,7 +16,7 @@ const AnnotationList: React.FC<AnnotationListProps> = ({
   onEditSave,
   onDeleteClick,
   onAddAnnotation,
-  projectId,
+  projectID,
 }) => {
   return (
     <ul>
@@ -24,12 +24,12 @@ const AnnotationList: React.FC<AnnotationListProps> = ({
         <AnnotationItem
           key={annotation.id}
           annotation={annotation}
-          onEditSave={(id, newText) => onEditSave(id, newText, projectId)}
-          onDeleteClick={(id) => onDeleteClick(id, projectId)}
+          onEditSave={(id, newText) => onEditSave(id, newText, projectID)}
+          onDeleteClick={(id) => onDeleteClick(id, projectID)}
         />
       ))}
       <NewAnnotationItem
-        onAddAnnotation={(newText) => onAddAnnotation(newText, projectId)}
+        onAddAnnotation={(newText) => onAddAnnotation(newText, projectID)}
       />
     </ul>
   );

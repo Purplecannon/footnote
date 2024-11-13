@@ -104,10 +104,10 @@ const AnnotationPage: React.FC = () => {
             style={{ display: "none" }} // Hide the file input element
           />
         </Col>
-
+            // TODO: the projectID should be retreived from the project page
         <Col md={6}>
           <div className="w-100">
-            <Annotation />
+            <Annotation projectID={0} />
           </div>
         </Col>
       </Row>
