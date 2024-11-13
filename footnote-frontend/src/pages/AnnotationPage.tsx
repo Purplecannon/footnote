@@ -37,7 +37,7 @@ const AnnotationPage: React.FC = () => {
         if (debounceTimeout.current) {
           clearTimeout(debounceTimeout.current);
         }
-    
+
         // Set a new timeout to update the debounced title after 1000ms
         debounceTimeout.current = setTimeout(() => {
           if (pid) {
@@ -45,13 +45,13 @@ const AnnotationPage: React.FC = () => {
           }
         }, 1000);
       };
-    
+
       // Send request to backend to update project name
       const updateProjectName = async (newTitle: string, pid: string) => {
         try {
           console.log(newTitle);
           await axios.put(
-            `http://localhost:3000/projects/update-project-name/${pid}`,
+            `http://localhost:3000/projects/edit-project-name`,
             { projectName: newTitle,
               pid: pid
             },
