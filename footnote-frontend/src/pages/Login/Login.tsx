@@ -55,7 +55,7 @@ export const Login: React.FC = () => {
         console.log(response.data); // Creation successful message
         navigate("/home"); // Redirect to home page
       } else {
-        console.log(response.data); // Error message
+        alert(response.data); // Error message
       }
     } catch (err) {
       console.log("Error on login request: ", err);
