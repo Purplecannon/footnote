@@ -7,6 +7,7 @@ import useProject from "../hooks/useProject";
 import { ProjectData } from "../types/types";
 import mockProjects from "../data/mockProjects";
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 const UserHome: React.FC = () => {
   const { projects, loading, error } = useProject();
@@ -16,14 +17,14 @@ const UserHome: React.FC = () => {
     id: 0,
     title: "Create a New Project",
     thumbnailURL:
-      "https://cdn.discordapp.com/attachments/1264335829665448039/1300599343371391018/file-hu0jIFPQTu4pGA4RKhIGQqCY.png?ex=67216d07&is=67201b87&hm=b3503a7e15a556693dce560d57da88ea67e125791855aa812570a7bc96bca2c4&",
+      "https://cdn.discordapp.com/attachments/1264335829665448039/1306489603632398408/file-hu0jIFPQTu4pGA4RKhIGQqCY.png?ex=6736dac2&is=67358942&hm=5d6e5dc2f35129437af8b401553b68e6e4a4183027e91fe80c4b76d6563f8521&",
     videoURL: "",
   };
 
   const handleCreateNewProject = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/projects/create-project",
+        `${API_BASE_URL}/projects/create-project`,
         { withCredentials: true }
       );
       const newPid = response.data.pid;
