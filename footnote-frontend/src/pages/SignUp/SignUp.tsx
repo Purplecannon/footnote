@@ -123,7 +123,7 @@ export const SignUp: React.FC = () => {
           {/* Button to switch to Sign Up mode */}
 
           {/* Button to switch to Login mode */}
-          <button>
+          <button className="submit">
             <div
               className={"submit"}
               role="button"

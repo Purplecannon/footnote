@@ -281,6 +281,14 @@ Testing Update.
 ## Assignment
 
 #### Kirupa Gunaseelan
+- Updated the project page header (title), added video player using react-player, incorporated all controls (play, pause, scrubber, etc), added video upload functionality
+- Added function to pass project name and pid to backend #44
+- Used useParam to keep track of the pid (project id)
+- Created a handleTitleChange that updated the title after the user stopped typing for 1 second
+- Created an async function to pass the project title and project id to the backend
+- Fixed Sign Up button so it was consistent with the Log In button 
+- Fixed alignment of the forgot password text 
+
 
 #### Mia Huynh
 
