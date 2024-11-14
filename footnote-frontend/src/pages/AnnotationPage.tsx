@@ -63,8 +63,6 @@ const AnnotationPage: React.FC = () => {
       const fileUrl = URL.createObjectURL(file); // Create a URL for the video file
       setVideoUrl(fileUrl);
       setIsVideoUploaded(true);
-      setVideoUrl(fileUrl);
-      setIsVideoUploaded(true);
     } else {
       alert("Please upload a valid MP4 file.");
     }
@@ -89,7 +87,7 @@ const AnnotationPage: React.FC = () => {
         </Col>
       </Row>
 
-      <Row className="mb-3">
+      <Row className="mb-1">
         <Col md={6}>
           <div
             className="d-flex justify-content-center align-items-center"
@@ -138,7 +136,6 @@ const AnnotationPage: React.FC = () => {
             style={{ display: "none" }} // Hide the file input element
           />
         </Col>
-        // TODO: the projectID should be retreived from the project page
         <Col md={6}>
           <div className="w-100">
             <Annotation projectID={0} />
