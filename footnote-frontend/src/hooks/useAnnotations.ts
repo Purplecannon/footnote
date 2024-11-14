@@ -15,11 +15,14 @@ export const useAnnotations = (projectID: number) => {
     const loadAnnotations = async () => {
       try {
         const response = await axios.get<AnnotationData[]>(
-          "http://localhost:3000/annotations/all"
-        ); // Update with your actual endpoint
-        setAnnotations(
-          response.data.length > 0 ? response.data : mockAnnotations
+          `${API_BASE_URL}/annotations/all?projectID=${projectID}`
         );
+        if (response.data.length > 0) {
+          setAnnotations(response.data);
+          setIsUsingMockData(false); // We’re using real data
+        } else {
+          setAnnotations(mockAnnotations);
+        }
       } catch (err) {
         console.error("Error loading annotations:", err);
         setAnnotations(mockAnnotations); // Fallback to mock data on error
