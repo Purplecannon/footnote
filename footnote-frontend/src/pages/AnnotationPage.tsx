@@ -135,10 +135,9 @@ const AnnotationPage: React.FC = () => {
             type="file"
             accept="video/mp4"
             onChange={handleFileUpload}
-            style={{ display: "none" }} // Hide the file input element
+            style={{ display: "none" }} // Hide the file input element, // TODO: the projectID should be retreived from the project page
           />
         </Col>
-        // TODO: the projectID should be retreived from the project page
         <Col md={6}>
           <div className="w-100">
             <Annotation projectID={0} />
