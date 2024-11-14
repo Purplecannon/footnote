@@ -13,6 +13,7 @@ Group hasn't been formed
 ## Assignment: Project pitch
 
 Initial meeting with team:
+
 - get to know each other and the project's main goals
 - discussed personal dev strengths
 
@@ -56,6 +57,7 @@ Initial meeting with team:
 - Showed team during weekly meeting and gathered feedback on the screens (getting rid of forgot password)
 
 #### Mia Huynh
+
 - Created the public GitHub repository, later changed to private, added members and TA
 - Purchased the footnote.us domain for team on GoDaddy
 - Delegated tasks for proposal and requirements assignment
@@ -79,7 +81,6 @@ Initial meeting with team:
 - Team decided to switch to javascript for backend. So, I deleted all spring stuff and generated express js.
 - Implemented video uploading logic in the backend and tested successfully with postman.
 - Wrote software architecture for software architecture. Shared with team and asked for their feedback.
-
 
 ---
 
@@ -308,10 +309,10 @@ Initial meeting with team:
   - the homepage actually shows a user's existing project
   - clicking on each project from home page routes to the corresponding project page
   - clicking on "create new project" button fetches a new project id from backend then routes to the corresponding project page
+- Fixed backend so that an uploaded video's URL is updated in the database for the given project id
 - Revised GitHub Secrets and GitHub Actions for DigitalOcean Spaces connection
 - Improved documentation formatting and content based on TA's feedback (README, UserManual, DeveloperGuidelines)
-- Worked on presentation slides (intro, demo, reflection, q&a) and script
-- Added video element enhancement and clearing tables bug to GitHub Issues
+- Worked on demo slides and script
 
 #### Catherine Jin
 
