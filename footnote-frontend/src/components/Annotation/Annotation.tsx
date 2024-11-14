@@ -2,25 +2,19 @@ import React from "react";
 import { useAnnotations } from "../../hooks/useAnnotations";
 import AnnotationList from "./AnnotationList";
 
-const Annotation: React.FC = () => {
-  const { annotations, setAnnotations, isLoading, error } = useAnnotations();
+interface AnnotationProps {
+  projectID: number;
+}
 
-  const handleEditSave = (id: number, newText: string) => {
-    setAnnotations((prev) =>
-      prev.map((annotation) =>
-        annotation.id === id ? { ...annotation, text: newText } : annotation
-      )
-    );
-  };
-
-  const handleDeleteClick = (id: number) => {
-    setAnnotations((prev) => prev.filter((annotation) => annotation.id !== id));
-  };
-
-  const handleAddAnnotation = (newText: string) => {
-    const newAnnotation = { id: Date.now(), timestamp: "00:00", text: newText };
-    setAnnotations((prev) => [...prev, newAnnotation]);
-  };
+const Annotation: React.FC<AnnotationProps> = ({ projectID }) => {
+  const {
+    annotations,
+    isLoading,
+    error,
+    addAnnotation,
+    editAnnotation,
+    deleteAnnotation,
+  } = useAnnotations(projectID); // Pass projectID to useAnnotations
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -31,9 +25,10 @@ const Annotation: React.FC = () => {
       {error && <div className="error-message">{error}</div>}
       <AnnotationList
         annotations={annotations}
-        onEditSave={handleEditSave}
-        onDeleteClick={handleDeleteClick}
-        onAddAnnotation={handleAddAnnotation}
+        onEditSave={editAnnotation}
+        onDeleteClick={deleteAnnotation}
+        onAddAnnotation={addAnnotation}
+        projectID={0}
       />
     </>
   );
