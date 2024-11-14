@@ -35,7 +35,8 @@ const UserHome: React.FC = () => {
     }
   };
 
-  const shouldShowMockProjects = !loading && (error || projects.length === 0);
+  const shouldShowMockProjects = !loading && error;
+  // const shouldShowMockProjects = !loading && (error || projects.length === 0);
 
   return (
     <section id="homepage" className="block homepage-block">
