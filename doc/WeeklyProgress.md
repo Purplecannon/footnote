@@ -4,50 +4,75 @@
 
 ## Week 1
 
-We didn't form a group yet.
+Group hasn't been formed
 
 ---
 
 ## Week 2
 
-## Assignment:
+## Assignment: Project pitch
 
-Requirements & Team Policies. Mainly an overview of the project and user-cases.
+Initial meeting with team:
+- get to know each other and the project's main goals
+- discussed personal dev strengths
 
-#### Alicia Z.
-
-- Wrote 3 user-cases. Shared my work with team and asked for their feedback. Give me thoughts for others' work.
-- Researched cloud service and frameworks.
-- Decided on digitalOcean together with Mia and set that up.
-- Generated sprint boot for backend.
-- Start to learn spring.
-
-#### Kirupa G.
+#### Kirupa Gunaseelan
 
 - Wrote user-cases. Discussed with the team to make sure we didn't have overlapping use cases
 - Discussed with Mia to get a better understanding of the product
 - Did research on frontend tools (HTML/CSS/React) as well as Figma
 - Started working on screens on Figma for Sign in, Login, and the Project page (video + annotations)
 
-#### Elainie K.
+#### Elainie Kassa
 
 - Wrote user-cases. Discussed with team for feedback.
 - Researched Figma app for initial frontend design.
 
-#### Lauren Y.
+#### Lauren Yarrington
 
 - Wrote and discussed user-cases
 - Did research on video components and displays using video.js
 - Discussed database implementation with Mia about project and annotation fields
 - Drew out our UI for home page and the main project page
 
+#### Alicia Z.
+
+- Wrote 3 user-cases. Shared my work with team and asked for their feedback. Give my thoughts for others' work.
+- Researched cloud service and frameworks.
+- Decided on digitalOcean together with Mia and set that up.
+- Generated sprint boot for backend.
+- Start to learn spring.
+
 ---
 
 ## Week 3
 
-## Assignment:
+## Assignment: Proposal and requirements
 
-Software Architecture Update.
+#### Kirupa Gunaseelan
+
+- Finished up Figma screens and showed my work to the team.
+- Created HTML/CSS for the Sign in and Login Screens
+- Showed team during weekly meeting and gathered feedback on the screens (getting rid of forgot password)
+
+#### Mia Huynh
+- Created the public GitHub repository, later changed to private, added members and TA
+- Purchased the footnote.us domain for team on GoDaddy
+- Delegated tasks for proposal and requirements assignment
+- Talked through the UI with teammates
+- Researched cloud services and designed SQL schema
+
+#### Catherine Jin
+
+#### Elainie Kassa
+
+- Took a break from research/implementation due to personal reasons
+- Communicated clearly with team and re-assigned roles temporarily
+
+#### Lauren Yarrington
+
+- Updated Schedule and divided schedule by person
+- Further clarified project page UI and button orders
 
 #### Alicia Z.
 
@@ -55,29 +80,12 @@ Software Architecture Update.
 - Implemented video uploading logic in the backend and tested successfully with postman.
 - Wrote software architecture for software architecture. Shared with team and asked for their feedback.
 
-#### Kirupa G.
-
-- Finished up Figma screens and showed my work to the team.
-- Created HTML/CSS for the Sign in and Login Screens
-- Showed team during weekly meeting and gathered feedback on the screens (getting rid of forgot password)
-
-#### Elainie K.
-
-- Took a break from research/implementation due to personal reasons
-- Communicated clearly with team and re-assigned roles temporarily
-
-#### Lauren Y.
-
-- Updated Schedule and divided schedule by person
-- Further clarified project page UI and button orders
 
 ---
 
 ## Week 4
 
-## Assignment:
-
-Software Design, Risk Assessment, Schedule update.
+## Assignment: Revisions and Architecture
 
 #### Kirupa Gunaseelan
 
@@ -124,9 +132,7 @@ Software Design, Risk Assessment, Schedule update.
 
 ## Week 5
 
-## Assignment:
-
-Testing Update.
+## Assignment: Design
 
 #### Kirupa Gunaseelan
 
@@ -167,7 +173,7 @@ Testing Update.
 
 ## Week 6
 
-## Assignment
+## Assignment: Testing
 
 #### Kirupa Gunaseelan
 
@@ -215,7 +221,7 @@ Testing Update.
 
 ## Week 7
 
-## Assignment:
+## Assignment: Documentation
 
 #### Kirupa Gunaseelan
 
@@ -236,9 +242,10 @@ Testing Update.
 - Documentation assignment: set up version update automation, contributed to user manual (description, install the software, run the software) and developer guidelines (build the software, build a release)
 - Living document: revised CI set up on GitHub Actions and incorporate TA feedback
 - Restructured backend directory
-- Helped teammates with database configurations
+- Helped teammates with database connection and configuration, as well as debugging video upload tests
 - Integrated homepage front and back end: with Kirupa and Alicia
 - Implemented full-stack session handling for login, signup, homepage
+- Set up GitHub Secrets for sensitive info like .env and certificates, set up GitHub Actions to reflect that, reconfigured DigitalOcean database so GitHub Actions can connect
 
 #### Catherine Jin
 
@@ -270,27 +277,41 @@ Testing Update.
 - Add my stuff in the bug report and for github issue.
 - Integrated Annotation component with backend.
 - Adding mocking data to display annotation component even if the backend is not present.
-- Add my stuff in the bug report and for github issue.
-- Integrated Annotation component with backend.
-- Adding mocking data to display annotation component even if the backend is not present.
 
 ---
 
 ## Week 8
 
-## Assignment
+## Assignment: Beta Release and Demo Presentation
 
 #### Kirupa Gunaseelan
+
 - Updated the project page header (title), added video player using react-player, incorporated all controls (play, pause, scrubber, etc), added video upload functionality
 - Added function to pass project name and pid to backend #44
 - Used useParam to keep track of the pid (project id)
 - Created a handleTitleChange that updated the title after the user stopped typing for 1 second
 - Created an async function to pass the project title and project id to the backend
-- Fixed Sign Up button so it was consistent with the Log In button 
-- Fixed alignment of the forgot password text 
-
+- Fixed Sign Up button so it was consistent with the Log In button
+- Fixed alignment of the forgot password text
 
 #### Mia Huynh
+
+- Facilitated communications for the beta release push between the different subteams, organized additional team meeting
+- Implemented annotations backend, including:
+  - adding ANNOTATIONS table
+  - retrieve all annotations endpoint
+  - add an annotation endpoint
+  - edit an annotation endpoint
+  - delete an annotation endpoint
+- Revised frontend routes
+- Revised backend and a bit of frontend so that:
+  - the homepage actually shows a user's existing project
+  - clicking on each project from home page routes to the corresponding project page
+  - clicking on "create new project" button fetches a new project id from backend then routes to the corresponding project page
+- Revised GitHub Secrets and GitHub Actions for DigitalOcean Spaces connection
+- Improved documentation formatting and content based on TA's feedback (README, UserManual, DeveloperGuidelines)
+- Worked on presentation slides (intro, demo, reflection, q&a) and script
+- Added video element enhancement and clearing tables bug to GitHub Issues
 
 #### Catherine Jin
 
