@@ -77,7 +77,27 @@ async function addUrl(pid, videoUrl) {
   }
 }
 
-// TODO: add functions that convert seconds -> string timestamp format, and vice versa
+// A function that convert timestamp (number) to mm:ss string format
+// For example, timestampString(4.932234) returns "00:05" since the milisecond is rounded to the nearest second
+function timestampString(timestamp) {
+  let res = "";
+  const minutes = Math.floor(timestamp / 60);
+  const seconds = Math.round(timestamp % 60);
+
+  if (minutes <= 9) {
+    // single digit
+    res += "0";
+  }
+  res += minutes;
+  res += ":";
+
+  if (seconds <= 9) {
+    // single digit
+    res += "0";
+  }
+  res += seconds;
+
+  return res;
+}
 
 module.exports = router;
-//export default router

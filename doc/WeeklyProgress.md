@@ -312,6 +312,7 @@ Initial meeting with team:
 - Fixed backend so that an uploaded video's URL is updated in the database for the given project id
 - Worked on frontend and backend so that when a user clicks on an existing project, it correctly loads the saved Project Name and Uploaded video
 - Added a function to frontend to seek when a user manually move the scrubber and track that timestamp
+- Added a function that convert timestamp (number) to mm:ss string format
 - Revised GitHub Secrets and GitHub Actions for DigitalOcean Spaces connection
 - Improved documentation formatting and content based on TA's feedback (README, UserManual, DeveloperGuidelines)
 - Worked on demo slides and script
