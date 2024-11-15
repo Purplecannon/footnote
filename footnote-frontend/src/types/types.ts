@@ -6,6 +6,7 @@ export interface ProjectData {
 }
 
 export interface AnnotationData {
+  projectID: number;
   id: number;
   timestamp: string;
   text: string;
