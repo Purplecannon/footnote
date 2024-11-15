@@ -19,6 +19,27 @@ const AnnotationPage: React.FC = () => {
 
   let { pid } = useParams<"pid">();
 
+  const loadExistingProject = async (pid: string) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/projects/load-project/${pid}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.data && response.data.project) {
+        const { project_name, video_url } = response.data.project;
+        console.log(project_name);
+        console.log(video_url);
+      } else {
+        console.error("Project not found");
+      }
+    } catch (error) {
+      console.error("Error loading project", error);
+    }
+  };
+
   const handlePause = () => {
     if (playerRef.current) {
       const currentTime = playerRef.current.getCurrentTime();
