@@ -96,6 +96,7 @@ export const useAnnotations = (projectID: number) => {
     try {
       await axios.delete(`${API_BASE_URL}/annotations/delete`, {
         data: { id, projectID },
+        withCredentials: true,
       });
     } catch (err) {
       console.error("Error deleting annotation:", err);

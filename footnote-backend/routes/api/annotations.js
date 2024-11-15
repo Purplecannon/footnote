@@ -1,12 +1,12 @@
 // Author: Mia, Lauren
 // Central file for backend handling of annotation retrieval, creation, deletion.
 
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const conn = require('../../config/database');
+const conn = require("../../config/database");
 
 // endpoint: "http://localhost:3000/annotations/all"
-router.get('/all', async(req, res) => {
+router.get("/all", async (req, res) => {
   // TODO: session handling?
   // const pid = req.session.pid;
   const pid = 1;
@@ -15,13 +15,13 @@ router.get('/all', async(req, res) => {
     const result = await getAnnotations(pid);
     res.send(result);
   } catch (err) {
-    console.log('Error retrieving existing annotations: ', err);
-    res.status(500).send('Error retrieving existing annotations');
+    console.log("Error retrieving existing annotations: ", err);
+    res.status(500).send("Error retrieving existing annotations");
   }
 });
 
 // endpoint: "http://localhost:3000/annotations/add"
-router.post('/add', async(req, res) => {
+router.post("/add", async (req, res) => {
   // TODO: session handling?
   // const pid = req.session.pid;
   const pid = 1;
@@ -30,13 +30,13 @@ router.post('/add', async(req, res) => {
     const result = await addAnnotation(req.body.timestamp, req.body.text, pid);
     res.send(result);
   } catch (err) {
-    console.log('Error adding annotation: ', err);
-    res.status(500).send('Error adding annotation');
+    console.log("Error adding annotation: ", err);
+    res.status(500).send("Error adding annotation");
   }
 });
 
 // endpoint: "http://localhost:3000/annotations/edit"
-router.put('/edit', async(req, res) => {
+router.put("/edit", async (req, res) => {
   // TODO: session handling?
   const aid = 1;
 
@@ -44,26 +44,30 @@ router.put('/edit', async(req, res) => {
     const result = await editAnnotation(req.body.timestamp, req.body.text, aid);
     res.send(result);
   } catch (err) {
-    console.log('Error editing annotation: ', err);
-    res.status(500).send('Error editing annotation');
+    console.log("Error editing annotation: ", err);
+    res.status(500).send("Error editing annotation");
   }
 });
 
 // endpoint: "http://localhost:3000/annotations/delete"
-router.delete('/delete', async(req, res) => {
+router.delete("/delete", async (req, res) => {
   // TODO: session handling?
-  const aid = 1;
+  if (!req.session.isLoggedIn || !req.session.username) {
+    return res.status(401).send("Unauthorized, please log in");
+  }
+
+  const { id, projectID } = req.body;
 
   try {
-    const result = await deleteAnnotation(aid);
+    const result = await deleteAnnotation(id);
     if (result === "Annotation deleted") {
       res.status(200).send({ message: result });
     } else {
       res.status(404).send({ message: result });
     }
   } catch (err) {
-    console.log('Error deleting annotation: ', err);
-    res.status(500).send('Error deleting annotation');
+    console.log("Error deleting annotation: ", err);
+    res.status(500).send("Error deleting annotation");
   }
 });
 
@@ -80,7 +84,8 @@ router.delete('/delete', async(req, res) => {
 //   },
 // ]
 async function getAnnotations(pid) {
-  const getAnnotationsSql = 'SELECT aid, timestamp, text FROM ANNOTATIONS WHERE pid = ?';
+  const getAnnotationsSql =
+    "SELECT aid, timestamp, text FROM ANNOTATIONS WHERE pid = ?";
   // const mockProjectSql = "INSERT INTO PROJECTS (project_name, username) VALUES ('eta newjeans', 'footnote');";
   // const mockAnnotationSql = "INSERT INTO ANNOTATIONS (timestamp, text, pid) VALUES ('00:00', 'first annotation', 1), ('01:32', 'second annotation', 1);";
 
@@ -94,14 +99,14 @@ async function getAnnotations(pid) {
       return [];
     } else {
       // extract the aid, timestamp, and text
-      return rows.map(row => ({
+      return rows.map((row) => ({
         id: row.aid,
         timestamp: row.timestamp,
-        text: row.text
+        text: row.text,
       }));
     }
   } catch (err) {
-    console.error('Error during annotations retrieval: ', err);
+    console.error("Error during annotations retrieval: ", err);
     // throw an error, can consider other error handling returns
     throw err;
   }
@@ -114,22 +119,25 @@ async function getAnnotations(pid) {
 //   text: "this is an annotation"
 // }
 async function addAnnotation(timestamp, text, pid) {
-  const addAnnotationSql = "INSERT INTO ANNOTATIONS (timestamp, text, pid) VALUES (?, ?, ?);";
+  const addAnnotationSql =
+    "INSERT INTO ANNOTATIONS (timestamp, text, pid) VALUES (?, ?, ?);";
 
   try {
-    const [result] = await conn.promise().query(addAnnotationSql, [timestamp, text, pid]);
+    const [result] = await conn
+      .promise()
+      .query(addAnnotationSql, [timestamp, text, pid]);
 
     if (result.affectedRows > 0) {
       return {
-        id: result.insertId,  // equivalent to aid
+        id: result.insertId, // equivalent to aid
         timestamp: timestamp,
         text: text,
       };
     } else {
-      throw new Error('Annotation not added');
+      throw new Error("Annotation not added");
     }
   } catch (err) {
-    console.error('Error adding annotation: ', err);
+    console.error("Error adding annotation: ", err);
     throw err;
   }
 }
@@ -141,10 +149,13 @@ async function addAnnotation(timestamp, text, pid) {
 //   text: "this is an annotation"
 // }
 async function editAnnotation(timestamp, text, aid) {
-  const editAnnotationSql = 'UPDATE ANNOTATIONS SET timestamp = ?, text = ? WHERE aid = ?;';
+  const editAnnotationSql =
+    "UPDATE ANNOTATIONS SET timestamp = ?, text = ? WHERE aid = ?;";
 
   try {
-    const [result] = await conn.promise().query(editAnnotationSql, [timestamp, text, aid]);
+    const [result] = await conn
+      .promise()
+      .query(editAnnotationSql, [timestamp, text, aid]);
 
     if (result.affectedRows > 0) {
       return {
@@ -153,18 +164,18 @@ async function editAnnotation(timestamp, text, aid) {
         text: text,
       };
     } else {
-      throw new Error('Annotation not found or not updated');
+      throw new Error("Annotation not found or not updated");
     }
   } catch (err) {
-    console.error('Error editing annotation', err);
-    return 'Error editing annotation';
+    console.error("Error editing annotation", err);
+    return "Error editing annotation";
   }
 }
 
 // deletes an annotation, given the annotation id
 // returns a success or failure message
 async function deleteAnnotation(aid) {
-  const deleteAnnotationSql = 'DELETE FROM ANNOTATIONS WHERE aid = ?';
+  const deleteAnnotationSql = "DELETE FROM ANNOTATIONS WHERE aid = ?";
 
   try {
     const [result] = await conn.promise().query(deleteAnnotationSql, aid);
@@ -175,11 +186,10 @@ async function deleteAnnotation(aid) {
       return "Annotation deleted";
     }
   } catch (err) {
-    console.error('Error deleting annotation: ', err);
-    return 'Error deleting annotation';
+    console.error("Error deleting annotation: ", err);
+    return "Error deleting annotation";
   }
 }
-
 
 // Lauren's code:
 
@@ -202,7 +212,6 @@ async function deleteAnnotation(aid) {
 //             note: '',
 //             pid
 //         });
-
 
 //         // Save the annotation to the database
 //         db.query('INSERT INTO annotations (aid, timestamp, note, pid) VALUES (?, ?, ?, ?)',
@@ -307,7 +316,6 @@ async function deleteAnnotation(aid) {
 //       return 'Error during annotation deletion';
 //     }
 //   }
-
 
 module.exports = router;
 // module.exports.annotationCreate = annotationCreate;
