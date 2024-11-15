@@ -1,9 +1,57 @@
 //Author: Catherine
 
 import * as assert from 'assert';
-import {getProjects, createProject, addUrl, deleteProject} from '../routes/api/projects.js';
+import request from 'supertest';
+import app from '../app.js'
+
+import {getProjects, deleteProject, loadProject} from '../routes/api/projects.js';
 import {createUser} from "../routes/auth/users.js";
 import {clearTables} from "../config/tables.js";
+
+/* 
+    TODO:
+
+    Before Beta: 
+    - create-project request
+    - loadProject method
+    - delete method
+    - getProjects method
+    - editProjectName method
+
+    After Beta:
+    - load homepage request (check that returns correct project list)
+    - load-project request
+    - edit-project-name request
+    - delete request
+
+*/
+
+const videosURL = '/videos';
+const projectsURL = '/projects';
+
+describe('Successful create and get projects', () => {
+    const username = 'dummyUser';
+    const password = 'dummyPassword';
+
+    before (async () =>  {
+        await clearTables();
+
+        //create account and new session to hold projects
+    });
+    after(async () => {
+        await clearTables();
+    });
+    
+    it('Handles basic create, get, and load', async () => {
+        const response = await request(app)
+            .get(projectsURL + '/create-project');
+
+        assert.strictEqual(response.status, 200);
+        assert.strictEqual(response.body.pid, 1);
+    });
+});
+
+/* OLD TESTS: CREATE-PROJECT() NO LONGER USED
 
 describe('Successful project creation', () => {
     const username = 'dummyUser';
@@ -225,7 +273,7 @@ describe('Failed project deletion', () => {
     afterEach(async () => {
         await clearTables();
     });
-    /*
+    
     it('Empty project ID should fail', async () => {
         const expectedResult = "Empty pid";
         const actualResult = await(deleteProject(""));
@@ -236,13 +284,14 @@ describe('Failed project deletion', () => {
         const actualResult = await(deleteProject(null));
         assert.deepStrictEqual(actualResult, expectedResult);
     });
-    */
+
     it('Project ID that does not exist should fail', async () => {
         const pid = 1;
         const expectedResult = "No matching pid " + pid + " found in PROJECTS";
         const actualResult = await(deleteProject(pid));
         assert.deepStrictEqual(actualResult, expectedResult)
     });
+
     it('Project ID that does not exist should fail', async () => {
         const project1 = 'Project1';
         const create1 = await(createProject(project1, username));
@@ -263,3 +312,5 @@ describe('Failed project deletion', () => {
         assert.deepStrictEqual(actualResult, expectedResult)
     });
 });
+
+*/
