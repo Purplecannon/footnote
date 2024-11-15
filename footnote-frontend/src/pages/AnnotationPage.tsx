@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import Annotation from "../components/Annotation/Annotation";
@@ -30,8 +30,13 @@ const AnnotationPage: React.FC = () => {
 
       if (response.data && response.data.project) {
         const { project_name, video_url } = response.data.project;
-        console.log(project_name);
-        console.log(video_url);
+        if (project_name) {
+          setTitle(project_name);
+        }
+        if (video_url) {
+          setVideoUrl(video_url);
+          setIsVideoUploaded(true);
+        }
       } else {
         console.error("Project not found");
       }
@@ -39,6 +44,12 @@ const AnnotationPage: React.FC = () => {
       console.error("Error loading project", error);
     }
   };
+
+  useEffect(() => {
+    if (pid) {
+      loadExistingProject(pid); // Load project if pid exists
+    }
+  }, [pid]); // Only run this effect when pid changes
 
   const handlePause = () => {
     if (playerRef.current) {
@@ -139,7 +150,7 @@ const AnnotationPage: React.FC = () => {
             }}
           />
           <div className="underline" />
-          </div>
+        </div>
       </Row>
 
       <Row className="mb-1">
@@ -151,7 +162,7 @@ const AnnotationPage: React.FC = () => {
               height: "300px",
               backgroundColor: "#f0f0f0", // Grey background
               border: "2px dashed #ccc", // Dashed border for the placeholder
-              borderRadius: "10px", 
+              borderRadius: "10px",
               cursor: "pointer",
               position: "relative",
             }}
@@ -169,10 +180,26 @@ const AnnotationPage: React.FC = () => {
                 >
                   +
                 </span>
-                <p style={{ position: "absolute", color: "#888", marginTop: "90px", fontSize: "15px", fontWeight: "500"}}>
+                <p
+                  style={{
+                    position: "absolute",
+                    color: "#888",
+                    marginTop: "90px",
+                    fontSize: "15px",
+                    fontWeight: "500",
+                  }}
+                >
                   Import Video
                 </p>
-                <p style={{ position: "absolute", color: "#888", marginTop: "140px", fontSize: "12px", fontWeight: "500"}}>
+                <p
+                  style={{
+                    position: "absolute",
+                    color: "#888",
+                    marginTop: "140px",
+                    fontSize: "12px",
+                    fontWeight: "500",
+                  }}
+                >
                   .MP4
                 </p>
               </>
