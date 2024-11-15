@@ -1,34 +1,28 @@
 import React, { useState } from "react";
-import "./SignUp.css";
-import user_icon from "../assets/person.png";
-import password_icon from "../assets/password.png";
+import "./Login.css";
+import user_icon from "../../assets/person.png";
+import password_icon from "../../assets/password.png";
 import axios, { AxiosResponse } from "axios";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-interface IUserModel {
+interface ILoginModel {
   username: string;
   password: string;
-  confirmPassword: string;
 }
 
 /**
- * SignUp Component
+ * Login Component
  *
- * This component provides a form for signing up. It displays inputs for
- * username, password, and a "confirm password" input field for
- * sign-up mode.
+ * This component provides a form for logging up. It displays inputs for
+ * username and password.
  *
- * @returns {TSX.Element} The rendered Login/Signup form.
+ * @returns {TSX.Element} The rendered Login form.
  */
-export const SignUp: React.FC = () => {
+export const Login: React.FC = () => {
   const navigate = useNavigate();
 
-  const [data, setData] = useState<IUserModel>({
-    username: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [data, setData] = useState<ILoginModel>({ username: "", password: "" });
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const id = event.target.id;
@@ -41,38 +35,40 @@ export const SignUp: React.FC = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    // console.log(data)
 
-    const newUser: IUserModel = {
+    const newUser: ILoginModel = {
       username: data.username,
       password: data.password,
-      confirmPassword: data.confirmPassword,
     };
 
     try {
       const response: AxiosResponse<string> = await axios.post(
-        "http://localhost:3000/users/create-user",
+        "http://localhost:3000/users/login-user",
         newUser,
-        { withCredentials: true }  // to send cookies with the request
+        { withCredentials: true } // to send cookies with the request
       );
 
-      if (response.data === "Created user " + newUser.username.toLowerCase()) {
+      if (
+        response.data ===
+        "Login successful for user " + newUser.username.toLowerCase()
+      ) {
         console.log(response.data); // Creation successful message
-        navigate('/home'); // Redirect to home page
+        navigate("/home"); // Redirect to home page
       } else {
-        console.log(response.data); // Error message
+        alert(response.data); // Error message
       }
     } catch (err) {
-      console.log("Error on signup request: ", err);
+      console.log("Error on login request: ", err);
     }
   };
 
   return (
     <div className="container">
       {/* Header section with current action text and underline */}
+      <div className="form-container">
       <form action="POST">
         <div className="header">
-          <div className="text">Sign Up</div>
+          <div className="text">Login</div>
           <div className="underline" />
         </div>
 
@@ -101,21 +97,14 @@ export const SignUp: React.FC = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="input">
-            <img src={password_icon} alt="Confirm Password Icon" />
-            <input
-              type="password"
-              placeholder="confirm password"
-              id="confirmPassword"
-              value={data.confirmPassword}
-              onChange={handleInputChange}
-            />
-          </div>
         </div>
 
+        {/* Display the message if it exists
+      {message && <div className="error-message">{message}</div>} */}
+
         {/* Conditional "Forgot your password?" link, only in Login mode */}
-        <div className="forgot-password">
-          Already have an account? <Link to="/"> Click Here!</Link>
+        <div className="forgot-password text-center">
+          Don't have an account? <Link to="/signup"> Click Here!</Link>
         </div>
 
         {/* Buttons to toggle between "Login" and "Sign Up" */}
@@ -123,7 +112,7 @@ export const SignUp: React.FC = () => {
           {/* Button to switch to Sign Up mode */}
 
           {/* Button to switch to Login mode */}
-          <button>
+          <button className="submit">
             <div
               className={"submit"}
               role="button"
@@ -135,8 +124,9 @@ export const SignUp: React.FC = () => {
           </button>
         </div>
       </form>
+      </div>
     </div>
   );
 };
 
-export default SignUp;
+export default Login;
