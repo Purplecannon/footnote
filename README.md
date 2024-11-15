@@ -15,23 +15,22 @@ The beta release includes:
 - Video capabilities:
 
   - Upload
+  - Video Storage
   - Playback controls
 
 Our work in progress:
-- Video Storage
 
 - Annotation system:
-
   - Add, edit, and delete annotations
   - Time-synchronized notes
 
 # User Manual
 
-For instructions on using Footnote, please refer to the [User Manual](./UserManual.md).
+For instructions on using Footnote, please refer to the [User Manual](./doc/UserManual.md).
 
 # Developer Guidelines
 
-For Footnote's directory layout, instructions on building, testing, and running Footnote, please refer to the [Developer Guidelines](./DeveloperGuidelines.md).
+For Footnote's directory layout, instructions on building, testing, and running Footnote, please refer to the [Developer Guidelines](./doc/DeveloperGuidelines.md).
 
 # Requirements and Team Policies
 
