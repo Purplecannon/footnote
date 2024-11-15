@@ -5,6 +5,8 @@ import useProject from "../hooks/useProject";
 import { ProjectData } from "../types/types";
 import axios from "axios";
 import { API_BASE_URL } from "../config";
+import plus_icon from "../assets/plus_icon.jpg"
+
 
 const UserHome: React.FC = () => {
   const { projects, error } = useProject();
@@ -14,7 +16,7 @@ const UserHome: React.FC = () => {
     id: 0,
     title: "Create Project",
     thumbnailURL:
-      "https://private-user-images.githubusercontent.com/67350424/386543382-e9379069-cf91-4fac-8d67-fe5ff79a129c.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzE2NjM3NzAsIm5iZiI6MTczMTY2MzQ3MCwicGF0aCI6Ii82NzM1MDQyNC8zODY1NDMzODItZTkzNzkwNjktY2Y5MS00ZmFjLThkNjctZmU1ZmY3OWExMjljLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMTUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTE1VDA5Mzc1MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTdkODQyYWE2MWU3MmE5ZWU4MmVlOTk1YzcwYjhkMmYyNDM5NzQ0YTY5YmIyMjhkZmU3N2Y2ZjhhZDQ2NjBhOTUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.7LPXA86cyl539RKpVWveJ3qyq8VTo2mb4YIGaJLX9Ls",
+      plus_icon,
     videoURL: "",
   };
 
