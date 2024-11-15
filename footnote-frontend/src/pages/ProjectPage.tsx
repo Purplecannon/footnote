@@ -13,7 +13,7 @@ const AnnotationPage: React.FC = () => {
       </Row>
 
       {/* Main Content */}
-      <Row className="vh-100">
+      <Row>
         {/* Left Half - Placeholder for Video Player */}
         <Col
           md={6}
@@ -30,7 +30,7 @@ const AnnotationPage: React.FC = () => {
         {/* Right Half - Annotation Component */}
         <Col md={6} className="d-flex">
           <div className="w-100">
-            <Annotation />
+            <Annotation projectID={0} />
           </div>
         </Col>
       </Row>
