@@ -251,3 +251,7 @@ async function deleteProject(pid) {
 module.exports = router;
 module.exports.getProjects = getProjects;
 module.exports.deleteProject = deleteProject;
+
+// Test Exports
+module.exports.loadProject = loadProject;
+module.exports.editProjectName = editProjectName;
