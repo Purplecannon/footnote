@@ -4,7 +4,7 @@
 
 ## Report New Bug
 
-Please email the bug report to miahuynh@cs.washington.edu
+Please email the bug report to <miahuynh@cs.washington.edu>.
 
 ## Template for Reporting Bug
 
