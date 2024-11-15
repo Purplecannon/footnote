@@ -14,7 +14,8 @@ You need an internet connection and a web browser, Chrome is recommended. There 
 
 ## How to run the software
 
-Navigate to <https://footnote.us/> to use Footnote.
+For beta release: Only works locally and not on our public domain, refer to our [DeveloperGuidelines](./DeveloperGuidelines.md) for instructions to build Footnote.
+For final release: Navigate to <https://footnote.us/> to use Footnote.
 
 ## How to use the software
 
