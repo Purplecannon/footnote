@@ -1,3 +1,5 @@
+// Author: Alicia, Mia
+
 const express = require("express");
 const multer = require("multer"); // Middleware for handling file uploads
 const { uploadToS3 } = require("../../services/s3Service"); // Import the S3 upload function
@@ -74,6 +76,8 @@ async function addUrl(pid, videoUrl) {
     return "Error during URL insertion";
   }
 }
+
+// TODO: add functions that convert seconds -> string timestamp format, and vice versa
 
 module.exports = router;
 //export default router
