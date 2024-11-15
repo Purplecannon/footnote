@@ -2,11 +2,13 @@
 
 ## How to obtain the source code
 
-The source code of footnote can be found in its public [gitHub repository](https://github.com/miahuynhh/footnote).
+The source code of footnote can be found in its private [GitHub repository](https://github.com/miahuynhh/footnote).
+
+If you are not currently a collaborator and want to obtain the source code, please email your request to <miahuynh@cs.washington.edu>.
 
 ## The layout of Footnote's directory structure
 
-### frontend
+### Frontend
 
 ```
 footnote-frontend
@@ -17,7 +19,7 @@ footnote-frontend
 └── routes # Route definitions
 ```
 
-### backend
+### Backend
 
 ```
 footnote-backend
@@ -31,68 +33,64 @@ footnote-backend
 
 ## How to build the software
 
-First, clone the remote repository by running this command on the command line:
+1. Clone the remote repository by running this command on the command line:
+    ```
+    git clone git@github.com:miahuynhh/footnote.git
+    ```
+2. You should now see a local `footnote` directory. From that root `footnote` directory, run the following commands:
+    ```
+    npm run install-all  # to install all dependencies in the footnote, footnote-backend, and footnote-frontend folders
+    npm run build        # to build the frontend; commonly used for deployment, can skip during development
+    ```
+3. For the backend to properly build, you will need to:
+    1. Navigate to the `footnote-backend` directory and create a `.env` file
+    2. Navigate to the `footnote-backend/config` directory and create a `ca-certificate.crt` file
+    3. Email <miahuynh@cs.washington.edu> for the content of these secure files. Once you have the content, make sure to save, navigate back to the root `footnote` directory, and run:
+    ```
+    npm start  # to start the server (on port 3000) and the app (on port 5173) concurrently
+    ```
+4. If the build was successful, you should see a build log that looks something like this:
+    ```
+    > footnote@1.0.0 start
+    > concurrently "npm start --prefix footnote-backend" "npm run dev --prefix footnote-frontend"
 
-`git clone git@github.com:miahuynhh/footnote.git`
-
-You should now see a local `footnote` directory. From that root `footnote` directory, run the following commands:
-
-`npm run install-all`  to install all dependencies in the `footnote`, `footnote-backend`, and `footnote-frontend` folders
-
-`npm run build`  to build the frontend; this command is commonly used for deployment, can skip this command during development
-
-For the backend to properly build, you will need to navigate to create a `.env` file in the `footnote-backend directory` and a file named `ca-certificate.crt` in the `footnote-backend/config` directory. Email miahuynh@cs.washington.edu for the content of these files. Once you have the files content, make sure to save, navigate back to the root `footnote` directory, and run:
-
-`npm start`  to start the server (on port 3000) and the app (on port 5173) concurrently
-
-If the build was successful, you should see a build log that looks something like this:
-
-```
-> footnote@1.0.0 start
-> concurrently "npm start --prefix footnote-backend" "npm run dev --prefix footnote-frontend"
-
-[1]
-[1] > footnote-frontend@0.0.0 dev
-[1] > vite
-[1]
-[0]
-[0] > login@0.0.0 start
-[0] > node ./bin/www
-[0]
-[1]
-[1]   VITE v5.4.10  ready in 203 ms
-[1]
-[1]   ➜  Local:   http://localhost:5173/
-[1]   ➜  Network: use --host to expose
-[0] Connected to the database as 654106
-[0] USERS table created
-[0] PROJECTS table created
-[0] ANNOTATIONS table created
-[0] All tables initialized
-[0] ANNOTATIONS table cleared
-[0] ANNOTATIONS table pid autoincrement reset
-[0] PROJECTS table cleared
-[0] PROJECTS table pid autoincrement reset
-[0] USERS table cleared
-[0] sessions table cleared
-[0] All tables cleared
-```
-
-You can now navigate to `http://localhost:5173/` on your browser with a working internet connection and interact with the Footnote app.
-
-For any errors encountered during these steps, refer to the Troubleshooting section below.
+    [1]
+    [1] > footnote-frontend@0.0.0 dev
+    [1] > vite
+    [1]
+    [0]
+    [0] > login@0.0.0 start
+    [0] > node ./bin/www
+    [0]
+    [1]
+    [1]   VITE v5.4.10  ready in 203 ms
+    [1]
+    [1]   ➜  Local:   http://localhost:5173/
+    [1]   ➜  Network: use --host to expose
+    [0] Connected to the database as 654106
+    [0] USERS table created
+    [0] PROJECTS table created
+    [0] ANNOTATIONS table created
+    [0] All tables initialized
+    ```
+5. Navigate to <http://localhost:5173/> on your browser with a working internet connection and interact with the Footnote app.
+6. For any errors encountered during these steps, refer to the Troubleshooting section below.
 
 ## How to test the software
 
-Ensure that all necessary packages are installed - i.e. run `npm install-all` from the root directory.
-For backend testing, ensure that the proper database configurations are in place - the correct .env file in the root directory, and the ca-certificate.crt file in the config directory in the footnote-backend directory.
-For backend testing - navigate to the footnote-backend directory.
-For frontend testing - navigate to the footnote-frontend directory.
-Ensure that the `test` folder is present within the directory, then run the following from the terminal:
-
-```
-npm test
-```
+1. Follow the build steps as listed in the [How to build the software](../DeveloperGuidelines.md#how-to-build-the-software) section
+2. To run the full test suite:
+    ```
+    npm run test  # from the root directory
+    ```
+3. To run the backend test suite:
+    ```
+    npm test      # from the footnote-backend directory
+    ```
+4. To run the frontend test suite (in progress):
+    ```
+    npm test      # from the footnote-frontend directory
+    ```
 
 ## How to add new tests
 
@@ -104,20 +102,39 @@ import * as assert from 'assert';
 
 ## How to build a release of the software
 
-Run an appropriate command from the following to update the version:
-`npm run version:patch` # for a patch update
-`npm run version:minor` # for a minor update
-`npm run version:major` # for a major update
-These commands increments the version in `package.json`, commit the change, and tag the commit with the new version.
+1. Run an appropriate command from the following to update the version:
+    ```
+    npm run version:patch  # for a patch update
+    npm run version:minor  # for a minor update
+    npm run version:major  # for a major update
+    ```
+    These commands increments the version in `package.json`, commit the change, and tag the commit with the new version.
 
-Perform sanity checks on the version update:
-`npm run build` # to build the frontend to ensure it’s ready for deployment
-`npm test` # to run the test suite to confirm all tests pass
-`npm start` # to start the backend server (port 3000) and frontend app (port 5173) concurrently to verify they function together as expected
-Also ensure that the git tag generated by the versioning command matches the intended version.
+2. Perform sanity checks on the version update:
+    1. Brief option: run the following commands from the root directory
+    ```
+    npm run build  # build the frontend to ensure it’s ready for deployment
+    npm start      # start the server (on port 3000) and the app (on port 5173) concurrently
+    npm run test   # run the test suite to confirm all tests pass
+    ```
+    2. Thorough option: follow steps 2-6 of [How to build the software](../DeveloperGuidelines.md#how-to-build-the-software) section and then step 2 of [How to test the software](#how-to-test-the-software) section
 
-After reviewing the version update, push it to the remote repository:
-`git push` # push the version update
-`git push --tags` # push the version update tag
+3. Ensure that the git tag generated by the versioning command matches the intended version.
+
+4. After reviewing the version update, push it to the remote repository:
+    ```
+    git push         # push the version update
+    git push --tags  # push the version update tag
+    ```
 
 ## Troubleshooting
+For database connection troubleshooting, refer to Digital Ocean Cluster documentation:
+* [Access denied](https://docs.digitalocean.com/support/when-connecting-to-mysql-i-get-an-access-denied-error/)
+* [Unsupported auth mode](https://docs.digitalocean.com/support/when-connecting-to-mysql-i-get-an-authentication-error/)
+* [Connection timed out](https://docs.digitalocean.com/support/when-connecting-to-my-database-i-get-a-connection-timed-out-error/)
+* [Unknown host](https://docs.digitalocean.com/support/when-connecting-to-mysql-i-get-an-unknown-host-error/)
+* [Lost connection during query](https://docs.digitalocean.com/support/when-issuing-a-query-on-mysql-i-get-a-lost-connection-error/)
+* [Unknown database](https://docs.digitalocean.com/support/when-connecting-to-mysql-i-get-an-unknown-database-error/)
+* [Host blocked by too many connection errors](https://docs.digitalocean.com/support/when-connecting-to-mysql-i-get-a-host-is-blocked-error/)
+
+For any issues that require admin access, please email <miahuynh@cs.washington.edu>.
