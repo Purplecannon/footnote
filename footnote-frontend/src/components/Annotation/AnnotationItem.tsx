@@ -1,31 +1,45 @@
 import React, { useState } from "react";
+
 import { Button, FormControl, InputGroup } from "react-bootstrap";
+
 import AnnotationBaseItem from "./AnnotationBaseItem";
+
 import { AnnotationData } from "../../types/types";
+
 import TrashIcon from "../../assets/trash3-fill.svg";
+
 import EditIcon from "../../assets/pencil-square.svg";
 
 interface AnnotationItemProps {
   annotation: AnnotationData;
+
   onEditSave: (id: number, newText: string, projectId: number) => void;
+
   onDeleteClick: (id: number, projectId: number) => void;
 }
+
 const AnnotationItem: React.FC<AnnotationItemProps> = ({
   annotation,
+
   onEditSave,
+
   onDeleteClick,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
+
   const [editText, setEditText] = useState(annotation.text);
 
   const handleEditSave = () => {
     if (editText.trim()) {
       onEditSave(annotation.id, editText, annotation.projectID);
+
+      setIsEditing(false);
     }
   };
 
   const handleEditCancel = () => {
     setEditText(annotation.text);
+
     setIsEditing(false);
   };
 
@@ -42,6 +56,7 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
             onBlur={handleEditSave}
             onKeyDown={(e) => {
               if (e.key === "Enter") handleEditSave();
+
               if (e.key === "Escape") handleEditCancel();
             }}
             placeholder="Edit annotation"
@@ -51,6 +66,7 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
       ) : (
         <span>{annotation.text}</span>
       )}
+
       {!isEditing && (
         <div>
           <Button
@@ -60,6 +76,7 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
           >
             <img src={EditIcon} alt="Edit" width={16} height={16} />
           </Button>
+
           <Button
             variant="link"
             onClick={() => onDeleteClick(annotation.id, annotation.projectID)}
