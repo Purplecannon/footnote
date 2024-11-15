@@ -121,21 +121,25 @@ const AnnotationPage: React.FC = () => {
 
   return (
     <Container fluid>
-      <Row className="bg-primary text-white p-3 mb-3">
-        <Col>
+      <Row className="text-white p-1 mb-1">
+        <div className="container">
           <input
             type="text"
             value={title}
             onChange={handleTitleChange}
-            className="form-control text-center"
+            className="form-control text-center input-field"
             style={{
-              fontSize: "2rem",
+              fontSize: "48px",
+              fontWeight: "650",
+              color: "#3c009d",
               backgroundColor: "transparent",
               border: "none",
-              color: "white",
+              width: "400px",
+              outline: "none",
             }}
           />
-        </Col>
+          <div className="underline" />
+          </div>
       </Row>
 
       <Row className="mb-1">
@@ -147,6 +151,7 @@ const AnnotationPage: React.FC = () => {
               height: "300px",
               backgroundColor: "#f0f0f0", // Grey background
               border: "2px dashed #ccc", // Dashed border for the placeholder
+              borderRadius: "10px", 
               cursor: "pointer",
               position: "relative",
             }}
@@ -164,8 +169,11 @@ const AnnotationPage: React.FC = () => {
                 >
                   +
                 </span>
-                <p style={{ position: "absolute", color: "#888" }}>
-                  Click to upload video
+                <p style={{ position: "absolute", color: "#888", marginTop: "90px", fontSize: "15px", fontWeight: "500"}}>
+                  Import Video
+                </p>
+                <p style={{ position: "absolute", color: "#888", marginTop: "140px", fontSize: "12px", fontWeight: "500"}}>
+                  .MP4
                 </p>
               </>
             ) : (
