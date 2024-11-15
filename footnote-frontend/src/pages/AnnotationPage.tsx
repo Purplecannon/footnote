@@ -59,6 +59,11 @@ const AnnotationPage: React.FC = () => {
     }
   };
 
+  const handleSeek = (newTimestamp: number) => {
+    setTimestamp(newTimestamp);
+    console.log("Video scrubbed to:", newTimestamp);
+  };
+
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
 
@@ -208,6 +213,7 @@ const AnnotationPage: React.FC = () => {
                 controls={true}
                 ref={playerRef}
                 onPause={handlePause}
+                onSeek={handleSeek}
                 url={videoUrl} // Pass the dynamically set video URL here
                 width="100%" // Ensure it fits in the container
                 height="100%"
