@@ -14,7 +14,8 @@ You need an internet connection and a web browser, Chrome is recommended. There 
 
 ## How to run the software
 
-Navigate to <https://footnote.us/> to use Footnote.
+For beta release: Only works locally and not on our public domain, refer to our [DeveloperGuidelines](./DeveloperGuidelines.md) for instructions to build Footnote.
+For final release: Navigate to <https://footnote.us/> to use Footnote.
 
 ## How to use the software
 
@@ -36,21 +37,20 @@ Internally, we will be using the [Issues](https://github.com/miahuynhh/footnote/
 
 As for bug reporting, we will be following some of the tips mentioned in the bug writing guidelines from Mozilla
 
-1.  First, please describe the expected behavior (how our website should work) and the actual behavior. 
+1.  First, please describe the expected behavior (how our website should work) and the actual behavior.
 
 2.  Indicate whether you can reproduce the bug, and if so, please outline the steps you will take.
 
-    a.  Additionally, anyone who reports a bug should copy and paste the error that they are getting in the issue description. This allows people to get a bigger picture of the error and makes it easier for developers to look for solutions on their own. 
+    a. Additionally, anyone who reports a bug should copy and paste the error that they are getting in the issue description. This allows people to get a bigger picture of the error and makes it easier for developers to look for solutions on their own.
 
-    b.  It would be good to note whether this occurs every time or if it is an intermittent issue. 
+    b. It would be good to note whether this occurs every time or if it is an intermittent issue.
 
-3.  You should also indicate any steps that you have already taken, so that other developers know what to rule out. 
+3.  You should also indicate any steps that you have already taken, so that other developers know what to rule out.
 
-4.  Other information to include would be type of device, operating system, and browser. 
+4.  Other information to include would be type of device, operating system, and browser.
 
 After reporting the bug, it’s important to follow up so that this is addressed in a timely manner.
 
 ## Known bugs
 
 We will be documenting our “known bugs” in our [BugReport.md](./BugReport.md) tab. This will include common bugs and their behavior as well as the exact steps to fix the bug.
-

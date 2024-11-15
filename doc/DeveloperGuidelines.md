@@ -5,9 +5,13 @@
 The source code of footnote can be found in its private [GitHub repository](https://github.com/miahuynhh/footnote).
 
 If you are not currently a collaborator and want to obtain the source code, please email your request to <miahuynh@cs.washington.edu>.
+The source code of footnote can be found in its private [GitHub repository](https://github.com/miahuynhh/footnote).
+
+If you are not currently a collaborator and want to obtain the source code, please email your request to <miahuynh@cs.washington.edu>.
 
 ## The layout of Footnote's directory structure
 
+### Frontend
 ### Frontend
 
 ```
@@ -19,6 +23,7 @@ footnote-frontend
 └── routes # Route definitions
 ```
 
+### Backend
 ### Backend
 
 ```
@@ -94,6 +99,7 @@ footnote-backend
 
 ## How to add new tests
 
+Navigate to the `test` directory - either in footnote-backend or footnote-frontend - and write tests using [Mocha](https://mochajs.org/) and the default node [assert](https://nodejs.org/api/assert.html) library, either by adding to an existing file with the `.mjs` extension, or by creating a new one. For a new file, import the assertion library:
 Navigate to the `test` directory - either in footnote-backend or footnote-frontend - and write tests using [Mocha](https://mochajs.org/) and the default node [assert](https://nodejs.org/api/assert.html) library, either by adding to an existing file with the `.mjs` extension, or by creating a new one. For a new file, import the assertion library:
 
 ```
