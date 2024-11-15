@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { ProjectData } from "../types/types";
+import { API_BASE_URL } from "../config";
 
 const useProject = () => {
   const [projects, setProjects] = useState<ProjectData[]>([]);
@@ -10,10 +11,9 @@ const useProject = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const { data } = await axios.get(
-          "http://localhost:3000/projects/home",
-          { withCredentials: true }
-        );
+        const { data } = await axios.get(`${API_BASE_URL}/projects/home`, {
+          withCredentials: true,
+        });
         setProjects(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("Error fetching projects:", err);
