@@ -16,21 +16,20 @@ const projectsURL = '/projects';
 
 describe('Video upload failure', () => {
     it('Empty pid and file should fail', async () => {
-        const response = await request(app)
+        await request(app)
             .post(videosURL + '/upload-video')
             .field('pid', '')
-            .attach('file', null);
-
-         assert.strictEqual(response.status, 400);
+            .attach('file', null)
+            .expect(400);
     });
 
     it('Empty file should fail', async() => {
-        const response = await request(app)
+        await request(app)
             .post(videosURL + '/upload-video')
             .field('pid', 1)
-            .attach('video', null);
+            .attach('video', null)
+            .expect(400);
 
-        assert.strictEqual(response.status, 400);
     });
 });
 
@@ -46,8 +45,7 @@ describe('Video upload success', () => {
         const response = await request(app)
             .post(videosURL + '/upload-video')
             .attach('video', videoPath);
-
-        assert.strictEqual(response.status, 200);
+            .expect(200);
     });
 })
 */
