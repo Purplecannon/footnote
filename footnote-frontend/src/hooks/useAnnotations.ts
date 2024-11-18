@@ -6,8 +6,6 @@ import { AnnotationData } from "../types/types";
 
 import { API_BASE_URL } from "../config";
 
-import { mockAnnotations } from "../data/mockAnnotations";
-
 export const useAnnotations = (projectID: number) => {
   const [annotations, setAnnotations] = useState<AnnotationData[]>([]);
 
@@ -27,9 +25,6 @@ export const useAnnotations = (projectID: number) => {
         setAnnotations(response.data);
       } catch (err) {
         console.error("Error loading annotations:", err);
-
-        setAnnotations(mockAnnotations); // Fallback to mock data on error
-
         setError("Failed to load annotations.");
       } finally {
         setIsLoading(false);
