@@ -370,6 +370,9 @@ Initial meeting with team:
 
 - Delegated tasks for peer review assignment
 - Helped peer review team get set up to test our app
+- Incorporated beta's code with more styling with teammates
+- Revised DeveloperGuidelines.md
+- Added more thorough session handling to backend projects routes
 
 #### Catherine Jin
 
