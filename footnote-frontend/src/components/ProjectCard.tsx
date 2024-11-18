@@ -1,9 +1,9 @@
 import React from "react";
 
 import { ProjectData } from "../types/types";
-
+import "./ProjectCard.css";
 import Card from "react-bootstrap/Card";
-
+import dancer from "../assets/dancers.png";
 import Button from "react-bootstrap/Button";
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
 const ProjectCard: React.FC<Props> = ({ project, buttonText, onClick }) => {
   const { title, thumbnailURL } = project;
 
-  const placeholderPic = "https://placehold.co/286x286";
+  const placeholderPic = dancer;
 
   return (
     <div className="holder">
