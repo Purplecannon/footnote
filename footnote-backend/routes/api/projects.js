@@ -29,7 +29,8 @@ router.get("/create-project", async (req, res) => {
 
   try {
     const pid = await getPid(req.session.username);
-    res.send({ pid });
+    const title = "untitled";
+    res.send({ pid, title });
   } catch (err) {
     console.log("Error getting new project id: ", err);
     res.status(500).send("Error getting new project id");
@@ -46,7 +47,7 @@ router.get("/load-project/:pid", async (req, res) => {
 
   try {
     const project = await loadProject(pid);
-    res.status(200).send({ project });
+    res.status(200).send(project);
   } catch (err) {
     console.log("Error loading project: ", err);
     res.status(500).send("Error loading project");
@@ -63,10 +64,10 @@ async function loadProject(pid) {
     } else {
       const row = rows[0];
       return {
-        pid: row.pid,
-        project_name: row.project_name,
-        video_url: row.video_url,
-        thumbnail_url: row.thumbnail_url,
+        projectID: row.pid,
+        title: row.project_name || "untitled",
+        videoURL: row.video_url,
+        thumbnailURL: row.thumbnail_url,
         username: row.username,
       };
     }
@@ -83,6 +84,7 @@ router.put("/edit-project-name", async (req, res) => {
   }
 
   const { projectName, pid } = req.body;
+  console.log(`PID = ${pid}`);
 
   // TODO: how about empty projectName?
   if (projectName.length > 100) {
@@ -112,14 +114,13 @@ router.put("/edit-project-name", async (req, res) => {
 
 // endpoint: DELETE "http://localhost:3000/projects/delete-project"
 // TODO: Path is set up for testing purposes. Get pid from somewhere
-router.delete("/delete-project", async (req, res) => {
+router.delete("/delete-project/:projectID", async (req, res) => {
   // session
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send("Unauthorized, please log in");
   }
 
-  // TODO: FOR NOW, TO TEST, NEED TO MANUALLY SET THIS VALUE
-  const pid = "1";
+  const pid = req.params.projectID;
 
   try {
     const result = await deleteProject(pid);
@@ -151,7 +152,7 @@ async function getProjects(username) {
     } else {
       // return an array of objects containing both pid and project_name
       return rows.map((row) => ({
-        id: row.pid, // return 'pid' as 'id' to match frontend model
+        projectID: row.pid, // return 'pid' as 'id' to match frontend model
         title: row.project_name, // return 'project_name' as 'title' to match frontend model
       }));
     }
@@ -194,8 +195,21 @@ async function editProjectName(projectName, pid) {
   }
 }
 
+async function deleteAllAnnotations(pid) {
+  const deleteAnnotationSql = "DELETE FROM ANNOTATIONS WHERE pid = ?";
+
+  try {
+    await conn.promise().query(deleteAnnotationSql, pid);
+  } catch (err) {
+    console.error("Error deleting annotation: ", err);
+    throw err;
+  }
+}
+
 // Deletes a project with a given pid
 async function deleteProject(pid) {
+  await deleteAllAnnotations(pid);
+
   const deleteProjectSql = "DELETE FROM PROJECTS WHERE pid = ?";
 
   try {
