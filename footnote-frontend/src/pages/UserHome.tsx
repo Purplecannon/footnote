@@ -36,11 +36,12 @@ import ProjectCard from "../components/ProjectCard";
 
 import { ProjectData } from "../types/types";
 
-import NewProjectIMG from "../assets/footnote.png";
+import NewProjectIMG from "../assets/plus_icon.jpg";
 
 import useProject from "../hooks/useProject";
 
 import axios from "axios";
+import "./UserHome.css";
 
 import { API_BASE_URL } from "../config";
 
