@@ -1,3 +1,5 @@
+// Author: Alicia, Mia
+
 const express = require("express");
 const multer = require("multer"); // Middleware for handling file uploads
 const { uploadToS3 } = require("../../services/s3Service"); // Import the S3 upload function
@@ -76,5 +78,27 @@ async function addUrl(pid, videoUrl) {
   }
 }
 
+// A function that convert timestamp (number) to mm:ss string format
+// For example, timestampString(4.932234) returns "00:05" since the milisecond is rounded to the nearest second
+function timestampString(timestamp) {
+  let res = "";
+  const minutes = Math.floor(timestamp / 60);
+  const seconds = Math.round(timestamp % 60);
+
+  if (minutes <= 9) {
+    // single digit
+    res += "0";
+  }
+  res += minutes;
+  res += ":";
+
+  if (seconds <= 9) {
+    // single digit
+    res += "0";
+  }
+  res += seconds;
+
+  return res;
+}
+
 module.exports = router;
-//export default router
