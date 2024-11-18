@@ -18,10 +18,12 @@ The beta release includes:
   - Video Storage
   - Playback controls
 
+- Annotation system
+    - Add, edit, and delete annotations
+
 Our work in progress:
 
 - Annotation system:
-  - Add, edit, and delete annotations
   - Time-synchronized notes
 
 # User Manual
