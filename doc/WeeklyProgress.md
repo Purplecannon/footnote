@@ -25,6 +25,7 @@ Initial meeting with team:
 - Started working on screens on Figma for Sign in, Login, and the Project page (video + annotations)
 
 #### Catherine Jin
+
 - Wrote user cases and discussed with team for feedback
 - Refreshed frontend and backend knowledge from previous courses
 
@@ -69,6 +70,7 @@ Initial meeting with team:
 - Researched cloud services and designed SQL schema
 
 #### Catherine Jin
+
 - Wrote some basic tests for creating a user and logging in (note: eventually rewritten by Lauren)
 - Began considering testing frameworks to use
 
@@ -108,6 +110,7 @@ Initial meeting with team:
 - Set up and initialized all USERS, PROJECTS, and ANNOTATIONS tables in app.js
 
 #### Catherine Jin
+
 - Rewrote and expanded upon unit tests for creating an account and logging in
 - Researched Javascript-specific testing frameworks
 - Set up testing branch
@@ -156,6 +159,7 @@ Initial meeting with team:
 - Improved code quality for my previously written code
 
 #### Catherine Jin
+
 - Switched to using Mocha for testing due to performance issues with Jest
 - Researched Mocha and Mocha assertion libraries
 - Installed Mocha and reconfigured testing suite to use it and the default node assertion library
@@ -207,6 +211,7 @@ Initial meeting with team:
   - Troubleshooting footnote-frontend: installed dependencies, fixed TS errors
 
 #### Catherine Jin
+
 - Ran a new set of dummy tests with Mocha
 - Created .env file on local machine and configured testing suite to run database tests
 - Began researching Supertest for http request testing
@@ -226,7 +231,6 @@ Initial meeting with team:
 
 #### Alicia Z.
 
-- Improved userHome page, by adding mocking projects while backend is offline.
 - Improved userHome page, by adding mocking projects while backend is offline.
 - Wrote my assignment part of the documentation.
 - Restructured the frontend with team.
@@ -262,6 +266,7 @@ Initial meeting with team:
 - Set up GitHub Secrets for sensitive info like .env and certificates, set up GitHub Actions to reflect that, reconfigured DigitalOcean database so GitHub Actions can connect
 
 #### Catherine Jin
+
 - Installed Supertest
 - Completed project tests - tests run successfully
 - Configured testing suite on local machine to upload files to Digital Ocean spaces
@@ -330,11 +335,14 @@ Initial meeting with team:
   - clicking on "create new project" button fetches a new project id from backend then routes to the corresponding project page
 - Fixed backend so that an uploaded video's URL is updated in the database for the given project id
 - Worked on frontend and backend so that when a user clicks on an existing project, it correctly loads the saved Project Name and Uploaded video
+- Added a function to frontend to seek when a user manually move the scrubber and track that timestamp
+- Added a function that convert timestamp (number) to mm:ss string format
 - Revised GitHub Secrets and GitHub Actions for DigitalOcean Spaces connection
 - Improved documentation formatting and content based on TA's feedback (README, UserManual, DeveloperGuidelines)
 - Worked on demo slides and script
 
 #### Catherine Jin
+
 - Rewrote video and project tests to account for changes in the code and implementation
 - Updated testing sections in the Developer Guidelines based on TA feedback
 - Added some minor test bug documentation
@@ -354,11 +362,14 @@ Initial meeting with team:
 
 ## Week 9
 
-## Assignment
+## Assignment: Peer review
 
 #### Kirupa Gunaseelan
 
 #### Mia Huynh
+
+- Delegated tasks for peer review assignment
+- Helped peer review team get set up to test our app
 
 #### Catherine Jin
 
