@@ -1,300 +1,454 @@
 //Author: Catherine
 
-import * as assert from "assert";
-import { getProjects, deleteProject } from "../routes/api/projects.js";
-import { createUser } from "../routes/auth/users.js";
-import { clearTables } from "../config/tables.js";
+import * as assert from 'assert';
+//import request from 'supertest';
+import app from '../app.js'
+import session from 'supertest-session';
 
-describe("Successful project creation", () => {
-  const username = "dummyUser";
-  const password = "dummyPassword";
+import {getProjects, deleteProject, loadProject} from '../routes/api/projects.js';
+import {clearTables} from "../config/tables.js";
 
-  before(async () => {
-    await clearTables();
+/* 
+    TODO Tests:
+    - create-project request
+    - loadProject method
+    - delete method
+    - getProjects method
+    - editProjectName method
+    - load homepage request (check that returns correct project list)
+    - load-project request
+    - edit-project-name request
+    - delete request
+*/
 
-    //create accounts to hold projects
-    const confirmPassword = "dummyPassword";
-    const userResult = await createUser(username, password, confirmPassword);
-    assert.deepStrictEqual(
-      userResult,
-      "Created user " + username.toLowerCase()
-    );
-  });
-  after(async () => {
-    await clearTables();
-  });
+const usersURL = '/users';
+const projectsURL = '/projects';
 
-  it("Handles basic creation and video upload (1)", async () => {
-    //project creation
-    const projectName = "Project1";
-    const createResult = await createProject(projectName, username);
-    const expectedResult =
-      "Created project " + projectName + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(createResult, expectedResult);
+describe('Handles project creation', () => {
+    let agent;
+    const username = "johndoe";
+    const password = "0RTHU4";
 
-    //TODO: Add video upload (addUrl Tests)
-  });
-
-  it("Handles basic creation and video upload (2)", async () => {
-    //project creation
-    const projectName = "Insert Project Name Here";
-    const createResult = await createProject(projectName, username);
-    const expectedResult =
-      "Created project " + projectName + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(createResult, expectedResult);
-
-    //TODO: Add video upload (addUrl Tests)
-  });
-});
-
-describe("Successful get projects", () => {
-  const username = "dummyUser";
-  const password = "dummyPassword";
-
-  before(async () => {
-    await clearTables();
-
-    //create accounts to hold projects
-    const confirmPassword = "dummyPassword";
-    const userResult = await createUser(username, password, confirmPassword);
-    assert.deepStrictEqual(
-      userResult,
-      "Created user " + username.toLowerCase()
-    );
-  });
-  after(async () => {
-    await clearTables();
-  });
-  it("Handles getting an empty project list", async () => {
-    const expectedResult = [];
-    const actualResult = await getProjects(username);
-    assert.deepStrictEqual(actualResult, expectedResult);
-  });
-  it("Handles getting a project list of length 1", async () => {
-    //create project
-    const projectName = "Project1";
-    const createResult = await createProject(projectName, username);
-    const projectResult =
-      "Created project " + projectName + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(createResult, projectResult);
-
-    const expectedResult = [{ id: 1, title: "Project1" }];
-    const actualResult = await getProjects(username);
-    assert.deepStrictEqual(actualResult, expectedResult);
-  });
-  it("Handles getting a project list of length > 1", async () => {
-    //create projects
-    const project2 = "Project2";
-    const create2 = await createProject(project2, username);
-    const result2 =
-      "Created project " + project2 + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(create2, result2);
-    const project3 = "Project3";
-    const create3 = await createProject(project3, username);
-    const result3 =
-      "Created project " + project3 + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(create3, result3);
-    const project4 = "Project4";
-    const create4 = await createProject(project4, username);
-    const result4 =
-      "Created project " + project4 + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(create4, result4);
-
-    const expectedResult = [
-      { id: 1, title: "Project1" },
-      { id: 2, title: "Project2" },
-      { id: 3, title: "Project3" },
-      { id: 4, title: "Project4" },
-    ];
-    const actualResult = await getProjects(username);
-    assert.deepStrictEqual(actualResult, expectedResult);
-  });
-});
-
-describe("Create project failure", () => {
-  const username = "dummyUser";
-  const password = "dummyPassword";
-
-  before(async () => {
-    await clearTables();
-
-    //create accounts to hold projects
-    const confirmPassword = "dummyPassword";
-    const userResult = await createUser(username, password, confirmPassword);
-    assert.deepStrictEqual(
-      userResult,
-      "Created user " + username.toLowerCase()
-    );
-  });
-  after(async () => {
-    await clearTables();
-  });
-
-  it("Empty username should fail", async () => {
-    const projectName = "Project1";
-    const createResult = await createProject(projectName, "");
-    const expectedResult = "Username is empty";
-    assert.deepStrictEqual(createResult, expectedResult);
-  });
-  it("Empty username (space) should fail", async () => {
-    const projectName = "ThisWillFail";
-    const createResult = await createProject(projectName, " ");
-    const expectedResult = "Username is empty";
-    assert.deepStrictEqual(createResult, expectedResult);
-  });
-  it("Empty project name should fail", async () => {
-    const projectName = "";
-    const createResult = await createProject(projectName, username);
-    const expectedResult = "Project name is empty";
-    assert.deepStrictEqual(createResult, expectedResult);
-  });
-  it("Empty project name (space) should fail", async () => {
-    const projectName = " ";
-    const createResult = await createProject(projectName, username);
-    const expectedResult = "Project name is empty";
-    assert.deepStrictEqual(createResult, expectedResult);
-  });
-});
-
-describe("Successful project deletion", () => {
-  const username = "dummyUser";
-  const password = "dummyPassword";
-
-  beforeEach(async () => {
-    await clearTables();
-
-    //create accounts to hold projects
-    const confirmPassword = "dummyPassword";
-    const userResult = await createUser(username, password, confirmPassword);
-    assert.deepStrictEqual(
-      userResult,
-      "Created user " + username.toLowerCase()
-    );
-  });
-  afterEach(async () => {
-    await clearTables();
-  });
-  it("Handles project creation and correct deletion (should not exist after)", async () => {
-    //create project
-    const projectName = "Project1";
-    const createResult = await createProject(projectName, username);
-    const projectResult =
-      "Created project " + projectName + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(createResult, projectResult);
-
-    //delete project
-    const pid = 1;
-    const expectedResult = "Deleted project with pid " + pid;
-    const actualResult = await deleteProject(pid);
-    assert.deepStrictEqual(expectedResult, actualResult);
-
-    const getResult = await getProjects(username);
-    const getExpected = [];
-    assert.deepStrictEqual(getResult, getExpected);
-
-    await clearTables();
-  });
-  it("Handles multiple projects created, one correctly deleted", async () => {
-    //create projects
-    const project1 = "Project1";
-    const create1 = await createProject(project1, username);
-    const expected1 =
-      "Created project " + project1 + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(create1, expected1);
-    const project2 = "Project2";
-    const create2 = await createProject(project2, username);
-    const result2 =
-      "Created project " + project2 + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(create2, result2);
-    const project3 = "Project3";
-    const create3 = await createProject(project3, username);
-    const result3 =
-      "Created project " + project3 + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(create3, result3);
-    const project4 = "Project4";
-    const create4 = await createProject(project4, username);
-    const result4 =
-      "Created project " + project4 + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(create4, result4);
-    const project5 = "Project5";
-    const create5 = await createProject(project5, username);
-    const result5 =
-      "Created project " + project5 + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(create5, result5);
-
-    //delete project
-    const pid = 3;
-    const expectedResult = "Deleted project with pid " + pid;
-    const actualResult = await deleteProject(pid);
-    assert.deepStrictEqual(expectedResult, actualResult);
-
-    const getResult = await getProjects(username);
-    const getExpected = [
-      { id: 1, title: "Project1" },
-      { id: 2, title: "Project2" },
-      { id: 4, title: "Project4" },
-      { id: 5, title: "Project5" },
-    ];
-    assert.deepStrictEqual(getResult, getExpected);
-  });
-});
-
-describe("Failed project deletion", () => {
-  const username = "dummyUser";
-  const password = "dummyPassword";
-
-  beforeEach(async () => {
-    await clearTables();
-
-    //create accounts to hold projects
-    const confirmPassword = "dummyPassword";
-    const userResult = await createUser(username, password, confirmPassword);
-    assert.deepStrictEqual(
-      userResult,
-      "Created user " + username.toLowerCase()
-    );
-  });
-  afterEach(async () => {
-    await clearTables();
-  });
-  /*
-    it('Empty project ID should fail', async () => {
-        const expectedResult = "Empty pid";
-        const actualResult = await(deleteProject(""));
-        assert.deepStrictEqual(actualResult, expectedResult);
+    before(async () => {
+        agent = session(app);
+        await agent
+                .post(usersURL + '/create-user')
+                .send({username: username, password: password, confirmPassword: password})
+                .expect(200);
     });
-    it('Empty project ID should fail', async () => {
-        const expectedResult = "Empty pid";
-        const actualResult = await(deleteProject(null));
-        assert.deepStrictEqual(actualResult, expectedResult);
+    beforeEach(() => {
+        agent = session(app);
+    });
+    after(async () => {
+        await agent.destroy();
+        await clearTables();
+    });
+
+    it('create-project fails when not logged in', async () => {
+        agent
+            .get(projectsURL + '/create-project')
+            .expect(401);
+    });
+
+    it('successful creates a project when logged in', async() => {
+        await agent
+                .post(usersURL + '/login-user')
+                .send({username: username, password: password})
+                .expect(200);
+
+        const projectResponse = await agent
+            .get(projectsURL + '/create-project')
+            .expect(200);
+        
+        const pid = projectResponse._body.pid;
+        assert.strictEqual(pid, 1);
+    });
+
+    it('successfully creates multiple projects', async() => {
+        await agent
+                .post(usersURL + '/login-user')
+                .send({username: username, password: password})
+                .expect(200);
+        
+        await agent
+                .get(projectsURL + '/create-project')
+                .expect(200);
+        await agent
+                .get(projectsURL + '/create-project')
+                .expect(200);
+        await agent
+                .get(projectsURL + '/create-project')
+                .expect(200);
+        await agent
+                .get(projectsURL + '/create-project')
+                .expect(200);
+
+        const getResponse = await getProjects(username);
+        assert.strictEqual(getResponse.length, 5);
+    })
+});
+
+describe('Handles loading a project', () => {
+    let agent;
+    const username = "arthurle34";
+    const password = "password123";
+
+    before(async () => {
+        agent = session(app);
+        await agent
+                .post(usersURL + '/create-user')
+                .send({username: username, password: password, confirmPassword: password})
+                .expect(200);
+    });
+    beforeEach(() => {
+        agent = session(app);
+    });
+    after(async () => {
+        await agent.destroy();
+        await clearTables();
+    });
+
+    it('successful load projects when logged in', async() => {
+        await agent
+                .post(usersURL + '/login-user')
+                .send({username: username, password: password})
+                .expect(200);
+        
+        const projectResponse = await agent
+            .get(projectsURL + '/create-project')
+            .expect(200);
+        
+        const pid = projectResponse._body.pid;
+        assert.strictEqual(pid, 1);
+
+        const loadResponse = 
+            await agent
+                    .get(projectsURL + "/load-project/" + pid)
+                    .expect(200);
+
+        assert.strictEqual(loadResponse._body.projectID, pid);
+        assert.strictEqual(loadResponse._body.title, "untitled");
+        assert.strictEqual(loadResponse._body.username, username);
+    });
+
+    it('load-project fails when not logged in', async() => {
+        const pid = 1;
+        await agent
+                .get(projectsURL + "/load-project/" + pid)
+                .expect(401);
+    });
+
+    /*
+    it('loading a nonexistent project fails', async() => {
+        await agent
+                .post(usersURL + '/login-user')
+                .send({username: username, password: password})
+                .expect(200);
+        
+        const pid1 = 1;
+        const pid2 = 2;
+        await agent
+                    .get(projectsURL + "/load-project/" + pid2)
+                    .expect(400);
+        await agent
+                    .delete(projectsURL + '/delete-project/' + pid1)
+                    .expect(400);
+    })
+    */
+});
+
+describe('Handles editing a project name', () => {
+    let agent;
+    const username = "mrjalapeno";
+    const password = "p4ssw0rd";
+
+    before(async () => {
+        agent = session(app);
+        await agent
+                .post(usersURL + '/create-user')
+                .send({username: username, password: password, confirmPassword: password})
+                .expect(200);
+    });
+    beforeEach(async () => {
+        agent = session(app);
+        await agent
+                .post(usersURL + '/login-user')
+                .send({username: username, password: password})
+                .expect(200);
+    });
+    after(async () => {
+        await agent.destroy();
+        await clearTables();
+    });
+
+    it('successful project name edit when logged in', async() => {        
+        const createResponse = await agent
+                .get(projectsURL + '/create-project')
+                .expect(200);
+    
+        const pid = createResponse._body.pid;
+        const projectName = "Dance Project 1";
+        
+        const editResponse =
+            await agent
+                    .put(projectsURL + '/edit-project-name')
+                    .send({projectName: projectName, pid: pid})
+                    .expect(200);
+        assert.strictEqual(editResponse.text, "Project name edited successfully");
+
+        const loadResponse = 
+            await agent
+                    .get(projectsURL + "/load-project/" + pid)
+                    .expect(200);
+
+        assert.strictEqual(loadResponse._body.projectID, pid);
+        assert.strictEqual(loadResponse._body.title, projectName);
+        assert.strictEqual(loadResponse._body.username, username);
+    });
+
+    it('failed project name edit when not logged in', async() => {
+        const pid = 1;
+        const projectName = "Dance Project 1";
+        
+        agent.destroy();
+        await agent
+                .put(projectsURL + '/edit-project-name')
+                .send({projectName: projectName, pid: pid})
+                .expect(401);
+    });
+
+    it('failed project name edit when new name is too long', async() => {
+        const createResponse = await agent
+                .get(projectsURL + '/create-project')
+                .expect(200);
+    
+        const pid = createResponse._body.pid;
+
+        const nameLen100 = "100charactersarerequiredforthispasswordsoimjustgonnakeeptypingyippeiamextremelytiredaaaaaaaaaaaaaaaa";
+        const nameLen100plus = "jurgenleitnerstupididiotmothereffingjurgenleitnergoddangfoolbookcollectingdusteatingratoldmanstupididiotavatarofthewenchbiggestclowninthecircus";
+
+        agent
+            .put(projectsURL + '/edit-project-name')
+            .send({projectName: nameLen100, pid: pid})
+            .expect(400);
+
+        agent
+            .put(projectsURL + '/edit-project-name')
+            .send({projectName: nameLen100plus, pid: pid})
+            .expect(400);
+    });
+    /*
+    it('failed project name edit when new name is empty', async() => {
+        const pid = 1;
+        agent
+            .put(projectsURL + '/edit-project-name')
+            .send({projectName: "", pid: pid})
+            .expect(400);
     });
     */
-  it("Project ID that does not exist should fail", async () => {
-    const pid = 1;
-    const expectedResult = "No matching pid " + pid + " found in PROJECTS";
-    const actualResult = await deleteProject(pid);
-    assert.deepStrictEqual(actualResult, expectedResult);
-  });
-  it("Project ID that does not exist should fail", async () => {
-    const project1 = "Project1";
-    const create1 = await createProject(project1, username);
-    const expected1 =
-      "Created project " + project1 + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(create1, expected1);
-    const project2 = "Project2";
-    const create2 = await createProject(project2, username);
-    const result2 =
-      "Created project " + project2 + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(create2, result2);
-    const project3 = "Project3";
-    const create3 = await createProject(project3, username);
-    const result3 =
-      "Created project " + project3 + "for user " + username.toLowerCase();
-    assert.deepStrictEqual(create3, result3);
+    it('failed project name edit when the project does not belong to the user', async() => {
+        const createResponse = await agent
+        .get(projectsURL + '/create-project')
+        .expect(200);
 
-    const pid = 5;
-    const expectedResult = "No matching pid " + pid + " found in PROJECTS";
-    const actualResult = await deleteProject(pid);
-    assert.deepStrictEqual(actualResult, expectedResult);
-  });
+        const pid = createResponse._body.pid;
+
+        agent.destroy();
+
+        const username2 = 'hatsunemiku';
+        const password2 = '01'
+        await agent
+                .post(usersURL + '/create-user')
+                .send({username: username2, password: password2, confirmPassword: password2})
+                .expect(200);
+        
+        agent
+            .put(projectsURL + '/edit-project-name')
+            .send({projectName: "projectname", pid: pid})
+            .expect(403);
+    });
 });
+
+describe('Handles project deletion', () => {
+    let agent;
+    const username = "pikachic";
+    const password = "egg";
+
+    before(async () => {
+        agent = session(app);
+        await agent
+                .post(usersURL + '/create-user')
+                .send({username: username, password: password, confirmPassword: password})
+                .expect(200);
+    });
+    beforeEach(() => {
+        agent = session(app);
+    });
+    after(async () => {
+        await agent.destroy();
+        await clearTables();
+    });
+    
+    it('successful project deletion when logged in', async() => {
+        await agent
+                .post(usersURL + '/login-user')
+                .send({username: username, password: password})
+                .expect(200);
+        
+        const projectResponse = 
+            await agent
+                    .get(projectsURL + '/create-project')
+                    .expect(200);
+            
+        const pid = projectResponse._body.pid;
+        
+        const response = await agent
+                .delete(projectsURL + '/delete-project/' + pid)
+                .expect(200);
+        assert.strictEqual(response.text,  "Deleted project with pid " + pid);
+        
+        const loadResponse = 
+            await agent
+                    .get(projectsURL + "/load-project/" + pid)
+                    .expect(200);
+
+        assert.strictEqual(loadResponse._body, undefined);
+    });
+
+    it('delete-project fails when not logged in', async() => {
+        await agent.destroy();
+        const pid = 1;
+        await agent
+                .delete(projectsURL + "/delete-project/" + pid)
+                .expect(401);
+    });
+
+    it('deletion of nonexistent project fails', async() => {
+        const pid = 1;
+        await agent
+                .post(usersURL + '/login-user')
+                .send({username: username, password: password})
+                .expect(200);
+        const response = await agent
+                .delete(projectsURL + '/delete-project/' + pid)
+                .expect(200);
+        assert.strictEqual(response.text, "No matching pid " + pid + " found in PROJECTS");
+    });
+
+    /*
+    it('delete-project fails when logged in and projectID is missing', async() => {
+        await agent
+                .post(usersURL + '/login-user')
+                .send({username: username, password: password})
+                .expect(200);
+        await agent
+                .delete(projectsURL + '/delete-project/')
+                .expect(400);
+    });
+    */
+});
+
+describe('Handles loading the homepage project list', () => {
+    let agent;
+    const username = "johndoe";
+    const password = "0RTHU4";
+
+    before(async () => {
+        agent = session(app);
+        await agent
+                .post(usersURL + '/create-user')
+                .send({username: username, password: password, confirmPassword: password})
+                .expect(200);
+    });
+    beforeEach(async () => {
+        agent = session(app);
+        await agent
+            .post(usersURL + '/login-user')
+            .send({username: username, password: password})
+            .expect(200);
+    });
+    after(async () => {
+        await agent.destroy();
+        await clearTables();
+    });
+
+    it('Fails when not logged in', async() => {
+        agent.destroy();
+        await agent
+            .get(projectsURL + "/home")
+            .expect(401);
+    });
+
+    it('Empty project list', async() => {
+        const response = 
+            await agent
+                    .get(projectsURL + '/home')
+                    .expect(200);
+        assert.deepStrictEqual(response._body, []);
+    });
+    
+    it('Project list with one project', async() => {
+        const p1Response = 
+            await agent
+                    .get(projectsURL + '/create-project')
+                    .expect(200);
+        const pid1 = p1Response._body.pid;
+        const projectName1 = 'Project1'
+
+        await agent
+            .put(projectsURL + '/edit-project-name')
+            .send({projectName: projectName1, pid: pid1})
+            .expect(200);
+        
+        const response = 
+            await agent
+                    .get(projectsURL + '/home')
+                    .expect(200);
+        assert.deepStrictEqual(response._body, [{projectID: pid1, title: projectName1}]);
+    });
+
+    it('Project list with multiple projects', async() => {
+        const pid1 = 1;
+        const load1Response = 
+            await agent
+                    .get(projectsURL + '/load-project/' + pid1)
+                    .expect(200);
+        const projectName1 = load1Response._body.title;
+
+        const p2Response = 
+            await agent
+                    .get(projectsURL + '/create-project')
+                    .expect(200);
+        const pid2 = p2Response._body.pid;
+        const projectName2 = 'Fight Song Choreo'
+
+        await agent
+            .put(projectsURL + '/edit-project-name')
+            .send({projectName: projectName2, pid: pid2})
+            .expect(200);
+
+        const p3Response = 
+            await agent
+                    .get(projectsURL + '/create-project')
+                    .expect(200);
+        const pid3 = p3Response._body.pid;
+        const projectName3 = 'CYC Opening Ceremony'
+
+        await agent
+            .put(projectsURL + '/edit-project-name')
+            .send({projectName: projectName3, pid: pid3})
+            .expect(200);
+        
+        const response = 
+            await agent
+                    .get(projectsURL + '/home')
+                    .expect(200);
+
+        assert.deepStrictEqual(response._body, [
+            {projectID: pid1, title: projectName1},
+            {projectID: pid2, title: projectName2},
+            {projectID: pid3, title: projectName3}]);
+    });
+});
+
+
