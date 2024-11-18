@@ -362,11 +362,14 @@ Initial meeting with team:
 
 ## Week 9
 
-## Assignment
+## Assignment: Peer review
 
 #### Kirupa Gunaseelan
 
 #### Mia Huynh
+
+- Delegated tasks for peer review assignment
+- Helped peer review team get set up to test our app
 
 #### Catherine Jin
 
