@@ -1,37 +1,21 @@
 import React from "react";
-
 import { ProjectData } from "../types/types";
-
-import Card from "react-bootstrap/Card";
-
-import Button from "react-bootstrap/Button";
+import "./ProjectCard.css";
+import dancers from "../assets/dancers.png";
 
 interface Props {
   project: ProjectData;
-
-  buttonText: string;
-
   onClick: () => void;
 }
 
-const ProjectCard: React.FC<Props> = ({ project, buttonText, onClick }) => {
+const ProjectCard: React.FC<Props> = ({ project, onClick }) => {
   const { title, thumbnailURL } = project;
-
-  const placeholderPic = "https://placehold.co/286x286";
+  const placeholderPic = dancers;
 
   return (
-    <div className="holder">
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src={thumbnailURL || placeholderPic} />
-
-        <Card.Body>
-          <Card.Title>{title || "Untitled"}</Card.Title>
-
-          <Button variant="primary" onClick={onClick}>
-            {buttonText}
-          </Button>
-        </Card.Body>
-      </Card>
+    <div className="project-card" onClick={onClick}>
+      <img src={thumbnailURL || placeholderPic} alt={title} />
+      <p className="project-title">{title || "Untitled"}</p>
     </div>
   );
 };
