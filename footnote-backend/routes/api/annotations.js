@@ -5,12 +5,12 @@ var express = require("express");
 var router = express.Router();
 const conn = require("../../config/database");
 
-// endpoint: "http://localhost:3000/annotations/all"
+// endpoint: GET "http://localhost:3000/annotations/all"
 router.get("/all", async (req, res) => {
-  // TODO: session handling?
-  // const pid = req.session.pid;
+  if (!req.session.isLoggedIn || !req.session.username) {
+    return res.status(401).send("Unauthorized, please log in");
+  }
 
-  console.log(req.query.projectID);
   try {
     const result = await getAnnotations(req.query.projectID);
     res.send(result);
@@ -20,14 +20,16 @@ router.get("/all", async (req, res) => {
   }
 });
 
-// endpoint: "http://localhost:3000/annotations/add"
+// endpoint: POST "http://localhost:3000/annotations/add"
 router.post("/add", async (req, res) => {
-  // TODO: session handling?
-  // const pid = req.session.pid;
+  if (!req.session.isLoggedIn || !req.session.username) {
+    return res.status(401).send("Unauthorized, please log in");
+  }
+
   const { timestamp, text, projectID } = req.body;
 
   try {
-    const result = await addAnnotation(text, projectID);
+    const result = await addAnnotation(timestamp, text, projectID);
     res.send(result);
   } catch (err) {
     console.log("Error adding annotation: ", err);
@@ -35,9 +37,12 @@ router.post("/add", async (req, res) => {
   }
 });
 
-// endpoint: "http://localhost:3000/annotations/edit"
+// endpoint: PUT "http://localhost:3000/annotations/edit"
 router.put("/edit", async (req, res) => {
-  // TODO: session handling?
+  if (!req.session.isLoggedIn || !req.session.username) {
+    return res.status(401).send("Unauthorized, please log in");
+  }
+
   const { id, text, projectID } = req.body;
 
   try {
@@ -83,13 +88,8 @@ router.delete("/delete", async (req, res) => {
 async function getAnnotations(pid) {
   const getAnnotationsSql =
     "SELECT aid, timestamp, text FROM ANNOTATIONS WHERE pid = ?";
-  // const mockProjectSql = "INSERT INTO PROJECTS (project_name, username) VALUES ('eta newjeans', 'footnote');";
-  // const mockAnnotationSql = "INSERT INTO ANNOTATIONS (timestamp, text, pid) VALUES ('00:00', 'first annotation', 1), ('01:32', 'second annotation', 1);";
 
   try {
-    // conn.promise().query(mockProjectSql);
-    // conn.promise().query(mockAnnotationSql);
-
     const [rows] = await conn.promise().query(getAnnotationsSql, [pid]);
 
     if (rows.length === 0) {
@@ -115,15 +115,19 @@ async function getAnnotations(pid) {
 //   timestamp: "00:31",
 //   text: "this is an annotation"
 // }
-async function addAnnotation(text, pid) {
-  const addAnnotationSql = "INSERT INTO ANNOTATIONS (text, pid) VALUES (?, ?);";
-
+// async function addAnnotation(text, pid) {
+async function addAnnotation(timestamp, text, pid) {
+  const addAnnotationSql =
+    "INSERT INTO ANNOTATIONS (timestamp, text, pid) VALUES (?, ?, ?);";
   try {
-    const [result] = await conn.promise().query(addAnnotationSql, [text, pid]);
+    const [result] = await conn
+      .promise()
+      .query(addAnnotationSql, [timestamp, text, pid]);
 
     if (result.affectedRows > 0) {
       return {
         id: result.insertId, // equivalent to aid
+        timestamp: timestamp,
         text: text,
       };
     } else {
