@@ -3,7 +3,8 @@
 import * as assert from 'assert';
 import {createUser, loginUser} from "../routes/auth/users.js";
 import {clearTables} from "../config/tables.js";
-
+import app from '../app.js'
+import session from 'supertest-session';
 
 describe('Successful createUser', () => {
     // TODO: Comment out clearTable
@@ -284,5 +285,128 @@ describe('incorrect password', () => {
 
         const loginResult = await loginUser(username, wrongPassword);
         assert.strictEqual(loginResult, expectedIncorrectResult);
+    });
+
+});
+
+//Tests added by Catherine
+
+describe("HTTP /create-user tests", () => {
+    let agent;
+    const usersURL = "/users";
+
+    beforeEach(async () => {
+        await clearTables();
+        agent = session(app);
+    });
+    after(async () => {
+        await clearTables();
+    });
+
+    it('Handles basic user creation - 200', async() => {
+        const username = "johndoe";
+        const password = "0RTHU4";
+        const response = await agent
+                                    .post(usersURL + '/create-user')
+                                    .send({username: username, password: password, confirmPassword: password})
+                                    .expect(200);
+        assert.strictEqual(response.text, "Created user " + username);
+    });
+    it('Handles failed user creation (empty username)', async() => {
+        const username = "";
+        const password = "egg";
+        const response = await agent
+                                    .post(usersURL + '/create-user')
+                                    .send({username: username, password: password, confirmPassword: password})
+                                    .expect(200);
+        assert.strictEqual(response.text, "Username is empty");
+    });
+    it('Handles failed user creation (empty password)', async() => {
+        const username = "arthurlester34";
+        const password = "password1234";
+        const response = await agent
+                                    .post(usersURL + '/create-user')
+                                    .send({username: username, password: "", confirmPassword: password})
+                                    .expect(200);
+        assert.strictEqual(response.text, "Password or confirm password is empty");
+    });
+    it('Handles failed user creation (empty confirmPassword)', async() => {
+        const username = "pikachic";
+        const password = "iameepy";
+        const response = await agent
+                                    .post(usersURL + '/create-user')
+                                    .send({username: username, password: password, confirmPassword: ""})
+                                    .expect(200);
+        assert.strictEqual(response.text, "Password or confirm password is empty");
+    });
+    it('Handles failed user creation (non-matching confirmPassword)', async() => {
+        const username = "johndoe";
+        const password = "0RTHU4";
+        const confirmPassword = "Y3LL0W";
+        const response = await agent
+                                .post(usersURL + '/create-user')
+                                .send({username: username, password: password, confirmPassword: confirmPassword})
+                                .expect(200);
+        assert.strictEqual(response.text, "Password and confirm password don't match");
+    });
+});
+
+describe("HTTP /login-user tests", () => {
+    let agent;
+    const usersURL = "/users";
+    const username = "johndoe";
+    const password = "ORTHU4";
+
+    beforeEach(async () => {
+        agent = session(app);
+        await agent.destroy();
+    });
+    after(async () => {
+        await clearTables();
+    });
+    it('Handles basic login - 200', async() => {
+        const createResponse = await agent
+                                    .post(usersURL + '/create-user')
+                                    .send({username: username, password: password, confirmPassword: password})
+                                    .expect(200);
+        assert.strictEqual(createResponse.text, "Created user " + username);
+
+        await agent.destroy();
+
+        const loginResponse = await agent
+                                    .post(usersURL + '/login-user')
+                                    .send({username: username, password: password})
+                                    .expect(200);
+        assert.strictEqual(loginResponse.text, "Login successful for user " + username);
+    });
+    it('Handles failed login (empty username)', async() => {
+        const loginResponse = await agent
+                                    .post(usersURL + '/login-user')
+                                    .send({username: "", password: password})
+                                    .expect(200);
+        assert.strictEqual(loginResponse.text, "Username or password is empty");
+    });
+    it('Handles failed login (empty password)', async() => {
+        const loginResponse = await agent
+                                    .post(usersURL + '/login-user')
+                                    .send({username: username, password: ""})
+                                    .expect(200);
+        assert.strictEqual(loginResponse.text, "Username or password is empty");
+    });
+    it('Handles failed login (incorrect password)', async() => {
+        const badPassword = 'gardettos';
+        const loginResponse = await agent
+                                    .post(usersURL + '/login-user')
+                                    .send({username: username, password: badPassword})
+                                    .expect(200);
+        assert.strictEqual(loginResponse.text, "Incorrect password");
+    });
+    it('Handles failed login (user does not exist)', async() => {
+        const badUsername = "larson";
+        const loginResponse = await agent
+                                    .post(usersURL + '/login-user')
+                                    .send({username: badUsername, password: password})
+                                    .expect(200);
+        assert.strictEqual(loginResponse.text, "Username doesn't exist");
     });
 });
