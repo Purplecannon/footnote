@@ -24,6 +24,10 @@ Initial meeting with team:
 - Did research on frontend tools (HTML/CSS/React) as well as Figma
 - Started working on screens on Figma for Sign in, Login, and the Project page (video + annotations)
 
+#### Catherine Jin
+- Wrote user cases and discussed with team for feedback
+- Refreshed frontend and backend knowledge from previous courses
+
 #### Elainie Kassa
 
 - Wrote user-cases. Discussed with team for feedback.
@@ -65,6 +69,8 @@ Initial meeting with team:
 - Researched cloud services and designed SQL schema
 
 #### Catherine Jin
+- Wrote some basic tests for creating a user and logging in (note: eventually rewritten by Lauren)
+- Began considering testing frameworks to use
 
 #### Elainie Kassa
 
@@ -102,11 +108,10 @@ Initial meeting with team:
 - Set up and initialized all USERS, PROJECTS, and ANNOTATIONS tables in app.js
 
 #### Catherine Jin
-
-- Write unit tests for creating an account and logging in
-- (won't run the unit tests until those functions are complete and a delete account function is implemented so we can remove any dummy accounts added during unit testing)
+- Rewrote and expanded upon unit tests for creating an account and logging in
+- Researched Javascript-specific testing frameworks
 - Set up testing branch
-- Started researching Javascript-specific testing frameworks
+- Installed successfully ran a dummy test with Jest
 
 #### Elainie Kassa
 
@@ -151,6 +156,10 @@ Initial meeting with team:
 - Improved code quality for my previously written code
 
 #### Catherine Jin
+- Switched to using Mocha for testing due to performance issues with Jest
+- Researched Mocha and Mocha assertion libraries
+- Installed Mocha and reconfigured testing suite to use it and the default node assertion library
+- Set up GitHub Actions for CI with Mia
 
 #### Elainie Kassa
 
@@ -198,6 +207,10 @@ Initial meeting with team:
   - Troubleshooting footnote-frontend: installed dependencies, fixed TS errors
 
 #### Catherine Jin
+- Ran a new set of dummy tests with Mocha
+- Created .env file on local machine and configured testing suite to run database tests
+- Began researching Supertest for http request testing
+- Wrote the testing-related sections in the Developer Guidelines
 
 #### Elainie Kassa
 
@@ -249,6 +262,12 @@ Initial meeting with team:
 - Set up GitHub Secrets for sensitive info like .env and certificates, set up GitHub Actions to reflect that, reconfigured DigitalOcean database so GitHub Actions can connect
 
 #### Catherine Jin
+- Installed Supertest
+- Completed project tests - tests run successfully
+- Configured testing suite on local machine to upload files to Digital Ocean spaces
+- Successfully ran a http post request test using Supertest
+- Completed video upload tests - tests run successfully
+- Set up new test-suite branch without the .env file
 
 #### Elainie Kassa
 
@@ -318,6 +337,10 @@ Initial meeting with team:
 - Worked on demo slides and script
 
 #### Catherine Jin
+- Rewrote video and project tests to account for changes in the code and implementation
+- Updated testing sections in the Developer Guidelines based on TA feedback
+- Added some minor test bug documentation
+- Worked on demo script
 
 #### Elainie Kassa
 

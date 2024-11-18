@@ -42,6 +42,7 @@ router.post("/upload-video", upload.single("video"), async (req, res) => {
 
     // Call the S3 upload function to store the file in DigitalOcean Spaces
     const uploadResult = await uploadToS3(file);
+    console.log(uploadResult);
 
     // Update the Url for video with given pid in DigitalOcean Cluser database
     const messageUrl = await addUrl(pid, uploadResult.Location);
