@@ -78,7 +78,7 @@ async function initialize() {
   }
 }
 
-// initialize();
+initialize();
 ////////////////
 
 // catch 404 and forward to error handler
