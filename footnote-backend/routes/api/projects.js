@@ -5,9 +5,8 @@ const express = require("express");
 const router = express.Router();
 const conn = require("../../config/database");
 
-// endpoint: "http://localhost:3000/projects/home"
+// endpoint: GET "http://localhost:3000/projects/home"
 router.get("/home", async (req, res) => {
-  // session
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send("Unauthorized, please log in");
   }
@@ -54,29 +53,6 @@ router.get("/load-project/:pid", async (req, res) => {
   }
 });
 
-async function loadProject(pid) {
-  const loadProjectSql = "SELECT * FROM PROJECTS WHERE pid = ?;";
-
-  try {
-    const [rows] = await conn.promise().query(loadProjectSql, [pid]);
-    if (rows.length === 0) {
-      return null; // no projects found
-    } else {
-      const row = rows[0];
-      return {
-        projectID: row.pid,
-        title: row.project_name || "untitled",
-        videoURL: row.video_url,
-        thumbnailURL: row.thumbnail_url,
-        username: row.username,
-      };
-    }
-  } catch (err) {
-    console.log("Error loading project", err);
-    throw err;
-  }
-}
-
 // endpoint: "http://localhost:3000/projects/edit-project-name"
 router.put("/edit-project-name", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
@@ -115,7 +91,6 @@ router.put("/edit-project-name", async (req, res) => {
 // endpoint: DELETE "http://localhost:3000/projects/delete-project"
 // TODO: Path is set up for testing purposes. Get pid from somewhere
 router.delete("/delete-project/:projectID", async (req, res) => {
-  // session
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send("Unauthorized, please log in");
   }
@@ -176,6 +151,29 @@ async function getPid(username) {
   }
 }
 
+async function loadProject(pid) {
+  const loadProjectSql = "SELECT * FROM PROJECTS WHERE pid = ?;";
+
+  try {
+    const [rows] = await conn.promise().query(loadProjectSql, [pid]);
+    if (rows.length === 0) {
+      return null; // no projects found
+    } else {
+      const row = rows[0];
+      return {
+        projectID: row.pid,
+        title: row.project_name || "untitled",
+        videoURL: row.video_url,
+        thumbnailURL: row.thumbnail_url,
+        username: row.username,
+      };
+    }
+  } catch (err) {
+    console.log("Error loading project", err);
+    throw err;
+  }
+}
+
 async function editProjectName(projectName, pid) {
   const editProjectNameSql =
     "UPDATE PROJECTS SET project_name = ? WHERE pid = ?;";
@@ -226,46 +224,9 @@ async function deleteProject(pid) {
   }
 }
 
-// Create a new project and insert a new tuple with (projectName, username)
-// into the PROJECTS table. URL will be added later once the user uploads a video.
-// pid (Project ID) is autoincremented. Same project name can exist since pid is
-// the unique identifier.
-// async function createProject(projectName, username) {
-//   // TODO: ENSURE WE CAN GET HERE ONLY AFTER LOGIN. IF NOT, NEED TO MAKE SURE USERNAME
-//   // EXIST IN DB BEFORE GETPORJECTS
-//   // The foreign key constraint should automatically enforce us from inserting into
-//   // PROJECTS if there's no corresponding username in USERS
-
-//   const createProjectSql =
-//     "INSERT INTO PROJECTS(project_name, username) VALUES(?, ?)";
-
-//   try {
-//     // check if projectName or username is empty
-//     if (!projectName || projectName.trim() === "") {
-//       return "Project name is empty";
-//     }
-
-//     if (!username || username.trim() === "") {
-//       return "Username is empty";
-//     }
-
-//     // usernames are not case-sensitive
-//     const usernameLower = username.toLowerCase();
-
-//     await conn.promise().query(createProjectSql, [projectName, usernameLower]);
-
-//     return "Created project " + projectName + "for user " + usernameLower;
-//   } catch (err) {
-//     console.error("Error during project creation: ", err);
-//     return "Error during project creation";
-//   }
-// }
-
 // Exports
 module.exports = router;
 module.exports.getProjects = getProjects;
 module.exports.deleteProject = deleteProject;
-
-// Test Exports
 module.exports.loadProject = loadProject;
 module.exports.editProjectName = editProjectName;
