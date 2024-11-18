@@ -27,7 +27,7 @@ router.post("/add", async (req, res) => {
   const { timestamp, text, projectID } = req.body;
 
   try {
-    const result = await addAnnotation(timestamp, text, projectID);
+    const result = await addAnnotation(text, projectID);
     res.send(result);
   } catch (err) {
     console.log("Error adding annotation: ", err);
@@ -115,19 +115,15 @@ async function getAnnotations(pid) {
 //   timestamp: "00:31",
 //   text: "this is an annotation"
 // }
-async function addAnnotation(timestamp, text, pid) {
-  const addAnnotationSql =
-    "INSERT INTO ANNOTATIONS (timestamp, text, pid) VALUES (?, ?, ?);";
+async function addAnnotation(text, pid) {
+  const addAnnotationSql = "INSERT INTO ANNOTATIONS (text, pid) VALUES (?, ?);";
 
   try {
-    const [result] = await conn
-      .promise()
-      .query(addAnnotationSql, [timestamp, text, pid]);
+    const [result] = await conn.promise().query(addAnnotationSql, [text, pid]);
 
     if (result.affectedRows > 0) {
       return {
         id: result.insertId, // equivalent to aid
-        timestamp: timestamp,
         text: text,
       };
     } else {
