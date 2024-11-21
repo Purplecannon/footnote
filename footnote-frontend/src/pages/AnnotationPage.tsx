@@ -42,7 +42,7 @@ const AnnotationPage: React.FC = () => {
     if (playerRef.current) {
       const currentTime = playerRef.current.getCurrentTime();
       setTimestamp(currentTime);
-      console.log("Video paused at:", timestamp);
+      console.log("Video paused at:", currentTime);
     }
   };
 
