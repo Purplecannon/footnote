@@ -1,7 +1,7 @@
 import React from "react";
-import { ProjectData } from "../types/types";
+import { ProjectData } from "../../types/types";
 import "./ProjectCard.css";
-import dancers from "../assets/dancers.png";
+import dancers from "../../assets/dancers.png";
 
 interface Props {
   project: ProjectData;
