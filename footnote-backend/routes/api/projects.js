@@ -1,11 +1,25 @@
-// Author: Mia
-// file for project back end handling
+/**
+ * Author: Mia
+ * File for project back end handling
+ */
 
+// Imports
 const express = require("express");
 const router = express.Router();
 const conn = require("../../config/database");
+const {
+  CHECK_OWN_PROJECT,
+  GET_PROJECTS_BY_USERNAME,
+  INSERT_PROJECT,
+  GET_PROJECT_BY_PID,
+  UPDATE_PROJECTNAME,
+  DELETE_PROJECT_BY_PID,
+  DELETE_ANNOTATIONS_BY_PID,
+} = require("../../queries/sqlConstants");
 
-// endpoint: GET "http://localhost:3000/projects/home"
+/**
+ * Endpoint: GET http://localhost:3000/projects/home
+ */
 router.get("/home", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send("Unauthorized, please log in");
@@ -20,7 +34,9 @@ router.get("/home", async (req, res) => {
   }
 });
 
-// endpoint: GET "http://localhost:3000/projects/create-project"
+/**
+ * Endpoint: GET http://localhost:3000/projects/create-project
+ */
 router.get("/create-project", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send("Unauthorized, please log in");
@@ -36,7 +52,9 @@ router.get("/create-project", async (req, res) => {
   }
 });
 
-// endpoint: GET "http://localhost:3000/projects/load-project/:pid"
+/**
+ * Endpoint: GET http://localhost:3000/projects/load-project/:pid
+ */
 router.get("/load-project/:pid", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send("Unauthorized, please log in");
@@ -53,7 +71,9 @@ router.get("/load-project/:pid", async (req, res) => {
   }
 });
 
-// endpoint: "http://localhost:3000/projects/edit-project-name"
+/**
+ * Endpoint: PUT http://localhost:3000/projects/edit-project-name
+ */
 router.put("/edit-project-name", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send("Unauthorized, please log in");
@@ -69,8 +89,7 @@ router.put("/edit-project-name", async (req, res) => {
 
   try {
     // Check if the user owns the project
-    const projectCheckSql = "SELECT username FROM PROJECTS WHERE pid = ?";
-    const [rows] = await conn.promise().query(projectCheckSql, [pid]);
+    const [rows] = await conn.promise().query(CHECK_OWN_PROJECT, [pid]);
     const project = rows[0];
 
     if (!project || project.username !== req.session.username) {
@@ -88,8 +107,9 @@ router.put("/edit-project-name", async (req, res) => {
   }
 });
 
-// endpoint: DELETE "http://localhost:3000/projects/delete-project"
-// TODO: Path is set up for testing purposes. Get pid from somewhere
+/**
+ * Endpoint: DELETE http://localhost:3000/projects/delete-project
+ */
 router.delete("/delete-project/:projectID", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send("Unauthorized, please log in");
@@ -106,13 +126,12 @@ router.delete("/delete-project/:projectID", async (req, res) => {
   }
 });
 
-// Retrieve the list of existing projects (pid, project_name) under the given username
+/**
+ * Retrieve the list of existing projects (pid, project_name) under the given username
+ * @param {*} username
+ * @returns
+ */
 async function getProjects(username) {
-  // TODO: ENSURE WE CAN GET HERE ONLY AFTER LOGIN. IF NOT, NEED TO MAKE SURE USERNAME
-  // EXIST IN DB BEFORE GETPORJECTS
-  const getProjectsSql =
-    "SELECT pid, project_name FROM PROJECTS WHERE username = ?;";
-
   try {
     // usernames are not case-sensitive
     const usernameLower = username.toLowerCase();
@@ -120,7 +139,9 @@ async function getProjects(username) {
     // retrieve projects under this username in database
     // rows hold the results, i.e., the first element of the two-element array returned by .query()
     // rows is either empty [] or is an array of objects:
-    const [rows] = await conn.promise().query(getProjectsSql, [usernameLower]);
+    const [rows] = await conn
+      .promise()
+      .query(GET_PROJECTS_BY_USERNAME, [usernameLower]);
 
     if (rows.length === 0) {
       return [];
@@ -138,12 +159,14 @@ async function getProjects(username) {
   }
 }
 
-// Retrieve a project id for a newly created project for the given username
+/**
+ * Retrieve a project id for a newly created project for the given username
+ * @param {*} username
+ * @returns
+ */
 async function getPid(username) {
-  const insertPidSql = "INSERT INTO PROJECTS(username) VALUES(?);";
-
   try {
-    const [result] = await conn.promise().query(insertPidSql, [username]);
+    const [result] = await conn.promise().query(INSERT_PROJECT, [username]);
     return result.insertId;
   } catch (err) {
     console.error("Error getting new pid ", err);
@@ -151,11 +174,14 @@ async function getPid(username) {
   }
 }
 
+/**
+ *
+ * @param {*} pid
+ * @returns
+ */
 async function loadProject(pid) {
-  const loadProjectSql = "SELECT * FROM PROJECTS WHERE pid = ?;";
-
   try {
-    const [rows] = await conn.promise().query(loadProjectSql, [pid]);
+    const [rows] = await conn.promise().query(GET_PROJECT_BY_PID, [pid]);
     if (rows.length === 0) {
       return null; // no projects found
     } else {
@@ -174,14 +200,17 @@ async function loadProject(pid) {
   }
 }
 
+/**
+ *
+ * @param {*} projectName
+ * @param {*} pid
+ * @returns
+ */
 async function editProjectName(projectName, pid) {
-  const editProjectNameSql =
-    "UPDATE PROJECTS SET project_name = ? WHERE pid = ?;";
-
   try {
     const [result] = await conn
       .promise()
-      .query(editProjectNameSql, [projectName, pid]);
+      .query(UPDATE_PROJECTNAME, [projectName, pid]);
     if (result.affectedRows > 0) {
       return "Project name edited successfully";
     } else {
@@ -193,25 +222,28 @@ async function editProjectName(projectName, pid) {
   }
 }
 
+/**
+ *
+ * @param {*} pid
+ */
 async function deleteAllAnnotations(pid) {
-  const deleteAnnotationSql = "DELETE FROM ANNOTATIONS WHERE pid = ?";
-
   try {
-    await conn.promise().query(deleteAnnotationSql, pid);
+    await conn.promise().query(DELETE_ANNOTATIONS_BY_PID, pid);
   } catch (err) {
     console.error("Error deleting annotation: ", err);
     throw err;
   }
 }
 
-// Deletes a project with a given pid
+/**
+ * Deletes a project with a given pid
+ * @param {*} pid
+ * @returns
+ */
 async function deleteProject(pid) {
   await deleteAllAnnotations(pid);
-
-  const deleteProjectSql = "DELETE FROM PROJECTS WHERE pid = ?";
-
   try {
-    const [result] = await conn.promise().query(deleteProjectSql, pid);
+    const [result] = await conn.promise().query(DELETE_PROJECT_BY_PID, pid);
 
     if (result.affectedRows === 0) {
       return "No matching pid " + pid + " found in PROJECTS";
