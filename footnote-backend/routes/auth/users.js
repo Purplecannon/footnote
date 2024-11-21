@@ -1,78 +1,98 @@
-// Author: Mia
-// Central file for backend handling of user authentication, includes session handling
+/**
+ * Author: Mia
+ * Central file for backend handling of user authentication, includes session handling
+ */
 
-const express = require('express');
+// Imports
+const express = require("express");
 const router = express.Router();
+const conn = require("../../config/database");
+const bcrypt = require("bcrypt");
+const {
+  CHECK_EXISTING_USER,
+  CREATE_NEW_USER,
+} = require("../../queries/sqlConstants");
 
-const conn = require('../../config/database');
-const bcrypt = require('bcrypt');
-
-// endpoint: "http://localhost:3000/users/create-user"
-router.post('/create-user', async(req, res) => {
+/**
+ * Creates a new user, with the given username, password (stored as hashedPassword)
+ * Endpoint: POST http://localhost:3000/users/create-user
+ */
+router.post("/create-user", async (req, res) => {
   const { username, password, confirmPassword } = req.body;
 
   try {
     const result = await createUser(username, password, confirmPassword);
 
     if (result === "Created user " + username.toLowerCase()) {
-      // session
       req.session.isLoggedIn = true;
       req.session.username = username.toLowerCase();
     }
 
-    res.send(result);  // TODO: wrap this in else block?
+    res.send(result); // TODO: wrap this in else block?
   } catch (err) {
-    console.log('Error creating user: ', err);
-    res.status(500).send('Error creating user');
+    console.log("Error creating user: ", err);
+    res.status(500).send("Error creating user");
   }
 });
 
-// endpoint: "http://localhost:3000/users/login-user"
-router.post('/login-user', async(req, res) => {
+/**
+ * Login an existing user, with the given username, password
+ * Endpoint: POST http://localhost:3000/users/login-user
+ */
+router.post("/login-user", async (req, res) => {
   const { username, password } = req.body;
 
   try {
     const result = await loginUser(username, password);
 
     if (result === "Login successful for user " + username.toLowerCase()) {
-      // session
       req.session.isLoggedIn = true;
       req.session.username = username.toLowerCase();
     }
 
-    res.send(result);  // TODO: wrap this in else block?
+    res.send(result); // TODO: wrap this in else block?
   } catch (err) {
-    console.log('Error logging in user: ', err);
-    res.status(500).send('Error logging in user');
+    console.log("Error logging in user: ", err);
+    res.status(500).send("Error logging in user");
   }
 });
 
-// TODO: logout
-// session
-// router.get('/logout', (req, res) => {
-//   req.session.destroy((err) => {
-//     if (err) {
-//       console.log(err);
-//       return res.status(500).send('Error logging out');
-//     }
-//     // TODO: redirect to login page
-//   });
-// });
+/**
+ * Logout an existing user, with the username currently associated with the session
+ * Endpoint: GET http://localhost:3000/users/logout
+ */
+router.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send("Error logging out");
+    } else {
+      return res.status(200).send("Logged out successfully");
+    }
+  });
+});
 
-// Create a new user given a username and password.
-// The password stored is a hashed password.
-// Usernames should be unique and are not case-sensitive.
+/**
+ * Create a new user given a username and password.
+ * The password stored is a hashed password.
+ * Usernames should be unique and are not case-sensitive.
+ * @param {*} username
+ * @param {*} password
+ * @param {*} confirmPassword
+ * @returns
+ */
 async function createUser(username, password, confirmPassword) {
-  const checkExistingSql = 'SELECT * FROM USERS WHERE username = ?';
-  const createUserSql = 'INSERT INTO USERS(username, hashed_password) VALUES(?, ?)';
-
   try {
     // check if username, password, or confirmPassword is empty
     if (!username || username.trim() === "") {
       return "Username is empty";
     }
-    if (!password || !confirmPassword ||
-        password.trim() === "" || confirmPassword.trim() === "") {
+    if (
+      !password ||
+      !confirmPassword ||
+      password.trim() === "" ||
+      confirmPassword.trim() === ""
+    ) {
       return "Password or confirm password is empty";
     }
     if (password !== confirmPassword) {
@@ -83,7 +103,9 @@ async function createUser(username, password, confirmPassword) {
     const usernameLower = username.toLowerCase();
 
     // check if username already exists
-    const [existingUser] = await conn.promise().query(checkExistingSql, [usernameLower]);
+    const [existingUser] = await conn
+      .promise()
+      .query(CHECK_EXISTING_USER, [usernameLower]);
 
     if (existingUser.length > 0) {
       return "Username already exists";
@@ -94,25 +116,35 @@ async function createUser(username, password, confirmPassword) {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // insert the new user into the database
-    await conn.promise().query(createUserSql, [usernameLower, hashedPassword]);
+    await conn
+      .promise()
+      .query(CREATE_NEW_USER, [usernameLower, hashedPassword]);
 
     return "Created user " + usernameLower;
   } catch (err) {
     // handles error during user creation (eg. deadlock)
-    console.error('Error during user creation: ', err);
-    return 'Error during user creation';
+    console.error("Error during user creation: ", err);
+    return "Error during user creation";
   }
 }
 
-// Login an existing user given a username and password.
-// The password stored is a hashed password.
-// Usernames should be unique and are not case-sensitive.
+/**
+ * Login an existing user given a username and password.
+ * The password stored is a hashed password.
+ * Usernames should be unique and are not case-sensitive.
+ * @param {*} username
+ * @param {*} password
+ * @returns
+ */
 async function loginUser(username, password) {
-  const checkExistingSql = 'SELECT * FROM USERS WHERE username = ?';
-
   try {
     // check if username or password is empty
-    if (!username || username.trim() === "" || !password || password.trim() === "") {
+    if (
+      !username ||
+      username.trim() === "" ||
+      !password ||
+      password.trim() === ""
+    ) {
       return "Username or password is empty";
     }
 
@@ -120,14 +152,16 @@ async function loginUser(username, password) {
     const usernameLower = username.toLowerCase();
 
     // check that username exists in database
-    const [existingUser] = await conn.promise().query(checkExistingSql, [usernameLower]);
+    const [existingUser] = await conn
+      .promise()
+      .query(CHECK_EXISTING_USER, [usernameLower]);
 
     if (existingUser.length === 0) {
       return "Username doesn't exist";
     }
 
     // compare the provided password with the stored hashed password
-    const hashedPassword = existingUser[0].hashed_password;  // the stored hashedPassword
+    const hashedPassword = existingUser[0].hashed_password; // the stored hashedPassword
     const correctPassword = await bcrypt.compare(password, hashedPassword);
 
     if (correctPassword) {
@@ -136,8 +170,8 @@ async function loginUser(username, password) {
       return "Incorrect password";
     }
   } catch (err) {
-    console.error('Error during user login: ', err);
-    return 'Error during user login';
+    console.error("Error during user login: ", err);
+    return "Error during user login";
   }
 }
 

@@ -12,7 +12,22 @@ const cors = require("cors"); // cors in backend to talk between port 5173 and 3
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 const conn = require("./config/database");
-const sessionStore = new MySQLStore({}, conn); // initialize MySQL session store
+const sessionStore = new MySQLStore(
+  {
+    schema: {
+      tableName:
+        process.env.NODE_ENV === "development"
+          ? "SESSIONS_dev"
+          : "SESSIONS_prod", // Custom table name
+      columnNames: {
+        session_id: "session_id", // Custom column name mapping
+        expires: "expires",
+        data: "data",
+      },
+    },
+  },
+  conn
+); // initialize MySQL session store
 
 const indexRouter = require("./routes/api/index");
 const usersRouter = require("./routes/auth/users");
@@ -20,7 +35,7 @@ const projectsRouter = require("./routes/api/projects");
 const videosRouter = require("./routes/api/videos"); // video routes
 const annotationsRouter = require("./routes/api/annotations");
 
-const { createTables, clearTables } = require("./config/tables");
+const { createTables, clearTables, resetTables } = require("./config/tables");
 
 const app = express();
 
@@ -69,12 +84,10 @@ app.use("/annotations", annotationsRouter);
 async function initialize() {
   try {
     await createTables();
-    console.log("All tables initialized");
-
-    // await clearTables();
-    // console.log('All tables cleared');
+    await clearTables();
+    await resetTables();
   } catch (err) {
-    console.log("Error during tables initialization and clearing: ", err);
+    console.log("Error creating/clearing/resetting tables: ", err);
   }
 }
 
