@@ -1,11 +1,22 @@
-// Author: Mia, Lauren
-// Central file for backend handling of annotation retrieval, creation, deletion.
+/**
+ * Author: Mia, Lauren
+ * Central file for backend handling of annotation retrieval, creation, deletion.
+ */
 
+// Imports
 var express = require("express");
 var router = express.Router();
 const conn = require("../../config/database");
+const {
+  GET_ANNOTATIONS_BY_PID,
+  INSERT_ANNOTATION,
+  UPDATE_ANNOTATION,
+  DELETE_ANNOTATION_BY_AID,
+} = require("../../queries/sqlConstants");
 
-// endpoint: GET "http://localhost:3000/annotations/all"
+/**
+ * Endpoint: GET http://localhost:3000/annotations/all
+ */
 router.get("/all", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send("Unauthorized, please log in");
@@ -20,7 +31,9 @@ router.get("/all", async (req, res) => {
   }
 });
 
-// endpoint: POST "http://localhost:3000/annotations/add"
+/**
+ * Endpoint: POST http://localhost:3000/annotations/add
+ */
 router.post("/add", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send("Unauthorized, please log in");
@@ -37,7 +50,9 @@ router.post("/add", async (req, res) => {
   }
 });
 
-// endpoint: PUT "http://localhost:3000/annotations/edit"
+/**
+ * Endpoint: PUT http://localhost:3000/annotations/edit
+ */
 router.put("/edit", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send("Unauthorized, please log in");
@@ -54,7 +69,9 @@ router.put("/edit", async (req, res) => {
   }
 });
 
-// endpoint: DELETE "http://localhost:3000/annotations/delete"
+/**
+ * Endpoint: DELETE http://localhost:3000/annotations/delete
+ */
 router.delete("/delete", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
     return res.status(401).send("Unauthorized, please log in");
@@ -73,24 +90,14 @@ router.delete("/delete", async (req, res) => {
   }
 });
 
-// Retrieve the list of existing annotations under the given pid (project id)
-// Returns: an array of Annotations objects like follows
-// [
-//   { id: 1
-//     timestamp: "00:31",
-//     text: "this is an annotation"
-//   },
-//   { id: 2
-//     timestamp: "00:31",
-//     text: "this is another annotation"
-//   },
-// ]
+/**
+ *
+ * @param {*} pid
+ * @returns
+ */
 async function getAnnotations(pid) {
-  const getAnnotationsSql =
-    "SELECT aid, timestamp, text FROM ANNOTATIONS WHERE pid = ?";
-
   try {
-    const [rows] = await conn.promise().query(getAnnotationsSql, [pid]);
+    const [rows] = await conn.promise().query(GET_ANNOTATIONS_BY_PID, [pid]);
 
     if (rows.length === 0) {
       return [];
@@ -109,20 +116,18 @@ async function getAnnotations(pid) {
   }
 }
 
-// add an annotation, given the timestamp, text, and project id
-// returns the Annotation object as follows
-// { id: 1
-//   timestamp: "00:31",
-//   text: "this is an annotation"
-// }
-// async function addAnnotation(text, pid) {
+/**
+ *
+ * @param {*} timestamp
+ * @param {*} text
+ * @param {*} pid
+ * @returns
+ */
 async function addAnnotation(timestamp, text, pid) {
-  const addAnnotationSql =
-    "INSERT INTO ANNOTATIONS (timestamp, text, pid) VALUES (?, ?, ?);";
   try {
     const [result] = await conn
       .promise()
-      .query(addAnnotationSql, [timestamp, text, pid]);
+      .query(INSERT_ANNOTATION, [timestamp, text, pid]);
 
     if (result.affectedRows > 0) {
       return {
@@ -139,17 +144,16 @@ async function addAnnotation(timestamp, text, pid) {
   }
 }
 
-// edit an annotation, given the text, and annotation id
-// returns the Annotation object as follows
-// { id: 1
-//   timestamp: "00:31",
-//   text: "this is an annotation"
-// }
+/**
+ *
+ * @param {*} aid
+ * @param {*} text
+ * @param {*} projectID
+ * @returns
+ */
 async function editAnnotation(aid, text, projectID) {
-  const editAnnotationSql = "UPDATE ANNOTATIONS SET text = ? WHERE aid = ?;";
-
   try {
-    const [result] = await conn.promise().query(editAnnotationSql, [text, aid]);
+    const [result] = await conn.promise().query(UPDATE_ANNOTATION, [text, aid]);
 
     if (result.affectedRows > 0) {
       return;
@@ -162,13 +166,14 @@ async function editAnnotation(aid, text, projectID) {
   }
 }
 
-// deletes an annotation, given the annotation id
-// returns a success or failure message
+/**
+ * Deletes an annotation, given the annotation id.
+ * @param {*} aid
+ * @returns
+ */
 async function deleteAnnotation(aid) {
-  const deleteAnnotationSql = "DELETE FROM ANNOTATIONS WHERE aid = ?";
-
   try {
-    const [result] = await conn.promise().query(deleteAnnotationSql, aid);
+    const [result] = await conn.promise().query(DELETE_ANNOTATION_BY_AID, aid);
 
     if (result.affectedRows === 0) {
       return "Annotation not found or not deleted";
@@ -181,4 +186,5 @@ async function deleteAnnotation(aid) {
   }
 }
 
+// Exports
 module.exports = router;
