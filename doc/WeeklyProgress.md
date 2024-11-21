@@ -370,9 +370,15 @@ Initial meeting with team:
 
 - Delegated tasks for peer review assignment
 - Helped peer review team get set up to test our app
+- Peer reviewed Husky Swap with team
 - Incorporated beta's code with more styling with teammates
 - Revised DeveloperGuidelines.md
 - Added more thorough session handling to backend projects routes
+- Created separate tables for development and production (USERS_dev, USERS_prod, etc.):
+  - Modified .env to respond to development/production environment
+  - Updated ci.yml and GitHub Secrets to always run CI and tests in development mode
+  - Modified SQL queries to respond to development/production environment
+    - Factored SQL queries from tables.js, users.js, projects.js, videos.js, annotations.js into sqlConstants.js
 
 #### Catherine Jin
 
