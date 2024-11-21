@@ -374,7 +374,7 @@ Initial meeting with team:
 - Incorporated beta's code with more styling with teammates
 - Revised DeveloperGuidelines.md
 - Added more thorough session handling to backend projects routes
-- Created separated tables for development and production (USERS_dev, USERS_prod, etc.):
+- Created separate tables for development and production (USERS_dev, USERS_prod, etc.):
   - Modified .env to respond to development/production environment
   - Updated ci.yml and GitHub Secrets to always run CI and tests in development mode
   - Modified SQL queries to respond to development/production environment
