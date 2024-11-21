@@ -1,4 +1,6 @@
-// Author: Alicia, Mia
+/**
+ * Author: Alicia, Mia
+ */
 
 const express = require("express");
 const multer = require("multer"); // Middleware for handling file uploads
@@ -7,11 +9,13 @@ const { uploadToS3 } = require("../../services/s3Service"); // Import the S3 upl
 const router = express.Router();
 const conn = require("../../config/database");
 
+const { UPDATE_PROJECTURL } = require("../../queries/sqlConstants");
+
 // Configure multer to store uploaded files in memory (in a buffer)
 const upload = multer({ storage: multer.memoryStorage() });
 
 /**
- * POST /upload-video
+ * Endpoint: POST http://localhost:3000/videos/upload-video
  *
  * Route for uploading a video file. The file is uploaded to the server, and then stored in
  * DigitalOcean Spaces using the AWS SDK. The route expects a single video file and returns
@@ -23,8 +27,6 @@ const upload = multer({ storage: multer.memoryStorage() });
  * @param {callback} middleware - Middleware to handle file uploads using multer.
  * @param {callback} callback - Async function that handles the request and response.
  */
-
-// endpoint: http://localhost:3000/videos/upload-video
 router.post("/upload-video", upload.single("video"), async (req, res) => {
   try {
     const file = req.file; // Retrieve the uploaded file from the request
@@ -59,13 +61,18 @@ router.post("/upload-video", upload.single("video"), async (req, res) => {
   }
 });
 
-// Adds a video URL to a previously created project using the pid
-// Returns error message if there is no existing matching pid in PROJECTS
+/**
+ * Adds a video URL to a previously created project using the pid.
+ * Returns error message if there is no existing matching pid in PROJECTS.
+ * @param {*} pid
+ * @param {*} videoUrl
+ * @returns
+ */
 async function addUrl(pid, videoUrl) {
-  const addUrlSql = "UPDATE PROJECTS SET video_url = ? WHERE pid = ?;";
-
   try {
-    const [result] = await conn.promise().query(addUrlSql, [videoUrl, pid]);
+    const [result] = await conn
+      .promise()
+      .query(UPDATE_PROJECTURL, [videoUrl, pid]);
 
     if (result.affectedRows === 0) {
       return "No matching pid " + pid + " found in PROJECTS";
@@ -78,8 +85,13 @@ async function addUrl(pid, videoUrl) {
   }
 }
 
-// A function that convert timestamp (number) to mm:ss string format
-// For example, timestampString(4.932234) returns "00:05" since the milisecond is rounded to the nearest second
+/**
+ * (Temporary function)
+ * A function that convert timestamp (number) to mm:ss string format.
+ * For example, timestampString(4.932234) returns "00:05" since the milisecond is rounded to the nearest second.
+ * @param {*} timestamp
+ * @returns
+ */
 function timestampString(timestamp) {
   let res = "";
   const minutes = Math.floor(timestamp / 60);
@@ -101,4 +113,5 @@ function timestampString(timestamp) {
   return res;
 }
 
+// Exports
 module.exports = router;
