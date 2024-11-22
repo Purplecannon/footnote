@@ -27,7 +27,8 @@ const CREATE_PROJECTS_TABLE = `
 const CREATE_ANNOTATIONS_TABLE = `
   CREATE TABLE IF NOT EXISTS ANNOTATIONS_${tableSuffix}(
     aid INT PRIMARY KEY AUTO_INCREMENT,
-    timestamp VARCHAR(256),
+    timestampStr VARCHAR(256),
+    timestampNum DOUBLE,
     text VARCHAR(1000),
     pid INT NOT NULL,
     FOREIGN KEY (pid) REFERENCES PROJECTS_${tableSuffix}(pid)
