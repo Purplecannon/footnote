@@ -14,13 +14,12 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ProjectCard from "../components/ProjectCard";
-import useProject from "../hooks/useProject";
-import { ProjectData } from "../types/types";
+import ProjectCard from "../../components/ProjectCard/ProjectCard";
+import useProject from "../../hooks/useProject";
+import { ProjectData } from "../../types/types";
 import axios from "axios";
-import { API_BASE_URL } from "../config";
-import NewProjectIMG from "../assets/plus_icon.jpg";
-
+import { API_BASE_URL } from "../../config";
+import NewProjectIMG from "../../assets/plus_icon.jpg";
 import "./UserHome.css";
 import LogoutButton from "../components/LogoutButton/LogoutButton";
 
