@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import Annotation from "../components/Annotation/Annotation";
+import Annotation from "../../components/Annotation/Annotation";
 import ReactPlayer from "react-player";
-import useProject from "../hooks/useProject";
+import useProject from "../../hooks/useProject";
 import axios from "axios";
 
-import { API_BASE_URL } from "../config";
+import { API_BASE_URL } from "../../config";
 
-const AnnotationPage: React.FC = () => {
+const ProjectPage: React.FC = () => {
   const navigate = useNavigate();
 
   const { pid } = useParams<"pid">(); // Get the project ID from the URL
@@ -262,4 +262,4 @@ const AnnotationPage: React.FC = () => {
   );
 };
 
-export default AnnotationPage;
+export default ProjectPage;
