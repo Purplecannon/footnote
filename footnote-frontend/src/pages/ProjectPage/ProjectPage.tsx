@@ -131,7 +131,6 @@ const ProjectPage: React.FC = () => {
         navigate("/home"); // Redirect to homepage
       } catch (err) {
         console.error("Failed to delete project:", err);
-
         alert("Error deleting the project. Please try again.");
       }
     }
@@ -144,11 +143,12 @@ const ProjectPage: React.FC = () => {
       <Row className="text-white p-1 mb-1">
         <div>
           <button
+            className="back-home-button"
             onClick={() => {
-              window.location.href = "/home";
+              navigate("/home");
             }}
           >
-            back to project home
+            Back to Project Home
           </button>
         </div>
         <div className="container">

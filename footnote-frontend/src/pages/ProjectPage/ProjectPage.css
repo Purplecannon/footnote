@@ -55,8 +55,6 @@
   flex-wrap: wrap;
 }
 
-
-
 /* Left Half - Placeholder for Video Player */
 .left-half {
   display: flex;
@@ -67,8 +65,7 @@
   border-right: 2px solid #eaeaea;
 }
 
-
-.underline{
+.underline {
   width: 61px;
   height: 6px;
   background: #3c009d;
@@ -168,4 +165,17 @@
     width: 100%;
     padding: 15px;
   }
+}
+.back-home-button {
+  padding: 10px 20px;
+  color: white;
+  background-color: #4c00b4;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.back-home-button:hover {
+  background-color: #3c009d;
 }
