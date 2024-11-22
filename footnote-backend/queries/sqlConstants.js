@@ -60,8 +60,8 @@ const UPDATE_PROJECTURL = `UPDATE PROJECTS_${tableSuffix} SET video_url = ? WHER
 
 ///////////////////////////////////ANNOTATIONS//////////////////////////////////
 const DELETE_ANNOTATIONS_BY_PID = `DELETE FROM ANNOTATIONS_${tableSuffix} WHERE pid = ?`;
-const GET_ANNOTATIONS_BY_PID = `SELECT aid, timestamp, text FROM ANNOTATIONS_${tableSuffix} WHERE pid = ?;`;
-const INSERT_ANNOTATION = `INSERT INTO ANNOTATIONS_${tableSuffix} (timestamp, text, pid) VALUES (?, ?, ?);`;
+const GET_ANNOTATIONS_BY_PID = `SELECT aid, timestampStr, text FROM ANNOTATIONS_${tableSuffix} WHERE pid = ?;`;
+const INSERT_ANNOTATION = `INSERT INTO ANNOTATIONS_${tableSuffix} (timestampStr, text, pid) VALUES (?, ?, ?);`;
 const UPDATE_ANNOTATION = `UPDATE ANNOTATIONS_${tableSuffix} SET text = ? WHERE aid = ?;`;
 const DELETE_ANNOTATION_BY_AID = `DELETE FROM ANNOTATIONS_${tableSuffix} WHERE aid = ?;`;
 
