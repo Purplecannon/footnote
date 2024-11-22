@@ -21,8 +21,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../../config";
 import NewProjectIMG from "../../assets/plus_icon.jpg";
 import "./UserHome.css";
-import LogoutButton from "../components/LogoutButton/LogoutButton";
-
+import LogoutButton from "../../components/LogoutButton/LogoutButton";
 
 const UserHome: React.FC = () => {
   const { projects, error, loading } = useProject(null);
@@ -108,7 +107,6 @@ const UserHome: React.FC = () => {
       <div>
         <LogoutButton>Logout</LogoutButton>
       </div>
-
     </section>
   );
 };
