@@ -41,7 +41,6 @@ export const SignUp: React.FC = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    // console.log(data)
 
     const newUser: IUserModel = {
       username: data.username,
