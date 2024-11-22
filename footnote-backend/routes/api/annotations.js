@@ -105,7 +105,7 @@ async function getAnnotations(pid) {
       // extract the aid, timestamp, and text
       return rows.map((row) => ({
         id: row.aid,
-        timestamp: row.timestamp,
+        timestamp: row.timestampStr,
         text: row.text,
       }));
     }

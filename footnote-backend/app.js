@@ -84,8 +84,8 @@ app.use("/annotations", annotationsRouter);
 async function initialize() {
   try {
     await createTables();
-    await clearTables();
-    await resetTables();
+    // await clearTables();
+    // await resetTables();
   } catch (err) {
     console.log("Error creating/clearing/resetting tables: ", err);
   }
