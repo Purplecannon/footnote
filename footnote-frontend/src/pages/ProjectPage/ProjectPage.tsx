@@ -258,6 +258,10 @@ const ProjectPage: React.FC = () => {
           </Button>
         </Col>
       </Row>
+
+      <div>
+        <LogoutButton>Logout</LogoutButton>
+      </div>
     </Container>
   );
 };
