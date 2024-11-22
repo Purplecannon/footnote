@@ -5,6 +5,7 @@ import Annotation from "../../components/Annotation/Annotation";
 import ReactPlayer from "react-player";
 import useProject from "../../hooks/useProject";
 import axios from "axios";
+import LogoutButton from "../../components/LogoutButton/LogoutButton";
 
 import { API_BASE_URL } from "../../config";
 
