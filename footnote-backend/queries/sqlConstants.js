@@ -27,7 +27,8 @@ const CREATE_PROJECTS_TABLE = `
 const CREATE_ANNOTATIONS_TABLE = `
   CREATE TABLE IF NOT EXISTS ANNOTATIONS_${tableSuffix}(
     aid INT PRIMARY KEY AUTO_INCREMENT,
-    timestamp VARCHAR(256),
+    timestampStr VARCHAR(256),
+    timestampNum DOUBLE,
     text VARCHAR(1000),
     pid INT NOT NULL,
     FOREIGN KEY (pid) REFERENCES PROJECTS_${tableSuffix}(pid)
@@ -59,8 +60,8 @@ const UPDATE_PROJECTURL = `UPDATE PROJECTS_${tableSuffix} SET video_url = ? WHER
 
 ///////////////////////////////////ANNOTATIONS//////////////////////////////////
 const DELETE_ANNOTATIONS_BY_PID = `DELETE FROM ANNOTATIONS_${tableSuffix} WHERE pid = ?`;
-const GET_ANNOTATIONS_BY_PID = `SELECT aid, timestamp, text FROM ANNOTATIONS_${tableSuffix} WHERE pid = ?;`;
-const INSERT_ANNOTATION = `INSERT INTO ANNOTATIONS_${tableSuffix} (timestamp, text, pid) VALUES (?, ?, ?);`;
+const GET_ANNOTATIONS_BY_PID = `SELECT aid, timestampStr, text FROM ANNOTATIONS_${tableSuffix} WHERE pid = ?;`;
+const INSERT_ANNOTATION = `INSERT INTO ANNOTATIONS_${tableSuffix} (timestampStr, text, pid) VALUES (?, ?, ?);`;
 const UPDATE_ANNOTATION = `UPDATE ANNOTATIONS_${tableSuffix} SET text = ? WHERE aid = ?;`;
 const DELETE_ANNOTATION_BY_AID = `DELETE FROM ANNOTATIONS_${tableSuffix} WHERE aid = ?;`;
 
