@@ -379,6 +379,7 @@ Initial meeting with team:
   - Updated ci.yml and GitHub Secrets to always run CI and tests in development mode
   - Modified SQL queries to respond to development/production environment
     - Factored SQL queries from tables.js, users.js, projects.js, videos.js, annotations.js into sqlConstants.js
+- Fixed bug: Enter key from login/signup page now works, in addition to Submit button
 
 #### Catherine Jin
 

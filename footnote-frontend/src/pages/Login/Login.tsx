@@ -31,8 +31,6 @@ export const Login: React.FC = () => {
     setData({ ...data, [id]: value });
   };
 
-  // const [message, setMessage] = useState<string>("")
-
   const handleSubmit = async (event: any) => {
     event.preventDefault();
 
@@ -66,64 +64,64 @@ export const Login: React.FC = () => {
     <div className="container">
       {/* Header section with current action text and underline */}
       <div className="form-container">
-      <form action="POST">
-        <div className="header">
-          <div className="text">Login</div>
-          <div className="underline" />
-        </div>
-
-        {/* Input fields for username and password */}
-        <div className="inputs">
-          {/* Username input */}
-          <div className="input">
-            <img src={user_icon} alt="User Icon" />
-            <input
-              type="text"
-              placeholder="username"
-              id="username"
-              value={data.username}
-              onChange={handleInputChange}
-            />
+        <form onSubmit={handleSubmit}>
+          <div className="header">
+            <div className="text">Login</div>
+            <div className="underline" />
           </div>
 
-          {/* Password input */}
-          <div className="input">
-            <img src={password_icon} alt="Password Icon" />
-            <input
-              type="password"
-              placeholder="password"
-              id="password"
-              value={data.password}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-
-        {/* Display the message if it exists
-      {message && <div className="error-message">{message}</div>} */}
-
-        {/* Conditional "Forgot your password?" link, only in Login mode */}
-        <div className="forgot-password text-center">
-          Don't have an account? <Link to="/signup"> Click Here!</Link>
-        </div>
-
-        {/* Buttons to toggle between "Login" and "Sign Up" */}
-        <div className="submit-container">
-          {/* Button to switch to Sign Up mode */}
-
-          {/* Button to switch to Login mode */}
-          <button className="submit">
-            <div
-              className={"submit"}
-              role="button"
-              tabIndex={0}
-              onClick={handleSubmit}
-            >
-              Submit
+          {/* Input fields for username and password */}
+          <div className="inputs">
+            {/* Username input */}
+            <div className="input">
+              <img src={user_icon} alt="User Icon" />
+              <input
+                type="text"
+                placeholder="username"
+                id="username"
+                value={data.username}
+                onChange={handleInputChange}
+              />
             </div>
-          </button>
-        </div>
-      </form>
+
+            {/* Password input */}
+            <div className="input">
+              <img src={password_icon} alt="Password Icon" />
+              <input
+                type="password"
+                placeholder="password"
+                id="password"
+                value={data.password}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          {/* Display the message if it exists
+            {message && <div className="error-message">{message}</div>} */}
+
+          {/* Conditional "Forgot your password?" link, only in Login mode */}
+          <div className="forgot-password text-center">
+            Don't have an account? <Link to="/signup"> Click Here!</Link>
+          </div>
+
+          {/* Buttons to toggle between "Login" and "Sign Up" */}
+          <div className="submit-container">
+            {/* Button to switch to Sign Up mode */}
+
+            {/* Button to switch to Login mode */}
+            <button className="submit">
+              <div
+                className={"submit"}
+                role="button"
+                tabIndex={0}
+                onClick={handleSubmit}
+              >
+                Submit
+              </div>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
