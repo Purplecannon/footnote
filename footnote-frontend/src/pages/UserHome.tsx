@@ -22,6 +22,7 @@ import { API_BASE_URL } from "../config";
 import NewProjectIMG from "../assets/plus_icon.jpg";
 
 import "./UserHome.css";
+import LogoutButton from "../components/LogoutButton/LogoutButton";
 
 const UserHome: React.FC = () => {
   const { projects, error, loading } = useProject(null);
@@ -76,9 +77,7 @@ const UserHome: React.FC = () => {
             </div>
           </div>
           {error && (
-            <p className="text-center text-danger">
-              Unable to fetch projects. Showing mock projects instead.
-            </p>
+            <p className="text-center text-danger">Unable to fetch projects.</p>
           )}
           <div className="hstack gap-3">
             {" "}
@@ -104,6 +103,9 @@ const UserHome: React.FC = () => {
             )}
           </div>
         </div>
+      </div>
+      <div>
+        <LogoutButton>Logout</LogoutButton>
       </div>
     </section>
   );

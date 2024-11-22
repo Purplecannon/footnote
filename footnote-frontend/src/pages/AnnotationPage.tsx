@@ -7,6 +7,7 @@ import useProject from "../hooks/useProject";
 import axios from "axios";
 
 import { API_BASE_URL } from "../config";
+import LogoutButton from "../components/LogoutButton/LogoutButton";
 
 const AnnotationPage: React.FC = () => {
   const navigate = useNavigate();
@@ -258,6 +259,9 @@ const AnnotationPage: React.FC = () => {
           </Button>
         </Col>
       </Row>
+      <div>
+        <LogoutButton>Logout</LogoutButton>
+      </div>
     </Container>
   );
 };
