@@ -142,6 +142,16 @@ const ProjectPage: React.FC = () => {
       {/* Project Title */}
 
       <Row className="text-white p-1 mb-1">
+
+        <div>
+          <button
+            className="back-home-button"
+            onClick={() => navigate("/home")}
+          >
+            Back to Project Home
+          </button>
+        </div>
+
         <div className="container">
           <input
             type="text"
