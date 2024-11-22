@@ -23,6 +23,7 @@ import NewProjectIMG from "../../assets/plus_icon.jpg";
 import "./UserHome.css";
 import LogoutButton from "../components/LogoutButton/LogoutButton";
 
+
 const UserHome: React.FC = () => {
   const { projects, error, loading } = useProject(null);
   const navigate = useNavigate();
@@ -103,9 +104,11 @@ const UserHome: React.FC = () => {
           </div>
         </div>
       </div>
+
       <div>
         <LogoutButton>Logout</LogoutButton>
       </div>
+
     </section>
   );
 };
