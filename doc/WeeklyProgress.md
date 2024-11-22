@@ -358,6 +358,13 @@ Initial meeting with team:
 - Restructured documents and added a template for bug reports.
 - Integrated annotation component with backend.
 
+- Debugged for beta release to make sure everything was running properly for beta, including but not limited to the following files:
+
+  - frontend hooks for both annotations and projects
+  - frontend userHome and Project page
+  - frontend annotation component, project card component
+  - backend api for video, project, annotation
+
 ---
 
 ## Week 9
@@ -388,14 +395,8 @@ Initial meeting with team:
 
 #### Alicia Z.
 
-- Debugged for beta release to make sure everything was running properly for beta, including but not limited to the following files:
-
-  - frontend hooks for both annotations and projects
-  - frontend userHome and Project page
-  - frontend annotation component, project card component
-  - backend api for video, project, annotation
-
 - Reviewing code from HuskySwap
+- Started to work on Logout Button
 
 ## Week 10
 
