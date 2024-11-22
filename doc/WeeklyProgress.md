@@ -397,7 +397,8 @@ Initial meeting with team:
 #### Alicia Z.
 
 - Reviewing code from HuskySwap
-- Started to work on Logout Button
+- Built Logout Button
+- Add button to navigate to userHome on project page
 
 ## Week 10
 

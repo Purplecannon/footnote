@@ -142,6 +142,15 @@ const ProjectPage: React.FC = () => {
       {/* Project Title */}
 
       <Row className="text-white p-1 mb-1">
+        <div>
+          <button
+            onClick={() => {
+              window.location.href = "/home";
+            }}
+          >
+            back to project home
+          </button>
+        </div>
         <div className="container">
           <input
             type="text"
