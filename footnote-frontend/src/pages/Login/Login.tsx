@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import user_icon from "../../assets/person.png";
-import password_icon from "../../assets/password.png";
+import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import axios, { AxiosResponse } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -12,24 +12,20 @@ interface ILoginModel {
   password: string;
 }
 
-/**
- * Login Component
- *
- * This component provides a form for logging in. It displays inputs for
- * username and password.
- *
- * @returns {TSX.Element} The rendered Login form.
- */
 export const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { login } = useAuth(); // Access the login function from the context
+  const { login } = useAuth();
 
   const [data, setData] = useState<ILoginModel>({ username: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false); // State to control password visibility
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev); // Toggle visibility
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const id = event.target.id;
     const value = event.target.value;
-
     setData({ ...data, [id]: value });
   };
 
@@ -45,18 +41,17 @@ export const Login: React.FC = () => {
       const response: AxiosResponse<string> = await axios.post(
         `${API_BASE_URL}/users/login-user`,
         newUser,
-        { withCredentials: true } // to send cookies with the request
+        { withCredentials: true }
       );
 
       if (
         response.data ===
         "Login successful for user " + newUser.username.toLowerCase()
       ) {
-        console.log(response.data); // Login successful message
-        login(); // Update the global authentication state
-        navigate("/home"); // Redirect to home page
+        login();
+        navigate("/home");
       } else {
-        alert(response.data); // Show error message
+        alert(response.data);
       }
     } catch (err) {
       console.log("Error on login request: ", err);
@@ -65,17 +60,13 @@ export const Login: React.FC = () => {
 
   return (
     <div className="container">
-      {/* Header section with current action text and underline */}
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <div className="header">
             <div className="text">Login</div>
             <div className="underline" />
           </div>
-
-          {/* Input fields for username and password */}
           <div className="inputs">
-            {/* Username input */}
             <div className="input">
               <img src={user_icon} alt="User Icon" />
               <input
@@ -86,26 +77,20 @@ export const Login: React.FC = () => {
                 onChange={handleInputChange}
               />
             </div>
-
-            {/* Password input */}
             <div className="input">
-              <img src={password_icon} alt="Password Icon" />
-              <input
-                type="password"
-                placeholder="password"
+              <PasswordInput
                 id="password"
                 value={data.password}
+                placeholder="Password"
                 onChange={handleInputChange}
+                showPassword={showPassword} // Pass visibility state
+                toggleVisibility={togglePasswordVisibility} // Pass toggle function
               />
             </div>
           </div>
-
-          {/* Conditional "Forgot your password?" link, only in Login mode */}
           <div className="forgot-password text-center">
             Don't have an account? <Link to="/signup"> Click Here!</Link>
           </div>
-
-          {/* Submit button */}
           <div className="submit-container">
             <button className="submit" type="submit">
               Submit
