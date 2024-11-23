@@ -18,6 +18,7 @@ export const useAnnotations = (projectID: number) => {
         );
 
         setAnnotations(response.data);
+        console.log("annotations", response.data);
       } catch (err) {
         console.error("Error loading annotations:", err);
         setError("Failed to load annotations.");
@@ -29,15 +30,37 @@ export const useAnnotations = (projectID: number) => {
     loadAnnotations();
   }, [projectID]);
 
+  function timestampString(timestamp:number) {
+    let res = "";
+    const minutes = Math.floor(timestamp / 60);
+    const seconds = Math.round(timestamp % 60);
+  
+    if (minutes <= 9) {
+      // single digit
+      res += "0";
+    }
+    res += minutes;
+    res += ":";
+  
+    if (seconds <= 9) {
+      // single digit
+      res += "0";
+    }
+    res += seconds;
+  
+    return res;
+  }
+
   // Add annotation
-  const addAnnotation = async (text: string) => {
+  const addAnnotation = async (text: string, t: number) => {
+    const timestamp:string = timestampString(t);
     try {
       const response = await axios.post(
         `${API_BASE_URL}/annotations/add`,
         {
           text,
           projectID,
-          timestamp: "00:00",
+          timestamp,
         },
         { withCredentials: true }
       );
@@ -45,10 +68,13 @@ export const useAnnotations = (projectID: number) => {
       if (response.data && response.data.id) {
         const annotationWithId = {
           id: response.data.id,
-          timestamp: "00:00",
+          timestamp,
           text,
           projectID,
         };
+
+        console.log("meowy", annotationWithId);
+        console.log("annotation-timestamp", t);
 
         setAnnotations((prev) => [...prev, annotationWithId]);
       } else {

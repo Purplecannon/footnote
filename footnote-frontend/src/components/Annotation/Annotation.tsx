@@ -4,9 +4,10 @@ import AnnotationList from "./AnnotationList";
 
 interface AnnotationProps {
   projectID: number;
+  timestamp: number;
 }
 
-const Annotation: React.FC<AnnotationProps> = ({ projectID }) => {
+const Annotation: React.FC<AnnotationProps> = ({ projectID, timestamp}) => {
   const {
     annotations,
     isLoading,
@@ -29,6 +30,7 @@ const Annotation: React.FC<AnnotationProps> = ({ projectID }) => {
         onDeleteClick={deleteAnnotation}
         onAddAnnotation={addAnnotation}
         projectID={0}
+        timestamp={timestamp}
       />
     </>
   );

@@ -244,7 +244,7 @@ const AnnotationPage: React.FC = () => {
 
         <Col md={6}>
           <div className="w-100">
-            <Annotation projectID={projectID || 0} />
+            <Annotation projectID={projectID || 0} timestamp={timestamp} />
           </div>
         </Col>
       </Row>
