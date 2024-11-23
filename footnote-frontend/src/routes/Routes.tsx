@@ -3,13 +3,35 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserHome from "../pages/UserHome/UserHome";
 import SignUp from "../pages/SignUp/SignUp";
 import ProjectPage from "../pages/ProjectPage/ProjectPage";
+import { ProtectedRoute } from "../components/ProtectedRoute";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },
   { path: "/signup", element: <SignUp /> },
-  { path: "/home", element: <UserHome /> },
-  { path: "/project", element: <ProjectPage /> },
-  { path: "/project/:pid", element: <ProjectPage /> },
+  {
+    path: "/home",
+    element: (
+      <ProtectedRoute>
+        <UserHome />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/project",
+    element: (
+      <ProtectedRoute>
+        <ProjectPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/project/:pid",
+    element: (
+      <ProtectedRoute>
+        <ProjectPage />
+      </ProtectedRoute>
+    ),
+  },
 ]);
 
 export function Routes() {
