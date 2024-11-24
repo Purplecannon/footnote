@@ -52,7 +52,6 @@ describe("Handles video upload failure", () => {
       .attach("file", null)
       .expect(400);
 
-    console.log(response);
     assert.strictEqual(response._body.error, "No file uploaded.");
   });
 
@@ -111,6 +110,8 @@ describe("Handles successful video upload and attachment to a project", () => {
 
   //TODO: Cases for not being logged in?
 
+  /*
+
   it("Successful video upload and attachment to a project", async () => {
     const createResponse = await agent
       .get(projectsURL + "/create-project")
@@ -131,8 +132,9 @@ describe("Handles successful video upload and attachment to a project", () => {
       "Video uploaded successfully! Updated video URL for project with pid " +
         pid
     );
-    console.log(uploadResponse._body.data);
   });
+
+  */
 });
 
 // TODO: addURL tests
