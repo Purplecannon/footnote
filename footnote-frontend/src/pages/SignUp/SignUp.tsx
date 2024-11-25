@@ -15,7 +15,7 @@ interface IUserModel {
 
 export const SignUp: React.FC = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login } = useAuth(); // Access the login function from the context
 
   const [data, setData] = useState<IUserModel>({
     username: "",
@@ -38,11 +38,6 @@ export const SignUp: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (data.password !== data.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
 
     const newUser: IUserModel = {
       username: data.username,
