@@ -4,12 +4,16 @@
 
 const express = require("express");
 const multer = require("multer"); // Middleware for handling file uploads
-const { uploadToS3 } = require("../../services/s3Service"); // Import the S3 upload function
+const generateThumbnail = require("../api/thumbnails");
+const { uploadToS3, uploadThumbnailToS3 } = require("../../services/s3Service"); // Import the S3 upload function
 
 const router = express.Router();
 const conn = require("../../config/database");
 
-const { UPDATE_PROJECTURL } = require("../../queries/sqlConstants");
+const {
+  UPDATE_PROJECTURL,
+  UPDATE_THUMBNAILURL,
+} = require("../../queries/sqlConstants");
 
 // Configure multer to store uploaded files in memory (in a buffer)
 const upload = multer({ storage: multer.memoryStorage() });
@@ -44,16 +48,38 @@ router.post("/upload-video", upload.single("video"), async (req, res) => {
 
     // Call the S3 upload function to store the file in DigitalOcean Spaces
     const uploadResult = await uploadToS3(file);
-    console.log(uploadResult);
 
-    // Update the Url for video with given pid in DigitalOcean Cluser database
-    const messageUrl = await addUrl(pid, uploadResult.Location);
+    generateThumbnail(
+      file.buffer,
+      file.originalname,
+      async (err, thumbnailBuffer) => {
+        if (err) {
+          return res.status(500).json({ error: "Failed to create thumbnail." });
+        }
 
-    // Respond with success and the URL of the uploaded video
-    return res.status(200).json({
-      message: "Video uploaded successfully! " + messageUrl,
-      data: uploadResult.Location, // The S3 URL of the uploaded file
-    });
+        // Upload thumbnail to S3
+        const thumbnailResult = await uploadThumbnailToS3(
+          thumbnailBuffer,
+          file.originalname
+        );
+
+        // Update the Url for video with given pid in DigitalOcean Cluser database
+        const messageUrl = await addUrl(pid, uploadResult.Location);
+
+        // Update the Url for thumbnail with given pid in DigitalOcean Cluser database
+        const messageThumbnailUrl = await addThumbnailUrl(
+          pid,
+          thumbnailResult.Location
+        );
+
+        // Respond with success and the URL of the uploaded video
+        return res.status(200).json({
+          message:
+            "Video uploaded successfully! " + messageUrl + messageThumbnailUrl,
+          data: uploadResult.Location, // The S3 URL of the uploaded video
+        });
+      }
+    );
   } catch (error) {
     // Log the error and return a 500 error response if the upload fails
     console.error("Error uploading video:", error);
@@ -85,32 +111,21 @@ async function addUrl(pid, videoUrl) {
   }
 }
 
-/**
- * (Temporary function)
- * A function that convert timestamp (number) to mm:ss string format.
- * For example, timestampString(4.932234) returns "00:05" since the milisecond is rounded to the nearest second.
- * @param {*} timestamp
- * @returns
- */
-function timestampString(timestamp) {
-  let res = "";
-  const minutes = Math.floor(timestamp / 60);
-  const seconds = Math.round(timestamp % 60);
+async function addThumbnailUrl(pid, thumbnailUrl) {
+  try {
+    const [result] = await conn
+      .promise()
+      .query(UPDATE_THUMBNAILURL, [thumbnailUrl, pid]);
 
-  if (minutes <= 9) {
-    // single digit
-    res += "0";
+    if (result.affectedRows === 0) {
+      return "No matching pid " + pid + " found in PROJECTS";
+    }
+
+    return "Updated thumbnail URL for project with pid " + pid;
+  } catch (err) {
+    console.error("Error during URL insertion: ", err);
+    return "Error during URL insertion";
   }
-  res += minutes;
-  res += ":";
-
-  if (seconds <= 9) {
-    // single digit
-    res += "0";
-  }
-  res += seconds;
-
-  return res;
 }
 
 // Exports

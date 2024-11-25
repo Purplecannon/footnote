@@ -387,6 +387,10 @@ Initial meeting with team:
   - Modified SQL queries to respond to development/production environment
     - Factored SQL queries from tables.js, users.js, projects.js, videos.js, annotations.js into sqlConstants.js
 - Fixed bug: Enter key from login/signup page now works, in addition to Submit button
+- Worked on thumbnail functionality
+  - Configured DigitalOcean Spaces for thumbnails
+  - Set up backend handling for capturing a thumbnail and uploading it to DO Spaces
+  - Set up frontend to display the thumbnail on the Home page
 
 #### Catherine Jin
 
