@@ -3,8 +3,9 @@ import "./SignUp.css";
 import user_icon from "../../assets/person.png";
 import password_icon from "../../assets/password.png";
 import axios, { AxiosResponse } from "axios";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { API_BASE_URL } from "../../config";
 
 interface IUserModel {
   username: string;
@@ -23,6 +24,7 @@ interface IUserModel {
  */
 export const SignUp: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth(); // Access the login function from the context
 
   const [data, setData] = useState<IUserModel>({
     username: "",
@@ -37,9 +39,7 @@ export const SignUp: React.FC = () => {
     setData({ ...data, [id]: value });
   };
 
-  // const [message, setMessage] = useState<string>("")
-
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const newUser: IUserModel = {
@@ -50,13 +50,14 @@ export const SignUp: React.FC = () => {
 
     try {
       const response: AxiosResponse<string> = await axios.post(
-        "http://localhost:3000/users/create-user",
+        `${API_BASE_URL}/users/create-user`,
         newUser,
         { withCredentials: true } // to send cookies with the request
       );
 
       if (response.data === "Created user " + newUser.username.toLowerCase()) {
-        console.log(response.data); // Creation successful message
+        console.log(response.data);
+        login();
         navigate("/home"); // Redirect to home page
       } else {
         alert(response.data); // Error message
@@ -113,25 +114,15 @@ export const SignUp: React.FC = () => {
             </div>
           </div>
 
-          {/* Conditional "Forgot your password?" link, only in Login mode */}
+          {/* Conditional "Already have an account?" link */}
           <div className="forgot-password text-center">
             Already have an account? <Link to="/"> Click Here!</Link>
           </div>
 
-          {/* Buttons to toggle between "Login" and "Sign Up" */}
+          {/* Submit button */}
           <div className="submit-container">
-            {/* Button to switch to Sign Up mode */}
-
-            {/* Button to switch to Login mode */}
-            <button className="submit">
-              <div
-                className={"submit"}
-                role="button"
-                tabIndex={0}
-                onClick={handleSubmit}
-              >
-                Submit
-              </div>
+            <button className="submit" type="submit">
+              Submit
             </button>
           </div>
         </form>

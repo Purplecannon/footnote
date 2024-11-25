@@ -397,7 +397,9 @@ Initial meeting with team:
 #### Alicia Z.
 
 - Reviewing code from HuskySwap
-- Started to work on Logout Button
+- Implemented reusable Button for logout
+- Implemented back to project list button
+- Implemented protected routing
 
 ## Week 10
 
