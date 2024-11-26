@@ -76,7 +76,8 @@ router.post("/upload-video", upload.single("video"), async (req, res) => {
         return res.status(200).json({
           message:
             "Video uploaded successfully! " + messageUrl + messageThumbnailUrl,
-          data: uploadResult.Location, // The S3 URL of the uploaded video
+          videoUrl: uploadResult.Location, // The S3 URL of the uploaded video
+          thumbnailUrl: thumbnailResult.Location, // The S3 URL of the uploaded thumbnail
         });
       }
     );

@@ -389,8 +389,7 @@ Initial meeting with team:
 - Fixed bug: Enter key from login/signup page now works, in addition to Submit button
 - Worked on thumbnail functionality
   - Configured DigitalOcean Spaces for thumbnails
-  - Set up backend handling for capturing a thumbnail and uploading it to DO Spaces
-  - Set up frontend to display the thumbnail on the Home page
+  - Implemented capturing a thumbnail, uploading it to DO Spaces, displaying on webapp
 
 #### Catherine Jin
 

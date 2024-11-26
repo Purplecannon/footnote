@@ -51,7 +51,7 @@ const CREATE_NEW_USER = `INSERT INTO USERS_${tableSuffix}(username, hashed_passw
 
 ////////////////////////////////////PROJECTS////////////////////////////////////
 const CHECK_OWN_PROJECT = `SELECT username FROM PROJECTS_${tableSuffix} WHERE pid = ?;`;
-const GET_PROJECTS_BY_USERNAME = `SELECT pid, project_name FROM PROJECTS_${tableSuffix} WHERE username = ?;`;
+const GET_PROJECTS_BY_USERNAME = `SELECT * FROM PROJECTS_${tableSuffix} WHERE username = ?;`;
 const INSERT_PROJECT = `INSERT INTO PROJECTS_${tableSuffix}(username) VALUES(?);`;
 const GET_PROJECT_BY_PID = `SELECT * FROM PROJECTS_${tableSuffix} WHERE pid = ?;`;
 const UPDATE_PROJECTNAME = `UPDATE PROJECTS_${tableSuffix} SET project_name = ? WHERE pid = ?;`;

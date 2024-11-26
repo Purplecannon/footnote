@@ -150,6 +150,8 @@ async function getProjects(username) {
       return rows.map((row) => ({
         projectID: row.pid, // return 'pid' as 'id' to match frontend model
         title: row.project_name, // return 'project_name' as 'title' to match frontend model
+        videoURL: row.video_url, // return 'video_url' as 'videoURL' to match frontend model
+        thumbnailURL: row.thumbnail_url, // return 'thumbnail_url' as 'thumbnailURL' to match frontend model
       }));
     }
   } catch (err) {

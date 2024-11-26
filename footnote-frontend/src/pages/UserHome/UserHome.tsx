@@ -30,7 +30,7 @@ const UserHome: React.FC = () => {
   const newProject: ProjectData = {
     projectID: 0,
     title: "Create a New Project",
-    thumbnailURL: NewProjectIMG,
+    thumbnailURL: NewProjectIMG, // Default image for creating new projects
     videoURL: "",
   };
 
@@ -58,6 +58,8 @@ const UserHome: React.FC = () => {
   if (loading) {
     return <div className="text-center">Loading...</div>;
   }
+
+  console.log(projects);
 
   return (
     <section id="homepage" className="block homepage-block">

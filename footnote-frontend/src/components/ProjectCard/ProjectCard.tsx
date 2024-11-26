@@ -10,6 +10,7 @@ interface Props {
 
 const ProjectCard: React.FC<Props> = ({ project, onClick }) => {
   const { title, thumbnailURL } = project;
+
   const placeholderPic = dancers;
 
   return (
