@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UserHome from "../pages/UserHome/UserHome";
 import SignUp from "../pages/SignUp/SignUp";
 import ProjectPage from "../pages/ProjectPage/ProjectPage";
-import { ProtectedRoute } from "../components/ProtectedRoute";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 export const router = createBrowserRouter([
   { path: "/", element: <Login /> },
