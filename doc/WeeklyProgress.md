@@ -400,7 +400,7 @@ Initial meeting with team:
 - Implemented reusable Button for logout
 - Implemented back to project list button
 - Implemented protected routing
-- Implemented reusable password input and added visibility option.
+- Implemented reusable password input and added visibility option. Addressed issue #65.
 
 ## Week 10
 
@@ -417,5 +417,14 @@ Initial meeting with team:
 #### Lauren Yarrington
 
 #### Alicia Z.
+
+- Updated userHome layout, addressed issue #70.
+- Adding documentation to
+  - ProtectedRoute.tsx
+  - UserHome.tsx
+  - Annotation.tsx
+  - AnnotationList.tsx
+  - NewAnnotationItem.tsx
+  - AnnotationBaseItem.tsx
 
 ---
