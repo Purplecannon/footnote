@@ -73,8 +73,9 @@ const UserHome: React.FC = () => {
           {error && (
             <p className="text-center text-danger">Unable to fetch projects.</p>
           )}
+
           <div className="container">
-            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+            <div className="d-flex flex-wrap justify-content-start g-4">
               {/* New project card */}
               <div>
                 <ProjectCard
