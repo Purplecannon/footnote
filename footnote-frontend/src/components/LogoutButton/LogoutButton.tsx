@@ -1,6 +1,7 @@
 import { ReactNode, useState } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../../config";
+import { useAuth } from "../../context/AuthContext";
 import styles from "./LogoutButton.module.css";
 
 interface Props {
@@ -9,14 +10,19 @@ interface Props {
 
 function LogoutButton({ children }: Props) {
   const [error, setError] = useState<string | null>(null);
+  const { logout } = useAuth();
 
   const handleOnClick = async () => {
     try {
       await axios.get(`${API_BASE_URL}/users/logout`, {
         withCredentials: true,
       });
-      // Redirect to home page after successful logout
+
       window.location.href = "/";
+
+      setTimeout(() => {
+        logout();
+      }, 100);
     } catch (err) {
       console.error("Error logging out:", err);
       setError("Failed to log out.");

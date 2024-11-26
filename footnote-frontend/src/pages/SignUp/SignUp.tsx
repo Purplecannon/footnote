@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./SignUp.css";
 import user_icon from "../../assets/person.png";
-import password_icon from "../../assets/password.png";
 import axios, { AxiosResponse } from "axios";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { API_BASE_URL } from "../../config";
+import PasswordInput from "../../components/PasswordInput/PasswordInput";
 
 interface IUserModel {
   username: string;
@@ -12,23 +13,21 @@ interface IUserModel {
   confirmPassword: string;
 }
 
-/**
- * SignUp Component
- *
- * This component provides a form for signing up. It displays inputs for
- * username, password, and a "confirm password" input field for
- * sign-up mode.
- *
- * @returns {TSX.Element} The rendered Login/Signup form.
- */
 export const SignUp: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth(); // Access the login function from the context
 
   const [data, setData] = useState<IUserModel>({
     username: "",
     password: "",
     confirmPassword: "",
   });
+
+  const [showPasswords, setShowPasswords] = useState(false); // State to control password visibility
+
+  const togglePasswordVisibility = () => {
+    setShowPasswords((prev) => !prev); // Toggle visibility
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const id = event.target.id;
@@ -37,9 +36,7 @@ export const SignUp: React.FC = () => {
     setData({ ...data, [id]: value });
   };
 
-  // const [message, setMessage] = useState<string>("")
-
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const newUser: IUserModel = {
@@ -50,16 +47,17 @@ export const SignUp: React.FC = () => {
 
     try {
       const response: AxiosResponse<string> = await axios.post(
-        "http://localhost:3000/users/create-user",
+        `${API_BASE_URL}/users/create-user`,
         newUser,
-        { withCredentials: true } // to send cookies with the request
+        { withCredentials: true }
       );
 
       if (response.data === "Created user " + newUser.username.toLowerCase()) {
-        console.log(response.data); // Creation successful message
-        navigate("/home"); // Redirect to home page
+        console.log(response.data);
+        login();
+        navigate("/home");
       } else {
-        alert(response.data); // Error message
+        alert(response.data);
       }
     } catch (err) {
       console.log("Error on signup request: ", err);
@@ -68,7 +66,6 @@ export const SignUp: React.FC = () => {
 
   return (
     <div className="container">
-      {/* Header section with current action text and underline */}
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <div className="header">
@@ -76,62 +73,45 @@ export const SignUp: React.FC = () => {
             <div className="underline" />
           </div>
 
-          {/* Input fields for username and password */}
-          <div className="inputs">
-            {/* Username input */}
-            <div className="input">
-              <img src={user_icon} alt="User Icon" />
-              <input
-                type="text"
-                placeholder="username"
-                id="username"
-                value={data.username}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            {/* Password input */}
-            <div className="input">
-              <img src={password_icon} alt="Password Icon" />
-              <input
-                type="password"
-                placeholder="password"
-                id="password"
-                value={data.password}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="input">
-              <img src={password_icon} alt="Confirm Password Icon" />
-              <input
-                type="password"
-                placeholder="confirm password"
-                id="confirmPassword"
-                value={data.confirmPassword}
-                onChange={handleInputChange}
-              />
-            </div>
+          <div className="input">
+            <img src={user_icon} alt="User Icon" />
+            <input
+              type="text"
+              placeholder="username"
+              id="username"
+              value={data.username}
+              onChange={handleInputChange}
+            />
           </div>
 
-          {/* Conditional "Forgot your password?" link, only in Login mode */}
+          <div className="input">
+            <PasswordInput
+              id="password"
+              value={data.password}
+              placeholder="Password"
+              onChange={handleInputChange}
+              showPassword={showPasswords}
+              toggleVisibility={togglePasswordVisibility}
+            />
+          </div>
+          <div className="input">
+            <PasswordInput
+              id="confirmPassword"
+              value={data.confirmPassword}
+              placeholder="Confirm Password"
+              onChange={handleInputChange}
+              showPassword={showPasswords}
+              toggleVisibility={togglePasswordVisibility}
+            />
+          </div>
+
           <div className="forgot-password text-center">
             Already have an account? <Link to="/"> Click Here!</Link>
           </div>
 
-          {/* Buttons to toggle between "Login" and "Sign Up" */}
           <div className="submit-container">
-            {/* Button to switch to Sign Up mode */}
-
-            {/* Button to switch to Login mode */}
-            <button className="submit">
-              <div
-                className={"submit"}
-                role="button"
-                tabIndex={0}
-                onClick={handleSubmit}
-              >
-                Submit
-              </div>
+            <button className="submit" type="submit">
+              Submit
             </button>
           </div>
         </form>

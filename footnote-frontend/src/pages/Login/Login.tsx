@@ -1,37 +1,35 @@
 import React, { useState } from "react";
 import "./Login.css";
 import user_icon from "../../assets/person.png";
-import password_icon from "../../assets/password.png";
+import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import axios, { AxiosResponse } from "axios";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { API_BASE_URL } from "../../config";
 
 interface ILoginModel {
   username: string;
   password: string;
 }
 
-/**
- * Login Component
- *
- * This component provides a form for logging up. It displays inputs for
- * username and password.
- *
- * @returns {TSX.Element} The rendered Login form.
- */
 export const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [data, setData] = useState<ILoginModel>({ username: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false); // State to control password visibility
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev); // Toggle visibility
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const id = event.target.id;
     const value = event.target.value;
-
     setData({ ...data, [id]: value });
   };
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const newUser: ILoginModel = {
@@ -41,19 +39,19 @@ export const Login: React.FC = () => {
 
     try {
       const response: AxiosResponse<string> = await axios.post(
-        "http://localhost:3000/users/login-user",
+        `${API_BASE_URL}/users/login-user`,
         newUser,
-        { withCredentials: true } // to send cookies with the request
+        { withCredentials: true }
       );
 
       if (
         response.data ===
         "Login successful for user " + newUser.username.toLowerCase()
       ) {
-        console.log(response.data); // Creation successful message
-        navigate("/home"); // Redirect to home page
+        login();
+        navigate("/home");
       } else {
-        alert(response.data); // Error message
+        alert(response.data);
       }
     } catch (err) {
       console.log("Error on login request: ", err);
@@ -62,17 +60,13 @@ export const Login: React.FC = () => {
 
   return (
     <div className="container">
-      {/* Header section with current action text and underline */}
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <div className="header">
             <div className="text">Login</div>
             <div className="underline" />
           </div>
-
-          {/* Input fields for username and password */}
           <div className="inputs">
-            {/* Username input */}
             <div className="input">
               <img src={user_icon} alt="User Icon" />
               <input
@@ -83,42 +77,23 @@ export const Login: React.FC = () => {
                 onChange={handleInputChange}
               />
             </div>
-
-            {/* Password input */}
             <div className="input">
-              <img src={password_icon} alt="Password Icon" />
-              <input
-                type="password"
-                placeholder="password"
+              <PasswordInput
                 id="password"
                 value={data.password}
+                placeholder="Password"
                 onChange={handleInputChange}
+                showPassword={showPassword} // Pass visibility state
+                toggleVisibility={togglePasswordVisibility} // Pass toggle function
               />
             </div>
           </div>
-
-          {/* Display the message if it exists
-            {message && <div className="error-message">{message}</div>} */}
-
-          {/* Conditional "Forgot your password?" link, only in Login mode */}
           <div className="forgot-password text-center">
             Don't have an account? <Link to="/signup"> Click Here!</Link>
           </div>
-
-          {/* Buttons to toggle between "Login" and "Sign Up" */}
           <div className="submit-container">
-            {/* Button to switch to Sign Up mode */}
-
-            {/* Button to switch to Login mode */}
-            <button className="submit">
-              <div
-                className={"submit"}
-                role="button"
-                tabIndex={0}
-                onClick={handleSubmit}
-              >
-                Submit
-              </div>
+            <button className="submit" type="submit">
+              Submit
             </button>
           </div>
         </form>
