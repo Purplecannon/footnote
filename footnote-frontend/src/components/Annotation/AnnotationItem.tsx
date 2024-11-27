@@ -41,17 +41,15 @@ import TrashIcon from "../../assets/trash3-fill.svg";
 import EditIcon from "../../assets/pencil-square.svg";
 
 interface AnnotationItemProps {
-  annotation: AnnotationData;
-  onEditSave: (id: number, newText: string, projectId: number) => void;
-  onDeleteClick: (id: number, projectId: number) => void;
+  annotation: AnnotationData; // The data for the annotation
+  onEditSave: (id: number, newText: string, projectId: number) => void; // Callback for saving edits
+  onDeleteClick: (id: number, projectId: number) => void; // Callback for deleting the annotation
 }
 
 const AnnotationItem: React.FC<AnnotationItemProps> = ({
   annotation,
   onEditSave,
   onDeleteClick,
-  onAddAnnotation,
-  id,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(annotation.text);
@@ -63,41 +61,35 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
     }
   };
 
-  const handleAddAnnotation = () => {
-    if (annotationText.trim() && onAddAnnotation) {
-      onAddAnnotation(annotationText);
-      setAnnotationText("");
-    }
-  };
-
   const handleEditCancel = () => {
     setEditText(annotation.text);
     setIsEditing(false);
   };
 
   return (
-    <li className="d-flex justify-content-between align-items-center">
-      <Button variant="link" onClick={onTimestampClick} className="p-0">
-        <strong>{timestamp}</strong>
-      </Button>
+    <AnnotationBaseItem
+      timestamp={annotation.timestamp}
+      onTimestampClick={() => {}}
+    >
       {isEditing ? (
         <InputGroup>
           <FormControl
-            value={annotationText}
-            onChange={(e) => setAnnotationText(e.target.value)}
-            placeholder={isNew ? "new annotation" : "Edit annotation"}
+            value={editText}
+            onChange={(e) => setEditText(e.target.value)}
+            onBlur={handleEditSave}
             onKeyDown={(e) => {
               if (e.key === "Enter") handleEditSave();
               if (e.key === "Escape") handleEditCancel();
             }}
-            onBlur={() => !isNew && handleEditSave()}
+            placeholder="Edit annotation"
             autoFocus
           />
         </InputGroup>
       ) : (
-        <span>{text}</span>
+        <span>{annotation.text}</span>
       )}
-      {!isEditing && !isNew && (
+
+      {!isEditing && (
         <div>
           <Button
             variant="link"
@@ -106,23 +98,17 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
           >
             <img src={EditIcon} alt="Edit" width={16} height={16} />
           </Button>
+
           <Button
             variant="link"
-            onClick={() =>
-              onDeleteClick && id !== undefined && onDeleteClick(id)
-            }
+            onClick={() => onDeleteClick(annotation.id, annotation.projectID)}
             className="p-0"
           >
             <img src={TrashIcon} alt="Delete" width={16} height={16} />
           </Button>
         </div>
       )}
-      {isNew && (
-        <Button variant="link" onClick={handleAddAnnotation} className="p-0">
-          <img src={CheckIcon} alt="Save" width={16} height={16} />
-        </Button>
-      )}
-    </li>
+    </AnnotationBaseItem>
   );
 };
 
