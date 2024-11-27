@@ -137,9 +137,10 @@ const useProject = (projectID: number | null) => {
 
       setProject((prev) => (prev ? { ...prev, title: newTitle } : null)); // Update only the title
     } catch (err) {
-      console.error("Error updating project title:", err);
+      alert("Project title is too long");
+      /*console.error("Error updating project title:", err);
 
-      setError("Failed to update project title. Please try again.");
+      setError("Failed to update project title. Please try again.");*/
     }
   };
 

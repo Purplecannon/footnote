@@ -333,7 +333,7 @@ describe("HTTP /create-user tests", () => {
             .post(usersURL + '/create-user')
             .send({username: username, password: password, confirmPassword: password})
             .expect(401);
-        assert.strictEqual(response.text, "Username is empty");
+        assert.strictEqual(response._body.message, "Username is empty");
     });
     it('Handles failed user creation (empty password)', async() => {
         const username = "arthurlester34";
@@ -342,7 +342,7 @@ describe("HTTP /create-user tests", () => {
             .post(usersURL + '/create-user')
             .send({username: username, password: "", confirmPassword: password})
             .expect(401);
-        assert.strictEqual(response.text, "Password or confirm password is empty");
+        assert.strictEqual(response._body.message, "Password or confirm password is empty");
     });
     it('Handles failed user creation (empty confirmPassword)', async() => {
         const username = "pikachic";
@@ -351,7 +351,7 @@ describe("HTTP /create-user tests", () => {
             .post(usersURL + '/create-user')
             .send({username: username, password: password, confirmPassword: ""})
             .expect(401);
-        assert.strictEqual(response.text, "Password or confirm password is empty");
+        assert.strictEqual(response._body.message, "Password or confirm password is empty");
     });
     it('Handles failed user creation (non-matching confirmPassword)', async() => {
         const username = "johndoe";
@@ -361,7 +361,7 @@ describe("HTTP /create-user tests", () => {
             .post(usersURL + '/create-user')
             .send({username: username, password: password, confirmPassword: confirmPassword})
             .expect(401);
-        assert.strictEqual(response.text, "Password and confirm password don't match");
+        assert.strictEqual(response._body.message, "Password and confirm password don't match");
     });
 });
 
@@ -388,8 +388,9 @@ describe("HTTP /login-user tests", () => {
             .post(usersURL + '/create-user')
             .send({username: username, password: password, confirmPassword: password})
             .expect(200);
-        assert.strictEqual(createResponse.text, "Created user " + username);
 
+        assert.strictEqual(createResponse.text, "Created user " + username);
+        
         await agent.destroy();
 
         const loginResponse = await agent
@@ -403,14 +404,14 @@ describe("HTTP /login-user tests", () => {
             .post(usersURL + '/login-user')
             .send({username: "", password: password})
             .expect(401);
-        assert.strictEqual(loginResponse.text, "Username or password is empty");
+        assert.strictEqual(loginResponse._body.message, "Username or password is empty");
     });
     it('Handles failed login (empty password)', async() => {
         const loginResponse = await agent
             .post(usersURL + '/login-user')
             .send({username: username, password: ""})
             .expect(401);
-        assert.strictEqual(loginResponse.text, "Username or password is empty");
+        assert.strictEqual(loginResponse._body.message, "Username or password is empty");
     });
     it('Handles failed login (incorrect password)', async() => {
         const badPassword = 'gardettos';
@@ -418,7 +419,7 @@ describe("HTTP /login-user tests", () => {
             .post(usersURL + '/login-user')
             .send({username: username, password: badPassword})
             .expect(401);
-        assert.strictEqual(loginResponse.text, "Incorrect password");
+        assert.strictEqual(loginResponse._body.message, "Incorrect password");
     });
     it('Handles failed login (user does not exist)', async() => {
         const badUsername = "larson";
@@ -426,6 +427,6 @@ describe("HTTP /login-user tests", () => {
             .post(usersURL + '/login-user')
             .send({username: badUsername, password: password})
             .expect(401);
-        assert.strictEqual(loginResponse.text, "Username doesn't exist");
+        assert.strictEqual(loginResponse._body.message, "Username doesn't exist");
     });
 });

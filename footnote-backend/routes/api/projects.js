@@ -100,7 +100,13 @@ router.put("/edit-project-name", async (req, res) => {
 
     // Update project name
     const result = await editProjectName(projectName, pid);
-    res.send(result);
+
+    if(result === "Project name edited successfully") {
+      return res.status(200).send(result);
+    }
+    else {
+      return res.status(400).send(result);
+    }
   } catch (err) {
     console.log("Error editing project name: ", err);
     res.status(500).send("Error editing project name");
@@ -119,7 +125,13 @@ router.delete("/delete-project/:projectID", async (req, res) => {
 
   try {
     const result = await deleteProject(pid);
-    res.send(result);
+
+    if(result === "Deleted project with pid " + pid) {
+      res.status(200).send(result);
+    }
+    else {
+      res.status(400).send(result);
+    }
   } catch (err) {
     console.log("Error deleting project: ", err);
     res.status(500).send("Error deleting project");

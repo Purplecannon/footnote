@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import user_icon from "../../assets/person.png";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { API_BASE_URL } from "../../config";
@@ -50,11 +50,24 @@ export const Login: React.FC = () => {
       ) {
         login();
         navigate("/home");
-      } else {
-        alert(response.data);
       }
     } catch (err) {
-      console.log("Error on login request: ", err);
+      if(err instanceof AxiosError) {
+        if(err.response && err.response.data) {
+          console.log(err.response?.data?.message);
+          var errorMessage = document.getElementById("errorMessage");
+          if(errorMessage) {
+            errorMessage.innerHTML = err.response?.data?.message;
+          }
+        }
+        else {
+          // invalid or missing error message
+          console.log(err);
+        }
+      }
+      else {
+        console.log(err);
+      }
     }
   };
 
@@ -88,6 +101,7 @@ export const Login: React.FC = () => {
               />
             </div>
           </div>
+          <div className="error-message text-center" id="errorMessage"></div>
           <div className="forgot-password text-center">
             Don't have an account? <Link to="/signup"> Click Here!</Link>
           </div>

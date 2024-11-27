@@ -91,6 +91,13 @@
     cursor: pointer;
 }
 
+.error-message{
+    padding-left: 1px;
+    margin-top: 27px;
+    color: red;
+    font-size: 18px;
+}
+
 .submit-container{
     display: flex;
     justify-content: center;

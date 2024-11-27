@@ -108,8 +108,6 @@ describe("Handles successful video upload and attachment to a project", () => {
     await resetTables();
   });
 
-  //TODO: Cases for not being logged in?
-
   /*
 
   it("Successful video upload and attachment to a project", async () => {
@@ -137,4 +135,3 @@ describe("Handles successful video upload and attachment to a project", () => {
   */
 });
 
-// TODO: addURL tests
