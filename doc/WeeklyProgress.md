@@ -410,6 +410,10 @@ Initial meeting with team:
 
 #### Mia Huynh
 
+- Worked on thumbnail functionality
+  - Configured DigitalOcean Spaces for thumbnails
+  - Implemented capturing a thumbnail, uploading it to DO Spaces, displaying on webapp
+
 #### Catherine Jin
 
 #### Elainie Kassa
