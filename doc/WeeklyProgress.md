@@ -413,6 +413,7 @@ Initial meeting with team:
 - Worked on thumbnail functionality
   - Configured DigitalOcean Spaces for thumbnails
   - Implemented capturing a thumbnail, uploading it to DO Spaces, displaying on webapp
+- Updated GitHub Secrets
 
 #### Catherine Jin
 
