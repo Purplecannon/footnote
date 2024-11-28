@@ -51,12 +51,13 @@ const CREATE_NEW_USER = `INSERT INTO USERS_${tableSuffix}(username, hashed_passw
 
 ////////////////////////////////////PROJECTS////////////////////////////////////
 const CHECK_OWN_PROJECT = `SELECT username FROM PROJECTS_${tableSuffix} WHERE pid = ?;`;
-const GET_PROJECTS_BY_USERNAME = `SELECT pid, project_name FROM PROJECTS_${tableSuffix} WHERE username = ?;`;
+const GET_PROJECTS_BY_USERNAME = `SELECT * FROM PROJECTS_${tableSuffix} WHERE username = ?;`;
 const INSERT_PROJECT = `INSERT INTO PROJECTS_${tableSuffix}(username) VALUES(?);`;
 const GET_PROJECT_BY_PID = `SELECT * FROM PROJECTS_${tableSuffix} WHERE pid = ?;`;
 const UPDATE_PROJECTNAME = `UPDATE PROJECTS_${tableSuffix} SET project_name = ? WHERE pid = ?;`;
 const DELETE_PROJECT_BY_PID = `DELETE FROM PROJECTS_${tableSuffix} WHERE pid = ?;`;
 const UPDATE_PROJECTURL = `UPDATE PROJECTS_${tableSuffix} SET video_url = ? WHERE pid = ?;`;
+const UPDATE_THUMBNAILURL = `UPDATE PROJECTS_${tableSuffix} SET thumbnail_url = ? WHERE pid = ?;`;
 
 ///////////////////////////////////ANNOTATIONS//////////////////////////////////
 const DELETE_ANNOTATIONS_BY_PID = `DELETE FROM ANNOTATIONS_${tableSuffix} WHERE pid = ?`;
@@ -83,6 +84,7 @@ module.exports = {
   INSERT_PROJECT,
   GET_PROJECT_BY_PID,
   UPDATE_PROJECTNAME,
+  UPDATE_THUMBNAILURL,
   DELETE_PROJECT_BY_PID,
   UPDATE_PROJECTURL,
   DELETE_ANNOTATIONS_BY_PID,
