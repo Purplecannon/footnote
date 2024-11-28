@@ -1,45 +1,68 @@
+/**
+ * AnnotationItem Component
+ *
+ * This component represents an individual annotation item. It allows users
+ * to view, edit, or delete the annotation content.
+ *
+ * Props:
+ * - `annotation` (AnnotationData): The data for the annotation, including
+ *   its ID, text, timestamp, and associated project ID.
+ * - `onEditSave` (function): Callback to handle saving an edited annotation.
+ *   Receives `id`, `newText`, and `projectId` as arguments.
+ * - `onDeleteClick` (function): Callback to handle deleting an annotation.
+ *   Receives `id` and `projectId` as arguments.
+ *
+ * Behavior:
+ * - When editing is active:
+ *   - The text field is shown, and the user can save with Enter or cancel with Escape.
+ * - When not editing:
+ *   - Displays the annotation text with edit and delete buttons.
+ *
+ * Usage:
+ * ```tsx
+ * <AnnotationItem
+ *   annotation={{
+ *     id: 1,
+ *     timestamp: "01:30",
+ *     text: "This is an annotation",
+ *     projectID: 123
+ *   }}
+ *   onEditSave={(id, newText, projectId) => console.log(id, newText, projectId)}
+ *   onDeleteClick={(id, projectId) => console.log(id, projectId)}
+ * />
+ * ```
+ */
+
 import React, { useState } from "react";
-
 import { Button, FormControl, InputGroup } from "react-bootstrap";
-
 import AnnotationBaseItem from "./AnnotationBaseItem";
-
 import { AnnotationData } from "../../types/types";
-
 import TrashIcon from "../../assets/trash3-fill.svg";
-
 import EditIcon from "../../assets/pencil-square.svg";
 
 interface AnnotationItemProps {
-  annotation: AnnotationData;
-
-  onEditSave: (id: number, newText: string, projectId: number) => void;
-
-  onDeleteClick: (id: number, projectId: number) => void;
+  annotation: AnnotationData; // The data for the annotation
+  onEditSave: (id: number, newText: string, projectId: number) => void; // Callback for saving edits
+  onDeleteClick: (id: number, projectId: number) => void; // Callback for deleting the annotation
 }
 
 const AnnotationItem: React.FC<AnnotationItemProps> = ({
   annotation,
-
   onEditSave,
-
   onDeleteClick,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
-
   const [editText, setEditText] = useState(annotation.text);
 
   const handleEditSave = () => {
     if (editText.trim()) {
       onEditSave(annotation.id, editText, annotation.projectID);
-
       setIsEditing(false);
     }
   };
 
   const handleEditCancel = () => {
     setEditText(annotation.text);
-
     setIsEditing(false);
   };
 
@@ -56,7 +79,6 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
             onBlur={handleEditSave}
             onKeyDown={(e) => {
               if (e.key === "Enter") handleEditSave();
-
               if (e.key === "Escape") handleEditCancel();
             }}
             placeholder="Edit annotation"

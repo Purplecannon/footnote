@@ -62,48 +62,40 @@ const UserHome: React.FC = () => {
   return (
     <section id="homepage" className="block homepage-block">
       <div className="page-border-wrapper">
-        {" "}
         {/* Container with border */}
         <div className="page-content">
-          {" "}
           {/* Inner content container */}
           <div className="header">
             <div className="text">Home</div>
             <div className="underline" />
-            <div className="underline-gap" style={{ marginTop: "40px" }}>
-              {" "}
-              {/* New gap element */}
-            </div>
+            <div className="underline-gap" style={{ marginTop: "40px" }}></div>
           </div>
           {error && (
             <p className="text-center text-danger">Unable to fetch projects.</p>
           )}
-          <div className="hstack gap-3">
-            {" "}
-            {/* Container for project cards */}
-            <div className="spacer"></div> {/* Spacer for left padding */}
-            <div>
-              <ProjectCard
-                project={newProject}
-                onClick={handleCreateNewProject}
-              />
+
+          <div className="container">
+            <div className="d-flex flex-wrap justify-content-start g-4">
+              {/* New project card */}
+              <div>
+                <ProjectCard
+                  project={newProject}
+                  onClick={handleCreateNewProject}
+                />
+              </div>
+              {/* Existing project cards */}
+              {projects.map((project) => (
+                <div key={project.projectID}>
+                  <ProjectCard
+                    project={project}
+                    onClick={() => navigate(`/project/${project.projectID}`)}
+                  />
+                </div>
+              ))}
             </div>
-            {projects.length > 0 && (
-              <>
-                {projects.map((project) => (
-                  <div key={project.projectID}>
-                    <ProjectCard
-                      project={project}
-                      onClick={() => navigate(`/project/${project.projectID}`)}
-                    />
-                  </div>
-                ))}
-              </>
-            )}
           </div>
         </div>
       </div>
-
       <div>
         <LogoutButton>Logout</LogoutButton>
       </div>
