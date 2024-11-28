@@ -11,11 +11,11 @@
     "version:minor": "npm version minor -m \"Bump version to %s\"",
     "version:major": "npm version major -m \"Bump version to %s\""
   },
-  "devDependencies": {
-    "concurrently": "^8.2.0",
-    "typescript": "^5.6.3"
-  },
   "dependencies": {
-    "bootstrap-icons": "^1.11.3"
+    "bootstrap-icons": "^1.11.3",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
   }
 }
