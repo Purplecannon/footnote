@@ -1,3 +1,7 @@
+/**
+ * Author: Alicia, Mia
+ */
+
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 require("dotenv").config();
 
@@ -12,6 +16,7 @@ const s3Client = new S3Client({
 });
 
 const BUCKET_NAME = process.env.DO_SPACES_BUCKET;
+const THUMBNAIL_BUCKET_NAME = process.env.DO_SPACES_THUMBNAIL_BUCKET;
 
 /**
  * uploadToS3
@@ -50,4 +55,27 @@ async function uploadToS3(file) {
   }
 }
 
-module.exports = { uploadToS3 };
+async function uploadThumbnailToS3(file, videoName) {
+  const params = {
+    Bucket: THUMBNAIL_BUCKET_NAME,
+    Key: `thumbnails/${Date.now()}-${videoName}`, // Create a unique filename using a timestamp
+    Body: file.buffer, // The contents of the file / buffer
+    ContentType: "image/jpeg", // Thumbnails are typically JPEG
+    ACL: "public-read", // Set the file to be publicly readable
+  };
+
+  try {
+    const command = new PutObjectCommand(params);
+    const data = await s3Client.send(command);
+
+    return {
+      Location: `${process.env.DO_SPACES_ENDPOINT}/${THUMBNAIL_BUCKET_NAME}/${params.Key}`, // The public URL of the uploaded file
+      data, // Additional response data from S3
+    };
+  } catch (error) {
+    console.error("Thumbnail upload error:", error);
+    throw error; // Re-throw the error to be handled by the caller
+  }
+}
+
+module.exports = { uploadToS3, uploadThumbnailToS3 };
