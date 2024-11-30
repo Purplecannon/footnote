@@ -414,6 +414,7 @@ Initial meeting with team:
   - Configured DigitalOcean Spaces for thumbnails
   - Implemented capturing a thumbnail, uploading it to DO Spaces, displaying on webapp
 - Updated GitHub Secrets
+- Debugged deployment - app can successfully build on DigitalOcean Droplet
 
 #### Catherine Jin
 
