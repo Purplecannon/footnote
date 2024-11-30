@@ -432,4 +432,10 @@ Initial meeting with team:
   - NewAnnotationItem.tsx
   - AnnotationBaseItem.tsx
 
+## Week 10
+
+#### Alicia Z.
+
+- deployment
+
 ---
