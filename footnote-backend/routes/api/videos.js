@@ -1,19 +1,17 @@
 /**
- * Author: Alicia, Mia
+ * Author: Alicia, Mia, Kirupa
  */
 
 const express = require("express");
 const multer = require("multer"); // Middleware for handling file uploads
-const generateThumbnail = require("../api/thumbnails");
 const { uploadToS3, uploadThumbnailToS3 } = require("../../services/s3Service"); // Import the S3 upload function
+const generateThumbnail = require("../api/thumbnails");
+
 
 const router = express.Router();
 const conn = require("../../config/database");
 
-const {
-  UPDATE_PROJECTURL,
-  UPDATE_THUMBNAILURL,
-} = require("../../queries/sqlConstants");
+const { UPDATE_PROJECTURL, UPDATE_THUMBNAILURL} = require("../../queries/sqlConstants");
 
 // Configure multer to store uploaded files in memory (in a buffer)
 const upload = multer({ storage: multer.memoryStorage() });
@@ -48,39 +46,35 @@ router.post("/upload-video", upload.single("video"), async (req, res) => {
 
     // Call the S3 upload function to store the file in DigitalOcean Spaces
     const uploadResult = await uploadToS3(file);
+    console.log(uploadResult);
 
-    generateThumbnail(
-      file.buffer,
-      file.originalname,
-      async (err, thumbnailBuffer) => {
-        if (err) {
-          return res.status(500).json({ error: "Failed to create thumbnail." });
-        }
+    // Generate the thumbnail using async/await and minimal code
+    // const thumbnailBuffer = await new Promise((resolve, reject) => {
+    //   generateThumbnail(file.buffer, (error, thumbnailBuffer) => {
+    //     if (error || !thumbnailBuffer) {
+    //       console.log("Thumbnail error:", error);
+    //       reject("Failed to generate thumbnail");
+    //     } else {
+    //       resolve(thumbnailBuffer);
+    //     }
+    //   });
+    // });
 
-        // Upload thumbnail to S3
-        const thumbnailResult = await uploadThumbnailToS3(
-          thumbnailBuffer,
-          file.originalname
-        );
+    // Upload the generated thumbnail to S3
+    // const thumbnailUploadResult = await uploadThumbnailToS3(thumbnailBuffer);
+    // console.log(thumbnailUploadResult);
 
-        // Update the Url for video with given pid in DigitalOcean Cluser database
-        const messageUrl = await addUrl(pid, uploadResult.Location);
+    // // Update the Url for video with given pid in DigitalOcean Cluser database
+    const messageUrl = await addUrl(pid, uploadResult.Location);
+    // // Update the thumbnail URL for the given pid in the database (if needed)
+    // const thumbnailUrlUpdateMessage = await addThumbnailUrl(pid, thumbnailUploadResult.Location);
+    // console.log(thumbnailUrlUpdateMessage);
 
-        // Update the Url for thumbnail with given pid in DigitalOcean Cluser database
-        const messageThumbnailUrl = await addThumbnailUrl(
-          pid,
-          thumbnailResult.Location
-        );
-
-        // Respond with success and the URL of the uploaded video
-        return res.status(200).json({
-          message:
-            "Video uploaded successfully! " + messageUrl + messageThumbnailUrl,
-          videoUrl: uploadResult.Location, // The S3 URL of the uploaded video
-          thumbnailUrl: thumbnailResult.Location, // The S3 URL of the uploaded thumbnail
-        });
-      }
-    );
+    // Respond with success and the URL of the uploaded video
+    return res.status(200).json({
+      message: "Video uploaded successfully! " + messageUrl,
+      data: uploadResult.Location, // The S3 URL of the uploaded file
+    });
   } catch (error) {
     // Log the error and return a 500 error response if the upload fails
     console.error("Error uploading video:", error);
@@ -106,23 +100,6 @@ async function addUrl(pid, videoUrl) {
     }
 
     return "Updated video URL for project with pid " + pid;
-  } catch (err) {
-    console.error("Error during URL insertion: ", err);
-    return "Error during URL insertion";
-  }
-}
-
-async function addThumbnailUrl(pid, thumbnailUrl) {
-  try {
-    const [result] = await conn
-      .promise()
-      .query(UPDATE_THUMBNAILURL, [thumbnailUrl, pid]);
-
-    if (result.affectedRows === 0) {
-      return "No matching pid " + pid + " found in PROJECTS";
-    }
-
-    return "Updated thumbnail URL for project with pid " + pid;
   } catch (err) {
     console.error("Error during URL insertion: ", err);
     return "Error during URL insertion";
