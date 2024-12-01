@@ -8,7 +8,6 @@ import axios from "axios";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
 
 import { API_BASE_URL } from "../../config";
-import { video } from "@cloudinary/url-gen/qualifiers/source";
 
 const ProjectPage: React.FC = () => {
   const navigate = useNavigate();
@@ -19,22 +18,21 @@ const ProjectPage: React.FC = () => {
   const { project, setProject, deleteProject, loading, error, updateProject } =
     useProject(projectID); // Use custom hook for project management
 
+  const playerRef = useRef<ReactPlayer>(null);
   const [titleInput, setTitleInput] = React.useState(project?.title || ""); // Local state for the input field
   const [timestamp, setTimestamp] = useState<number>(0);
-  const debounceTimeout = useRef<NodeJS.Timeout | null>(null); // debouncing the POST request
-
-  // MIRRORING
-
-  const playerRef = useRef<ReactPlayer>(null);
   const [mirrored, setMirrored] = useState(false); // State to toggle mirroring
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null); // debouncing the POST request
 
   useEffect(() => {
     if (playerRef.current) {
-      // Access the native video element
       const videoElement = playerRef.current.getInternalPlayer();
       console.log(`videoElement is ${videoElement}`);
+      if (videoElement instanceof HTMLVideoElement) {
+        // Reset any existing styles
+        videoElement.style.transform = "";
 
-      if (videoElement) {
+        // Apply transformation for mirroring only the video content
         videoElement.style.transform = mirrored ? "scaleX(-1)" : "scaleX(1)";
       }
     }
@@ -43,8 +41,6 @@ const ProjectPage: React.FC = () => {
   const toggleMirror = () => {
     setMirrored((prev) => !prev);
   };
-
-  /////
 
   useEffect(() => {
     if (project) {
@@ -251,14 +247,6 @@ const ProjectPage: React.FC = () => {
                 </p>
               </>
             ) : (
-              // <div
-              //   style={{
-              //     width: "100%",
-              //     height: "100%",
-              //     transform: mirrored ? "scaleX(-1)" : "scaleX(1)",
-              //     transition: "transform 0.3s ease",
-              //   }}
-              // >
               <ReactPlayer
                 controls={true}
                 ref={playerRef}
@@ -268,7 +256,6 @@ const ProjectPage: React.FC = () => {
                 width="100%" // Ensure it fits in the container
                 height="100%"
               />
-              // </div>
             )}
 
             {/* Mirror Button */}
@@ -308,7 +295,7 @@ const ProjectPage: React.FC = () => {
 
         <Col md={6}>
           <div className="w-100">
-            <Annotation projectID={projectID || 0} />
+            <Annotation projectID={projectID || 0} timestamp={timestamp} />
           </div>
         </Col>
       </Row>
