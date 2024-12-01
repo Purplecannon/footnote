@@ -26,17 +26,19 @@ import AnnotationBaseItem from "./AnnotationBaseItem";
 import CheckIcon from "../../assets/check-square-fill.svg";
 
 interface NewAnnotationItemProps {
-  onAddAnnotation: (text: string) => void; // Callback for adding a new annotation
+  timestamp: number;
+  onAddAnnotation: (text: string, timestamp: number) => void; // Callback for adding a new annotation
 }
 
 const NewAnnotationItem: React.FC<NewAnnotationItemProps> = ({
-  onAddAnnotation,
+  timestamp,
+  onAddAnnotation
 }) => {
   const [newAnnotation, setNewAnnotation] = useState<string>("");
 
   const handleAddAnnotation = () => {
     if (newAnnotation.trim()) {
-      onAddAnnotation(newAnnotation);
+      onAddAnnotation(newAnnotation, timestamp);
       setNewAnnotation("");
     }
   };
