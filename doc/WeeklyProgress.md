@@ -414,6 +414,9 @@ Initial meeting with team:
   - Configured DigitalOcean Spaces for thumbnails
   - Implemented capturing a thumbnail, uploading it to DO Spaces, displaying on webapp
 - Updated GitHub Secrets
+- Worked on video mirroring functionality
+- Create a separate video upload button
+  - Users can now click on the video to play/pause rather than being prompted to upload another video
 
 #### Catherine Jin
 
