@@ -417,6 +417,9 @@ Initial meeting with team:
 - Worked on video mirroring functionality
 - Create a separate video upload button
   - Users can now click on the video to play/pause rather than being prompted to upload another video
+- Styling for UserHome page
+  - design the new hologram style, create pngs, backgrounds, styled frontend
+  - fixed backend thumbnail scaling
 
 #### Catherine Jin
 

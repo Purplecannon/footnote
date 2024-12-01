@@ -19,9 +19,10 @@ import useProject from "../../hooks/useProject";
 import { ProjectData } from "../../types/types";
 import axios from "axios";
 import { API_BASE_URL } from "../../config";
-import NewProjectIMG from "../../assets/plus_icon.jpg";
 import "./UserHome.css";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
+import home from "../../assets/home.png";
+import plusHologram from "../../assets/plus-hologram.png";
 
 const UserHome: React.FC = () => {
   const { projects, error, loading } = useProject(null);
@@ -29,8 +30,8 @@ const UserHome: React.FC = () => {
 
   const newProject: ProjectData = {
     projectID: 0,
-    title: "Create a New Project",
-    thumbnailURL: NewProjectIMG,
+    title: " ",
+    thumbnailURL: plusHologram,
     videoURL: "",
   };
 
@@ -66,9 +67,9 @@ const UserHome: React.FC = () => {
         <div className="page-content">
           {/* Inner content container */}
           <div className="header">
-            <div className="text">Home</div>
-            <div className="underline" />
-            <div className="underline-gap" style={{ marginTop: "40px" }}></div>
+            <div className="home">
+              <img src={home} alt="HOME" />
+            </div>
           </div>
           {error && (
             <p className="text-center text-danger">Unable to fetch projects.</p>
@@ -81,6 +82,7 @@ const UserHome: React.FC = () => {
                 <ProjectCard
                   project={newProject}
                   onClick={handleCreateNewProject}
+                  isCreateButton={true}
                 />
               </div>
               {/* Existing project cards */}
@@ -89,6 +91,7 @@ const UserHome: React.FC = () => {
                   <ProjectCard
                     project={project}
                     onClick={() => navigate(`/project/${project.projectID}`)}
+                    isCreateButton={false}
                   />
                 </div>
               ))}

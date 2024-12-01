@@ -1,56 +1,67 @@
-.page-border-wrapper {
-  /* border: 3px solid #3c009d; */
-  /* Adds a border around the entire page */
-  border-radius: 10px;
-  /* Optional: Rounded corners */
-  padding: 20px;
-  /* Space between the border and the content */
-  margin: 10px;
-  /* Space between the border and the viewport edges */
+#homepage {
+  position: relative;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+#homepage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../../assets/holographic-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.6);
+  z-index: -1;
 }
 
 .page-content {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  padding: 0;
+  margin-top: 15px !important;
+  overflow: hidden;
+  background: none !important;
+}
+
+#homepage .container .d-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Align items to the left */
+  align-items: flex-start;
+  gap: 5px 70px; /* Maintain spacing between items */
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row !important;
   align-items: center;
-  gap: 9px;
-  width: 100%;
-  margin-bottom: 30px;
+  justify-content: center;
+  gap: 10px;
+  padding-top: 70px;
 }
 
-.text {
-  color: #3c009d;
-  font-size: 48px;
-  font-weight: 700;
-}
-
-.underline {
-  width: 61px;
-  height: 6px;
-  background: #3c009d;
-  border-radius: 9px;
-}
-
-.hstack {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  overflow-x: auto;
-  /* Enable horizontal scrolling if necessary */
-  padding: 10px 0;
-}
-
-.gap-3 > div {
-  margin-right: 18px;
-  /* Spacing between project cards */
-}
-
-.spacer {
-  flex: 0 0 20px;
-  /* Fixed spacer width for space to the left of "Create New Project" card */
+.header img {
+  width: auto;
+  height: 120px;
 }
