@@ -1,0 +1,12 @@
+name: footnote
+services:
+  - name: backend
+    github:
+      repo: Purplecannon/footnote
+      branch: main
+      deploy_on_push: true
+    source_dir: footnote-backend/
+    dockerfile_path: footnote-backend/Dockerfile
+    http_port: 5000
+    instance_count: 1
+    instance_size_slug: basic-xxs
