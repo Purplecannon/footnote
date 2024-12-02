@@ -436,3 +436,9 @@ Initial meeting with team:
   - AnnotationBaseItem.tsx
 
 ---
+
+## Week 11
+
+#### Alicia Z.
+
+- Deploy to domain
