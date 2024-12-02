@@ -82,15 +82,15 @@ app.use("/annotations", annotationsRouter);
 
 // TODO: change the following initialize() portion once app actually storing real user data
 async function initialize() {
-  if (process.env.NODE_ENV == "development") {
-    try {
-      await createTables();
-      // await clearTables();
-      // await resetTables();
-    } catch (err) {
-      console.log("Error creating/clearing/resetting tables: ", err);
-    }
+  // if (process.env.NODE_ENV == "development") {
+  try {
+    await createTables();
+    // await clearTables();
+    // await resetTables();
+  } catch (err) {
+    console.log("Error creating/clearing/resetting tables: ", err);
   }
+  // }
 }
 
 initialize();
