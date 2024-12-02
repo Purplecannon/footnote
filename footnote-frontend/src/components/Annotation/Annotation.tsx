@@ -37,9 +37,10 @@ import AnnotationList from "./AnnotationList";
 
 interface AnnotationProps {
   projectID: number; // The ID of the project for which annotations are managed
+  timestamp: number;
 }
 
-const Annotation: React.FC<AnnotationProps> = ({ projectID }) => {
+const Annotation: React.FC<AnnotationProps> = ({ projectID, timestamp }) => {
   // Fetch annotations and manage state using the useAnnotations hook
   const {
     annotations, // Array of annotation objects
@@ -67,6 +68,7 @@ const Annotation: React.FC<AnnotationProps> = ({ projectID }) => {
         onDeleteClick={deleteAnnotation} // Callback for deleting annotations
         onAddAnnotation={addAnnotation} // Callback for adding annotations
         projectID={projectID} // Pass the projectID for context
+        timestamp={timestamp}
       />
     </>
   );
