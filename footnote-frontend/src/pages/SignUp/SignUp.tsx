@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-import user_icon from "../../assets/person.png";
 import axios, { AxiosResponse } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -74,7 +73,6 @@ export const SignUp: React.FC = () => {
           </div>
 
           <div className="input">
-            <img src={user_icon} alt="User Icon" />
             <input
               type="text"
               placeholder="username"

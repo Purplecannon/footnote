@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../../config";
 import { useAuth } from "../../context/AuthContext";
 import styles from "./LogoutButton.module.css";
+import logoutIcon from "../../assets/logout-button.png";
 
 interface Props {
   children: ReactNode;
@@ -32,7 +33,8 @@ function LogoutButton({ children }: Props) {
   return (
     <div>
       <button className={styles["logout-button"]} onClick={handleOnClick}>
-        {children}
+        {/* {children} */}
+        <img src={logoutIcon} alt="Logout" className={styles["logout-icon"]} />
       </button>
       {error && <p className={styles["logout-error"]}>{error}</p>}
     </div>

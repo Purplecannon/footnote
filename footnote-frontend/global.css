@@ -1,0 +1,7 @@
+/* Custom cursor applied globally */
+* {
+  cursor: url("/footnote-frontend/src/assets/cursor.png"), auto;
+}
+
+/* cursor: url("/footnote-frontend/src/assets/cursor.png") 16 16, auto; */
+/* 8 8  */

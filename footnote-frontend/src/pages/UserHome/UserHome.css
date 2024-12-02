@@ -1,8 +1,13 @@
 #homepage {
+  cursor: url("../../assets/cursor-shadow.png"), auto;
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
+}
+
+#homepage * {
+  cursor: url("../../assets/cursor-shadow.png"), auto;
 }
 
 #homepage::before {
@@ -14,8 +19,8 @@
   bottom: 0;
   background-image: url("../../assets/holographic-background.jpg");
   background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-position: top left;
+  background-repeat: repeat-y;
   filter: brightness(0.6);
   z-index: -1;
 }
@@ -42,15 +47,21 @@
 #homepage .container .d-flex {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start; /* Align items to the left */
+  justify-content: flex-start;
   align-items: flex-start;
-  gap: 5px 70px; /* Maintain spacing between items */
+  gap: 5px 70px;
   width: 100%;
   margin: 0;
   padding: 0;
   overflow: hidden;
   box-sizing: border-box;
 }
+
+/* #homepage .container .d-flex > div { */
+/* flex: 1 1 calc(33.33% - 60px); 3 projects per row, subtract gap to avoid overflow */
+/* max-width: calc(33.33% - 60px); Ensure max width aligns with 3 columns */
+/* box-sizing: border-box; */
+/* } */
 
 .header {
   display: flex;

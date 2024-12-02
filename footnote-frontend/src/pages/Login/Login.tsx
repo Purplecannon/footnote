@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "./Login.css";
-import user_icon from "../../assets/person.png";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import axios, { AxiosResponse } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { API_BASE_URL } from "../../config";
+import loginWindow from "../../assets/login-window.png";
+import submitButton from "../../assets/submit-button.png";
+import welcomeWindow from "../../assets/welcome-window.png";
 
 interface ILoginModel {
   username: string;
@@ -60,15 +62,11 @@ export const Login: React.FC = () => {
 
   return (
     <div className="container">
+      <img className="welcome-image" src={welcomeWindow} alt="Welcome window" />
       <div className="form-container">
         <form onSubmit={handleSubmit}>
-          <div className="header">
-            <div className="text">Login</div>
-            <div className="underline" />
-          </div>
           <div className="inputs">
             <div className="input">
-              <img src={user_icon} alt="User Icon" />
               <input
                 type="text"
                 placeholder="username"
@@ -81,7 +79,7 @@ export const Login: React.FC = () => {
               <PasswordInput
                 id="password"
                 value={data.password}
-                placeholder="Password"
+                placeholder="password"
                 onChange={handleInputChange}
                 showPassword={showPassword} // Pass visibility state
                 toggleVisibility={togglePasswordVisibility} // Pass toggle function
@@ -93,10 +91,15 @@ export const Login: React.FC = () => {
           </div>
           <div className="submit-container">
             <button className="submit" type="submit">
-              Submit
+              <img src={submitButton} alt="Submit" className="submit-image" />
             </button>
           </div>
         </form>
+        <img
+          className="login-overlay-image"
+          src={loginWindow}
+          alt="Login Image Overlay"
+        />
       </div>
     </div>
   );

@@ -2,22 +2,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 220px;
-  height: 59px;
-  color: #ffff;
-  background: #4c00b4;
-  border-radius: 50px;
-  font-size: 19px;
-  font-weight: 700;
+  width: 170px;
+  height: 50px;
+  background: none;
+  border: none;
   cursor: pointer;
-  position: fixed; /* Fixed positioning */
+  position: absolute;
   bottom: 20px; /* Distance from the bottom */
-  right: 20px; /* Distance from the right */
+  right: 40px; /* Distance from the right */
   z-index: 1000; /* Ensures it's on top of other elements */
 }
 
-.logout-button:hover {
-  background: #3c009d; /* Optional hover effect */
+.logout-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .logout-error {
