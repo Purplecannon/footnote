@@ -3,7 +3,7 @@ services:
   - name: backend
     github:
       repo: Purplecannon/footnote
-      branch: main
+      branch: prep
       deploy_on_push: true
     source_dir: footnote-backend/
     dockerfile_path: footnote-backend/Dockerfile
