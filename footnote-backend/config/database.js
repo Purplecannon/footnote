@@ -5,7 +5,7 @@ const mysql = require("mysql2");
 const fs = require("fs");
 require("dotenv").config(); // load environment variables
 
-// const caCert = fs.readFileSync(process.env.DB_SSL__CA);
+const caCert = fs.readFileSync(process.env.DB_SSL__CA);
 
 // create a connection
 const conn = mysql.createConnection({
@@ -17,7 +17,7 @@ const conn = mysql.createConnection({
   ssl: {
     // enable SSL mode as required by DigitalOcean database
     rejectUnauthorized: true,
-    // ca: caCert,
+    ca: caCert,
   },
 });
 
