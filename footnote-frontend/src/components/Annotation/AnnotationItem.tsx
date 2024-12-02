@@ -41,6 +41,8 @@ import TrashIcon from "../../assets/trash3-fill.svg";
 import EditIcon from "../../assets/pencil-square.svg";
 
 interface AnnotationItemProps {
+  timestamp: number;
+  text: string;
   annotation: AnnotationData; // The data for the annotation
   onEditSave: (id: number, newText: string, projectId: number) => void; // Callback for saving edits
   onDeleteClick: (id: number, projectId: number) => void; // Callback for deleting the annotation
