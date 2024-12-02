@@ -5,7 +5,12 @@ const mysql = require("mysql2");
 const fs = require("fs");
 require("dotenv").config(); // load environment variables
 
-const caCert = fs.readFileSync(process.env.DB_SSL__CA);
+let caCert;
+if (process.env.DB_SSL__CA_STR !== undefined) {
+  caCert = process.env.DB_SSL__CA_STR;
+} else {
+  caCert = fs.readFileSync(process.env.DB_SSL__CA);
+}
 
 // create a connection
 const conn = mysql.createConnection({

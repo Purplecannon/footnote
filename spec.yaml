@@ -1,5 +1,12 @@
 name: footnote
 region: sfo
+# databases:
+#   - cluster_name: footnote-mysql-db
+#     db_name: defaultdb
+#     engine: MYSQL
+#     name: footnote-mysql-db
+#     production: true
+#     version: "8"
 services:
   - name: backend
     github:
