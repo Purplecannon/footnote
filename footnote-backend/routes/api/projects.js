@@ -82,9 +82,8 @@ router.put("/edit-project-name", async (req, res) => {
   const { projectName, pid } = req.body;
   console.log(`PID = ${pid}`);
 
-  // TODO: how about empty projectName?
   if (projectName.length > 100) {
-    return res.status(400).send("Project name is longer than 100 characters");
+    return res.status(400).json({message: "Project name is longer than 100 characters"});
   }
 
   try {

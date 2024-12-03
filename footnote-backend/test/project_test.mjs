@@ -150,11 +150,11 @@ describe("Handles loading a project", () => {
   it("missing pid fails", async() => {
     await agent
       .get(projectsURL + '/load-project')
-      .expect(400);
+      .expect(404);
 
     await agent
       .get(projectsURL + '/load-project/')
-      .expect(400);
+      .expect(404);
   })
   /*
   it("loading a nonexistent project fails", async() => {
@@ -260,15 +260,17 @@ describe("Handles editing a project name", () => {
     const nameLen100plus =
       "jurgenleitnerstupididiotmothereffingjurgenleitnergoddangfoolbookcollectingdusteatingratoldmanstupididiotavatarofthewenchbiggestclowninthecircus";
 
-    agent
+    const response1 = await agent
       .put(projectsURL + "/edit-project-name")
       .send({ projectName: nameLen100, pid: pid })
-      .expect(400);
+      .expect(200);
+    assert.strictEqual(response1.text, "Project name edited successfully");
 
-    agent
+    const response2 = await agent
       .put(projectsURL + "/edit-project-name")
       .send({ projectName: nameLen100plus, pid: pid })
       .expect(400);
+    assert.strictEqual(response2._body.message, "Project name is longer than 100 characters");
   });
   
   /*
@@ -297,12 +299,12 @@ describe("Handles editing a project name", () => {
   });
   */
 
-  it('failed project name edit when the project does not exist', async() => {
-      const pid = 2;
+  it('failed project name edit when the project does not exist within the user\'s account', async() => {
+      const pid = 20;
       await agent
-          .put(projectsURL + '/edit-project-name/' + pid)
+          .put(projectsURL + "/edit-project-name")
           .send({projectName: "This project doesn't exist", pid: pid})
-          .expect(400);
+          .expect(403);
   })
 
   it("failed project name edit when the project does not belong to the user", async () => {
@@ -415,11 +417,11 @@ describe("Handles project deletion", () => {
 
     await agent
       .delete(projectsURL + '/delete-project')
-      .expect(400);
+      .expect(404);
 
     await agent
       .delete(projectsURL + '/delete-project/')
-      .expect(400);
+      .expect(404);
   });
 });
 
