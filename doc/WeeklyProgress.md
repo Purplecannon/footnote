@@ -424,7 +424,7 @@ Initial meeting with team:
     - Fixed backend thumbnail scaling, implemented a window frame overlay, designed a placeholder thumbnail image
   - Login page, Signup page
     - Styled background, graphics, input forms, submit button
-  - Logout button
+  - Logout button, Password components
     - Designed and styled the button
 
 #### Catherine Jin
@@ -445,3 +445,9 @@ Initial meeting with team:
   - AnnotationBaseItem.tsx
 
 ---
+
+## Week 11
+
+#### Alicia Z.
+
+- Deploy to domain

@@ -45,12 +45,12 @@ app.set("view engine", "jade");
 
 // enable cors in backend: to allow frontend (port 5173) to communicate with backend (port 3000)
 // app.use(cors());
-app.use(
-  cors({
-    origin: "http://localhost:5173", // url of frontend
-    credentials: true, // allow credentials (cookies) to be sent
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // url of frontend
+//     credentials: true, // allow credentials (cookies) to be sent
+//   })
+// );
 
 app.use(logger("dev"));
 app.use(express.json()); // to parse JSON bodies
@@ -82,12 +82,14 @@ app.use("/annotations", annotationsRouter);
 
 // TODO: change the following initialize() portion once app actually storing real user data
 async function initialize() {
-  try {
-    await createTables();
-    // await clearTables();
-    // await resetTables();
-  } catch (err) {
-    console.log("Error creating/clearing/resetting tables: ", err);
+  if (process.env.NODE_ENV == "development") {
+    try {
+      await createTables();
+      // await clearTables();
+      // await resetTables();
+    } catch (err) {
+      console.log("Error creating/clearing/resetting tables: ", err);
+    }
   }
 }
 

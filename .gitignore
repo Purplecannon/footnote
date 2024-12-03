@@ -11,4 +11,5 @@ README-mia.md
 # footnote-backend directory
 footnote-backend/.env
 footnote-backend/config/ca-certificate.crt
+footnote-react
 

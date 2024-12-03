@@ -1,11 +1,16 @@
 // Author: Mia
 // a central file for database configuration
 
-const mysql = require('mysql2');
-const fs = require('fs');
-require('dotenv').config();  // load environment variables
+const mysql = require("mysql2");
+const fs = require("fs");
+require("dotenv").config(); // load environment variables
 
-const caCert = fs.readFileSync(process.env.DB_SSL__CA);
+let caCert;
+if (process.env.DB_SSL__CA_STR !== undefined) {
+  caCert = process.env.DB_SSL__CA_STR;
+} else {
+  caCert = fs.readFileSync(process.env.DB_SSL__CA);
+}
 
 // create a connection
 const conn = mysql.createConnection({
@@ -17,17 +22,17 @@ const conn = mysql.createConnection({
   ssl: {
     // enable SSL mode as required by DigitalOcean database
     rejectUnauthorized: true,
-    ca: caCert
-  }
+    ca: caCert,
+  },
 });
 
 // tests the connection
 conn.connect((err) => {
   if (err) {
-    console.error('Error connecting to the database: ', err);
+    console.error("Error connecting to the database: ", err);
     return;
   } else {
-    console.log('Connected to the database as ' + conn.threadId);
+    console.log("Connected to the database as " + conn.threadId);
   }
 });
 
