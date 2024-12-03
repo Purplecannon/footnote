@@ -63,9 +63,7 @@ const UserHome: React.FC = () => {
   return (
     <section id="homepage" className="block homepage-block">
       <div className="page-border-wrapper">
-        {/* Container with border */}
         <div className="page-content">
-          {/* Inner content container */}
           <div className="header">
             <div className="home">
               <img src={home} alt="HOME" />
@@ -75,7 +73,7 @@ const UserHome: React.FC = () => {
             <p className="text-center text-danger">Unable to fetch projects.</p>
           )}
 
-          <div className="container">
+          <div className="home-container">
             <div className="d-flex flex-wrap justify-content-start g-4">
               {/* New project card */}
               <div>

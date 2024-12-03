@@ -8,7 +8,7 @@
   border: none;
   cursor: pointer;
   position: absolute;
-  bottom: 20px; /* Distance from the bottom */
+  bottom: 30px; /* Distance from the bottom */
   right: 40px; /* Distance from the right */
   z-index: 1000; /* Ensures it's on top of other elements */
 }

@@ -61,45 +61,51 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="container">
-      <img className="welcome-image" src={welcomeWindow} alt="Welcome window" />
-      <div className="form-container">
-        <form onSubmit={handleSubmit}>
-          <div className="inputs">
-            <div className="input">
-              <input
-                type="text"
-                placeholder="username"
-                id="username"
-                value={data.username}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="input">
-              <PasswordInput
-                id="password"
-                value={data.password}
-                placeholder="password"
-                onChange={handleInputChange}
-                showPassword={showPassword} // Pass visibility state
-                toggleVisibility={togglePasswordVisibility} // Pass toggle function
-              />
-            </div>
-          </div>
-          <div className="forgot-password text-center">
-            Don't have an account? <Link to="/signup"> Click Here!</Link>
-          </div>
-          <div className="submit-container">
-            <button className="submit" type="submit">
-              <img src={submitButton} alt="Submit" className="submit-image" />
-            </button>
-          </div>
-        </form>
+    <div id="auth">
+      <div className="auth-container">
         <img
-          className="login-overlay-image"
-          src={loginWindow}
-          alt="Login Image Overlay"
+          className="welcome-image"
+          src={welcomeWindow}
+          alt="Welcome window"
         />
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <div className="inputs">
+              <div className="input">
+                <input
+                  type="text"
+                  placeholder="username"
+                  id="username"
+                  value={data.username}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="input">
+                <PasswordInput
+                  id="password"
+                  value={data.password}
+                  placeholder="password"
+                  onChange={handleInputChange}
+                  showPassword={showPassword} // Pass visibility state
+                  toggleVisibility={togglePasswordVisibility} // Pass toggle function
+                />
+              </div>
+            </div>
+            <div className="forgot-password text-center">
+              Don't have an account? <Link to="/signup"> Click here!</Link>
+            </div>
+            <div className="submit-container">
+              <button className="submit" type="submit">
+                <img src={submitButton} alt="Submit" className="submit-image" />
+              </button>
+            </div>
+          </form>
+          <img
+            className="auth-overlay-image"
+            src={loginWindow}
+            alt="Login Image Overlay"
+          />
+        </div>
       </div>
     </div>
   );

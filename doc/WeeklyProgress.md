@@ -417,12 +417,15 @@ Initial meeting with team:
 - Worked on video mirroring functionality
 - Create a separate video upload button
   - Users can now click on the video to play/pause rather than being prompted to upload another video
-- Added new styling for UserHome page
-  - designed the holographic style and create pngs/backgrounds on Canva
-  - styled background, Create button, project cards, Home title
-  - fixed backend thumbnail scaling, implemented a window frame overlay, designed a placeholder thumbnail image
-- Designed and styled Logout button
-- Custom cursor
+- Designed the holographic style and create pngs/backgrounds on Canva
+- Added new styling for components:
+  - UserHome page
+    - Styled background, Create button, project cards, Home title
+    - Fixed backend thumbnail scaling, implemented a window frame overlay, designed a placeholder thumbnail image
+  - Login page, Signup page
+    - Styled background, graphics, input forms, submit button
+  - Logout button
+    - Designed and styled the button
 
 #### Catherine Jin
 

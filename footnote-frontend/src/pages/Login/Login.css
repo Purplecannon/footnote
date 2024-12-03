@@ -1,15 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@1,800&family=Lora&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Share+Tech+Mono&family=Space+Grotesk:wght@300..700&display=swap");
 
-#root {
-  cursor: url("../../assets/cursor-shadow.png"), auto;
-}
-
 body {
   font-family: "Space Grotesk", sans-serif !important;
   color: black !important;
 }
 
-#root::before {
+#auth * {
+  cursor: url("../../assets/cursor-shadow.png"), auto;
+}
+
+#auth::before {
   content: "";
   position: absolute;
   top: 0;
@@ -23,20 +23,20 @@ body {
   z-index: -3;
 }
 
-.container {
+.welcome-image {
+  position: absolute;
+  width: 25%;
+  transform: translate(-90%, -120%);
+  z-index: -1;
+}
+
+.auth-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
   width: 100%;
-}
-
-.welcome-image {
-  position: absolute;
-  width: 22%;
-  transform: translate(-90%, -120%);
-  z-index: -1;
 }
 
 .form-container {
@@ -48,13 +48,13 @@ body {
   padding-bottom: 180px;
 }
 
-.login-overlay-image {
+.auth-overlay-image {
   position: absolute;
   top: 50%; /* Adjust as needed */
   left: 50%;
   transform: translate(-50%, -50%); /* Center the image */
   z-index: -1; /* Ensure it's below the form */
-  width: 360px; /* Adjust image size */
+  width: 370px; /* Adjust image size */
 }
 
 .inputs {
