@@ -152,7 +152,7 @@ const useProject = (projectID: number | null) => {
         console.log(err);
       }
       //alert("Project title is too long");
-      console.error("Error updating project title:", err);
+      //console.error("Error updating project title:", err);
       //setError("Failed to update project title. Please try again.");
     }
   };

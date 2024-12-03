@@ -107,6 +107,7 @@ export const Login: React.FC = () => {
             <div className="forgot-password text-center">
               Don't have an account? <Link to="/signup"> Click here!</Link>
             </div>
+            <div className="error-message text-center" id="errorMessage"></div>
             <div className="submit-container">
               <button className="submit" type="submit">
                 <img src={submitButton} alt="Submit" className="submit-image" />

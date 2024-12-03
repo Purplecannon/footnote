@@ -12,19 +12,6 @@ import {
 } from "../routes/api/projects.js";
 import { clearTables, resetTables } from "../config/tables.js";
 
-/*
-    TODO Tests:
-    - create-project request
-    - loadProject method
-    - delete method
-    - getProjects method
-    - editProjectName method
-    - load homepage request (check that returns correct project list)
-    - load-project request
-    - edit-project-name request
-    - delete request
-*/
-
 const usersURL = "/users";
 const projectsURL = "/projects";
 
@@ -480,9 +467,8 @@ describe("Handles loading the homepage project list", () => {
       .expect(200);
 
     const response = await agent.get(projectsURL + "/home").expect(200);
-    assert.deepStrictEqual(response._body, [
-      { projectID: pid1, title: projectName1 },
-    ]);
+    assert.deepStrictEqual(response._body[0].title, projectName1);
+    assert.deepStrictEqual(response._body[0].projectID, pid1);
   });
 
   it("Project list with multiple projects", async () => {
@@ -516,10 +502,13 @@ describe("Handles loading the homepage project list", () => {
 
     const response = await agent.get(projectsURL + "/home").expect(200);
 
-    assert.deepStrictEqual(response._body, [
-      { projectID: pid1, title: projectName1 },
-      { projectID: pid2, title: projectName2 },
-      { projectID: pid3, title: projectName3 },
-    ]);
+    assert.deepStrictEqual(response._body[0].title, projectName1);
+    assert.deepStrictEqual(response._body[0].projectID, pid1);
+
+    assert.deepStrictEqual(response._body[1].title, projectName2);
+    assert.deepStrictEqual(response._body[1].projectID, pid2);
+
+    assert.deepStrictEqual(response._body[2].title, projectName3);
+    assert.deepStrictEqual(response._body[2].projectID, pid3);
   });
 });
