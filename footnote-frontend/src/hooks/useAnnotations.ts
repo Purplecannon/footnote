@@ -33,7 +33,7 @@ export const useAnnotations = (projectID: number) => {
   function timestampString(timestamp:number) {
     let res = "";
     const minutes = Math.floor(timestamp / 60);
-    const seconds = Math.round(timestamp % 60);
+    const seconds = Math.floor(timestamp % 60);
 
     if (minutes <= 9) {
       // single digit
