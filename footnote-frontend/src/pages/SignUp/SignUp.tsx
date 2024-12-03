@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import "./SignUp.css";
-import user_icon from "../../assets/person.png";
+// import "./SignUp.css";  // Same styling as Login
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { API_BASE_URL } from "../../config";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
+import signupWindow from "../../assets/signup-window.png";
+import submitButton from "../../assets/submit-button.png";
+import welcomeWindow from "../../assets/welcome-window.png";
 
 interface IUserModel {
   username: string;
@@ -81,58 +83,62 @@ export const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="container">
-      <div className="form-container">
-        <form onSubmit={handleSubmit}>
-          <div className="header">
-            <div className="text">Sign Up</div>
-            <div className="underline" />
-          </div>
-
-          <div className="input">
-            <img src={user_icon} alt="User Icon" />
-            <input
-              type="text"
-              placeholder="username"
-              id="username"
-              value={data.username}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          <div className="input">
-            <PasswordInput
-              id="password"
-              value={data.password}
-              placeholder="Password"
-              onChange={handleInputChange}
-              showPassword={showPasswords}
-              toggleVisibility={togglePasswordVisibility}
-            />
-          </div>
-          <div className="input">
-            <PasswordInput
-              id="confirmPassword"
-              value={data.confirmPassword}
-              placeholder="Confirm Password"
-              onChange={handleInputChange}
-              showPassword={showPasswords}
-              toggleVisibility={togglePasswordVisibility}
-            />
-          </div>
-
-          <div className="error-message text-center" id="errorMessage"></div>
-
-          <div className="forgot-password text-center">
-            Already have an account? <Link to="/"> Click Here!</Link>
-          </div>
-
-          <div className="submit-container">
-            <button className="submit" type="submit">
-              Submit
-            </button>
-          </div>
-        </form>
+    <div id="auth">
+      <div className="auth-container">
+        <img
+          className="welcome-image"
+          src={welcomeWindow}
+          alt="Welcome window"
+        />
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <div className="inputs">
+              <div className="input">
+                <input
+                  type="text"
+                  placeholder="username"
+                  id="username"
+                  value={data.username}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="input">
+                <PasswordInput
+                  id="password"
+                  value={data.password}
+                  placeholder="password"
+                  onChange={handleInputChange}
+                  showPassword={showPasswords}
+                  toggleVisibility={togglePasswordVisibility}
+                />
+              </div>
+              <div className="input">
+                <PasswordInput
+                  id="confirmPassword"
+                  value={data.confirmPassword}
+                  placeholder="confirm password"
+                  onChange={handleInputChange}
+                  showPassword={showPasswords}
+                  toggleVisibility={togglePasswordVisibility}
+                />
+              </div>
+            </div>
+            <div className="forgot-password text-center">
+              Already have an account? <Link to="/"> Click here!</Link>
+            </div>
+            <div className="error-message text-center" id="errorMessage"></div>
+            <div className="submit-container">
+              <button className="submit" type="submit">
+                <img src={submitButton} alt="Submit" className="submit-image" />
+              </button>
+            </div>
+          </form>
+          <img
+            className="auth-overlay-image"
+            src={signupWindow}
+            alt="Signup Image Overlay"
+          />
+        </div>
       </div>
     </div>
   );

@@ -6,6 +6,8 @@ import ReactPlayer from "react-player";
 import useProject from "../../hooks/useProject";
 import axios from "axios";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
+import pencil from "../../assets/pencil.ico";
+import arrow from "../../assets/arrow.png";
 
 import { API_BASE_URL } from "../../config";
 
@@ -177,23 +179,21 @@ const ProjectPage: React.FC = () => {
       <Row className="mb-1">
         {/* Video Section */}
 
-        <Col md={6}>
+        <Col md={7}>
           <div
             className="d-flex justify-content-center align-items-center"
             style={{
               width: "100%",
-              height: "300px",
+              height: "500px",
               backgroundColor: "#f0f0f0", // Grey background
               border: "2px dashed #ccc", // Dashed border for placeholder
               borderRadius: "10px",
-              cursor: "pointer",
               position: "relative",
             }}
-            onClick={() => document.getElementById("file-input")?.click()} // Trigger file input on click
           >
             {!project?.videoURL ? (
               <>
-                <span
+                {/* <span
                   style={{
                     fontSize: "3rem",
                     color: "#888",
@@ -201,13 +201,14 @@ const ProjectPage: React.FC = () => {
                   }}
                 >
                   +
-                </span>
+                </span> */}
 
                 <p
                   style={{
                     position: "absolute",
                     color: "#888",
-                    marginTop: "90px",
+                    top: "50px",
+                    right: "90px",
                     fontSize: "15px",
                     fontWeight: "500",
                   }}
@@ -219,13 +220,27 @@ const ProjectPage: React.FC = () => {
                   style={{
                     position: "absolute",
                     color: "#888",
-                    marginTop: "140px",
+                    top: "75px",
+                    right: "120px",
                     fontSize: "12px",
                     fontWeight: "500",
                   }}
                 >
                   .MP4
                 </p>
+
+                <img
+                  src={arrow} // Provide the relative path to your pencil.ico image
+                  alt="arrow points to pencil"
+                  style={{
+                    position: "absolute",
+                    top: "30px",
+                    right: "55px",
+                    width: "30px", // Adjust the size of the image as needed
+                    height: "30px",
+                    opacity: 0.9,
+                  }}
+                />
               </>
             ) : (
               <ReactPlayer
@@ -238,6 +253,28 @@ const ProjectPage: React.FC = () => {
                 height="100%"
               />
             )}
+
+            <button
+              onClick={() => document.getElementById("file-input")?.click()} // Trigger file input on click
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                padding: "5px 10px",
+                border: "none",
+                cursor: "pointer",
+                zIndex: 10, // Ensure the button is above other elements
+              }}
+            >
+              <img
+                src={pencil} // Provide the relative path to your pencil.ico image
+                alt="pencil"
+                style={{
+                  width: "20px", // Adjust the size of the image as needed
+                  height: "20px",
+                }}
+              />
+            </button>
           </div>
 
           <input
@@ -251,7 +288,7 @@ const ProjectPage: React.FC = () => {
 
         {/* Annotation Section */}
 
-        <Col md={6}>
+        <Col md={5}>
           <div className="w-100">
             <Annotation projectID={projectID || 0} timestamp={timestamp} />
           </div>
@@ -269,7 +306,7 @@ const ProjectPage: React.FC = () => {
       </Row>
 
       <div>
-        <LogoutButton>Logout</LogoutButton>
+        <LogoutButton></LogoutButton>
       </div>
     </Container>
   );

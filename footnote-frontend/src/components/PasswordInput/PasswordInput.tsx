@@ -1,6 +1,7 @@
 import React from "react";
 import "./PasswordInput.css";
-import password_icon from "../../assets/password.png";
+import eyeOpen from "../../assets/eye-open.png";
+import eyeClose from "../../assets/eye-close.png";
 
 interface PasswordInputProps {
   id: string;
@@ -21,7 +22,6 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 }) => {
   return (
     <div className="password-input-container">
-      <img src={password_icon} alt="Password Icon" />
       <input
         id={id}
         type={showPassword ? "text" : "password"}
@@ -34,7 +34,12 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
         onClick={toggleVisibility}
         aria-label={showPassword ? "Hide password" : "Show password"}
       >
-        {showPassword ? "🙈" : "👁️"}
+        <img
+          src={showPassword ? eyeClose : eyeOpen}
+          alt={showPassword ? "Hide password" : "Show password"}
+          className="visibility-icon"
+        />
+        {/* {showPassword ? "🙈" : "👁️"} */}
       </button>
     </div>
   );

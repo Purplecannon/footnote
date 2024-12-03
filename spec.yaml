@@ -1,0 +1,13 @@
+name: footnote
+region: sfo
+services:
+  - name: frontend
+    github:
+      repo: Purplecannon/footnote
+      branch: prep
+      deploy_on_push: true
+    source_dir: footnote-frontend/
+    dockerfile_path: footnote-frontend/Dockerfile
+    http_port: 80
+    instance_count: 1
+    instance_size_slug: basic-xxs

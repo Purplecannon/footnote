@@ -52,7 +52,7 @@ function generateThumbnail(videoBuffer, videoName, callback) {
     .outputOptions([
       "-vframes 1", // Capture only one frame
       "-filter_complex",
-      "scale=w=320:h=240", // Scale the image to 320x240 resolution
+      "crop='min(iw,ih)':'min(iw,ih)':'(iw-min(iw,ih))/2':'(ih-min(iw,ih))/2',scale=550:550", // Crop to square and scale
     ])
     .on("end", function () {
       console.log(
