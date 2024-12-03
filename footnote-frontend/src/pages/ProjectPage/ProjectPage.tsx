@@ -306,7 +306,7 @@ const ProjectPage: React.FC = () => {
       </Row>
 
       <div>
-        <LogoutButton>Logout</LogoutButton>
+        <LogoutButton></LogoutButton>
       </div>
     </Container>
   );
