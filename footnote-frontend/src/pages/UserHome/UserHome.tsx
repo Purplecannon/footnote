@@ -98,7 +98,7 @@ const UserHome: React.FC = () => {
         </div>
       </div>
       <div>
-        <LogoutButton>Logout</LogoutButton>
+        <LogoutButton></LogoutButton>
       </div>
     </section>
   );

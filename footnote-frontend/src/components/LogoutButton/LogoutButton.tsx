@@ -1,15 +1,17 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
+// import { ReactNode, useState } from "react";
 import axios from "axios";
 import { API_BASE_URL } from "../../config";
 import { useAuth } from "../../context/AuthContext";
 import styles from "./LogoutButton.module.css";
 import logoutIcon from "../../assets/logout-button.png";
 
-interface Props {
-  children: ReactNode;
-}
+// interface Props {
+//   children: ReactNode;
+// }
 
-function LogoutButton({ children }: Props) {
+function LogoutButton() {
+  // function LogoutButton({ children }: Props) {
   const [error, setError] = useState<string | null>(null);
   const { logout } = useAuth();
 
