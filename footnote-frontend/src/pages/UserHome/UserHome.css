@@ -1,56 +1,79 @@
-.page-border-wrapper {
-  /* border: 3px solid #3c009d; */
-  /* Adds a border around the entire page */
-  border-radius: 10px;
-  /* Optional: Rounded corners */
-  padding: 20px;
-  /* Space between the border and the content */
-  margin: 10px;
-  /* Space between the border and the viewport edges */
+#homepage {
+  cursor: url("../../assets/cursor-shadow.png"), auto;
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+#homepage * {
+  cursor: url("../../assets/cursor-shadow.png"), auto;
+}
+
+#homepage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../../assets/holographic-background.jpg");
+  background-size: cover;
+  background-position: top left;
+  background-repeat: repeat-y;
+  filter: brightness(0.6);
+  z-index: -1;
 }
 
 .page-content {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  box-sizing: border-box;
 }
+
+.home-container {
+  width: 100%;
+  padding: 0;
+  margin-top: 50px;
+  margin-left: 250px;
+  overflow: hidden;
+  background: none;
+}
+
+#homepage .home-container .d-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 5px 70px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* #homepage .container .d-flex > div { */
+/* flex: 1 1 calc(33.33% - 60px); 3 projects per row, subtract gap to avoid overflow */
+/* max-width: calc(33.33% - 60px); Ensure max width aligns with 3 columns */
+/* box-sizing: border-box; */
+/* } */
 
 .header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row !important;
   align-items: center;
-  gap: 9px;
-  width: 100%;
-  margin-bottom: 30px;
+  justify-content: center;
+  gap: 10px;
+  padding-top: 70px;
 }
 
-.text {
-  color: #3c009d;
-  font-size: 48px;
-  font-weight: 700;
-}
-
-.underline {
-  width: 61px;
-  height: 6px;
-  background: #3c009d;
-  border-radius: 9px;
-}
-
-.hstack {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  overflow-x: auto;
-  /* Enable horizontal scrolling if necessary */
-  padding: 10px 0;
-}
-
-.gap-3 > div {
-  margin-right: 18px;
-  /* Spacing between project cards */
-}
-
-.spacer {
-  flex: 0 0 20px;
-  /* Fixed spacer width for space to the left of "Create New Project" card */
+.header img {
+  width: auto;
+  height: 120px;
 }

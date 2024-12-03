@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "./Login.css";
-import user_icon from "../../assets/person.png";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import axios, { AxiosResponse } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { API_BASE_URL } from "../../config";
+import loginWindow from "../../assets/login-window.png";
+import submitButton from "../../assets/submit-button.png";
+import welcomeWindow from "../../assets/welcome-window.png";
 
 interface ILoginModel {
   username: string;
@@ -59,44 +61,51 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="container">
-      <div className="form-container">
-        <form onSubmit={handleSubmit}>
-          <div className="header">
-            <div className="text">Login</div>
-            <div className="underline" />
-          </div>
-          <div className="inputs">
-            <div className="input">
-              <img src={user_icon} alt="User Icon" />
-              <input
-                type="text"
-                placeholder="username"
-                id="username"
-                value={data.username}
-                onChange={handleInputChange}
-              />
+    <div id="auth">
+      <div className="auth-container">
+        <img
+          className="welcome-image"
+          src={welcomeWindow}
+          alt="Welcome window"
+        />
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <div className="inputs">
+              <div className="input">
+                <input
+                  type="text"
+                  placeholder="username"
+                  id="username"
+                  value={data.username}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <div className="input">
+                <PasswordInput
+                  id="password"
+                  value={data.password}
+                  placeholder="password"
+                  onChange={handleInputChange}
+                  showPassword={showPassword} // Pass visibility state
+                  toggleVisibility={togglePasswordVisibility} // Pass toggle function
+                />
+              </div>
             </div>
-            <div className="input">
-              <PasswordInput
-                id="password"
-                value={data.password}
-                placeholder="Password"
-                onChange={handleInputChange}
-                showPassword={showPassword} // Pass visibility state
-                toggleVisibility={togglePasswordVisibility} // Pass toggle function
-              />
+            <div className="forgot-password text-center">
+              Don't have an account? <Link to="/signup"> Click here!</Link>
             </div>
-          </div>
-          <div className="forgot-password text-center">
-            Don't have an account? <Link to="/signup"> Click Here!</Link>
-          </div>
-          <div className="submit-container">
-            <button className="submit" type="submit">
-              Submit
-            </button>
-          </div>
-        </form>
+            <div className="submit-container">
+              <button className="submit" type="submit">
+                <img src={submitButton} alt="Submit" className="submit-image" />
+              </button>
+            </div>
+          </form>
+          <img
+            className="auth-overlay-image"
+            src={loginWindow}
+            alt="Login Image Overlay"
+          />
+        </div>
       </div>
     </div>
   );
