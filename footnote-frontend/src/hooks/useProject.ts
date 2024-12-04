@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 
 import { ProjectData } from "../types/types";
 
@@ -137,9 +137,23 @@ const useProject = (projectID: number | null) => {
 
       setProject((prev) => (prev ? { ...prev, title: newTitle } : null)); // Update only the title
     } catch (err) {
-      console.error("Error updating project title:", err);
-
-      setError("Failed to update project title. Please try again.");
+      if(err instanceof AxiosError) {
+        if(err.response && err.response.data) {
+          console.log(err.response?.data?.message);
+          alert(err.response?.data?.message);
+        }
+        else {
+          // invalid or missing error message
+          console.log(err);
+        }
+        
+      }
+      else {
+        console.log(err);
+      }
+      //alert("Project title is too long");
+      //console.error("Error updating project title:", err);
+      //setError("Failed to update project title. Please try again.");
     }
   };
 

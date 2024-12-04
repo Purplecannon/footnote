@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import "./SignUp.css";  // Same styling as Login
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { API_BASE_URL } from "../../config";
@@ -58,11 +58,27 @@ export const SignUp: React.FC = () => {
         console.log(response.data);
         login();
         navigate("/home");
-      } else {
+      } /* else {
         alert(response.data);
-      }
+      } */
     } catch (err) {
-      console.log("Error on signup request: ", err);
+      if(err instanceof AxiosError) {
+        if(err.response && err.response.data) {
+          console.log(err.response?.data?.message);
+          var errorMessage = document.getElementById("errorMessage");
+          if(errorMessage) {
+            errorMessage.innerHTML = err.response?.data?.message;
+          }
+        }
+        else {
+          // invalid or missing error message
+          console.log(err);
+        }
+        
+      }
+      else {
+        console.log(err);
+      }
     }
   };
 
@@ -110,6 +126,7 @@ export const SignUp: React.FC = () => {
             <div className="forgot-password text-center">
               Already have an account? <Link to="/"> Click here!</Link>
             </div>
+            <div className="error-message text-center" id="errorMessage"></div>
             <div className="submit-container">
               <button className="submit" type="submit">
                 <img src={submitButton} alt="Submit" className="submit-image" />
@@ -126,5 +143,6 @@ export const SignUp: React.FC = () => {
     </div>
   );
 };
+
 
 export default SignUp;

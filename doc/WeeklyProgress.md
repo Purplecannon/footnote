@@ -389,6 +389,12 @@ Initial meeting with team:
 - Fixed bug: Enter key from login/signup page now works, in addition to Submit button
 
 #### Catherine Jin
+- Changed tests to expect error codes that more accurately reflect the error that occurs
+- Implemented the throwing of the correct error codes that accurately reflect the error that occurs
+- Implemented the display of the correct error messages for sign in and login (ex: displays "Incorrect Password" below the input fields when user attempt to log in with incorrect password)
+- Removed the alert() methods used previously
+- Implemented an alert for when the user attempts to change the project title to something longer than 100 characters
+- Addressed issue #89
 
 #### Elainie Kassa
 
