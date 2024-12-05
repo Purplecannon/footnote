@@ -52,15 +52,16 @@ export const useAnnotations = (projectID: number) => {
   }
 
   // Add annotation
-  const addAnnotation = async (text: string, t: number) => {
-    const timestamp: string = timestampString(t);
+  const addAnnotation = async (text: string, timestampNum: number) => {
+    const timestampStr: string = timestampString(timestampNum);
     try {
       const response = await axios.post(
         `${API_BASE_URL}/annotations/add`,
         {
           text,
           projectID,
-          timestamp,
+          timestampStr,
+          timestampNum,
         },
         { withCredentials: true }
       );
@@ -68,12 +69,13 @@ export const useAnnotations = (projectID: number) => {
       if (response.data && response.data.id) {
         const annotationWithId = {
           id: response.data.id,
-          timestamp,
+          timestampStr,
+          timestampNum,
           text,
           projectID,
         };
 
-        console.log("checking timestamp", timestamp);
+        console.log("checking timestamp", timestampStr);
         setAnnotations((prev) => [...prev, annotationWithId]);
       } else {
         throw new Error("No ID received from backend");

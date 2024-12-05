@@ -36,6 +36,8 @@ interface AnnotationListProps {
   onAddAnnotation: (newText: string, newTimestamp: number, projectID: number) => void;
   projectID: number;
   timestamp: number;
+  onTimestampClick: (timestamp: number) => void;  // Add this prop
+
 }
 
 const AnnotationList: React.FC<AnnotationListProps> = ({
@@ -43,6 +45,7 @@ const AnnotationList: React.FC<AnnotationListProps> = ({
   onEditSave,
   onDeleteClick,
   onAddAnnotation,
+  onTimestampClick,
   projectID,
   timestamp,
 }) => {
@@ -56,6 +59,7 @@ const AnnotationList: React.FC<AnnotationListProps> = ({
           annotation={annotation}
           onEditSave={(id, newText) => onEditSave(id, newText, projectID)}
           onDeleteClick={(id) => onDeleteClick(id, projectID)}
+          onTimestampClick={onTimestampClick}
         />
       ))}
 
@@ -63,6 +67,7 @@ const AnnotationList: React.FC<AnnotationListProps> = ({
       <NewAnnotationItem
         timestamp={timestamp}
         onAddAnnotation={(newText) => onAddAnnotation(newText, timestamp, projectID)}
+        onTimestampClick={onTimestampClick}
       />
     </ul>
   );
