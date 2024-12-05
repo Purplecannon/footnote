@@ -27,9 +27,8 @@ router.post("/create-user", async (req, res) => {
       req.session.isLoggedIn = true;
       req.session.username = username.toLowerCase();
       return res.status(200).send(result);
-    }
-    else {
-      return res.status(401).json({message: result});
+    } else {
+      return res.status(401).json({ message: result });
     }
   } catch (err) {
     console.log("Error creating user: ", err);
@@ -47,14 +46,13 @@ router.post("/login-user", async (req, res) => {
   try {
     const result = await loginUser(username, password);
 
-    if (result === ("Login successful for user " + username.toLowerCase())) {
+    if (result === "Login successful for user " + username.toLowerCase()) {
       req.session.isLoggedIn = true;
       req.session.username = username.toLowerCase();
       return res.status(200).send(result);
+    } else {
+      return res.status(401).json({ message: result });
     }
-    else {
-      return res.status(401).json({message: result});
-    }    
   } catch (err) {
     console.log("Error logging in user: ", err);
     res.status(500).send("Error logging in user");

@@ -8,6 +8,8 @@ import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import signupWindow from "../../assets/signup-window.png";
 import submitButton from "../../assets/submit-button.png";
 import welcomeWindow from "../../assets/welcome-window.png";
+import errorWindow from "../../assets/long-window.png";
+import closeButton from "../../assets/close-button.png";
 
 interface IUserModel {
   username: string;
@@ -26,6 +28,7 @@ export const SignUp: React.FC = () => {
   });
 
   const [showPasswords, setShowPasswords] = useState(false); // State to control password visibility
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error message
 
   const togglePasswordVisibility = () => {
     setShowPasswords((prev) => !prev); // Toggle visibility
@@ -62,24 +65,22 @@ export const SignUp: React.FC = () => {
         alert(response.data);
       } */
     } catch (err) {
-      if(err instanceof AxiosError) {
-        if(err.response && err.response.data) {
+      if (err instanceof AxiosError) {
+        if (err.response && err.response.data) {
           console.log(err.response?.data?.message);
-          var errorMessage = document.getElementById("errorMessage");
-          if(errorMessage) {
-            errorMessage.innerHTML = err.response?.data?.message;
-          }
-        }
-        else {
+          setErrorMessage(err.response?.data?.message);
+        } else {
           // invalid or missing error message
           console.log(err);
         }
-        
-      }
-      else {
+      } else {
         console.log(err);
       }
     }
+  };
+
+  const handleCloseError = () => {
+    setErrorMessage(null);
   };
 
   return (
@@ -139,10 +140,21 @@ export const SignUp: React.FC = () => {
             alt="Signup Image Overlay"
           />
         </div>
+        {errorMessage && (
+          <div className="error-container long">
+            <img
+              className="close-button shift"
+              src={closeButton}
+              alt="Close button"
+              onClick={handleCloseError}
+            />
+            <img className="error-image" src={errorWindow} alt="Error window" />
+            <div className="error-message text-center">{errorMessage}</div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
-
 
 export default SignUp;

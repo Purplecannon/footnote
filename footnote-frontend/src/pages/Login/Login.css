@@ -57,6 +57,49 @@ body {
   width: 370px; /* Adjust image size */
 }
 
+.error-container {
+  position: absolute;
+  width: 370px; /* Matches the error image width */
+  height: auto;
+  top: 65%;
+  left: 60%;
+}
+
+.long {
+  width: 430px; /* Matches the error image width */
+}
+
+.close-button {
+  width: 20px;
+  position: absolute;
+  left: 90%;
+  top: 8%;
+  z-index: 5;
+}
+
+.shift {
+  left: 91%;
+}
+
+.error-image {
+  width: 100%;
+  display: block;
+  z-index: 3;
+}
+
+.error-message {
+  width: 100%;
+  font-size: 17px;
+  font-weight: 500;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -25%);
+  padding-top: 20px;
+  text-align: center;
+  z-index: 4;
+}
+
 .inputs {
   margin-top: 200px;
   display: flex;
@@ -99,13 +142,6 @@ body {
 
 .forgot-password span {
   cursor: pointer;
-}
-
-.error-message{
-  padding-left: 1px;
-  margin-top: 27px;
-  color: red;
-  font-size: 18px;
 }
 
 .submit-container {
