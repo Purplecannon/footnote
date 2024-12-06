@@ -24,19 +24,19 @@ import React, { useState } from "react";
 import { Button, InputGroup, FormControl } from "react-bootstrap";
 import AnnotationBaseItem from "./AnnotationBaseItem";
 import CheckIcon from "../../assets/check-square-fill.svg";
-import { none } from "@cloudinary/url-gen/qualifiers/fontHinting";
-import { AnnotationData } from "../../types/types";
+// import { none } from "@cloudinary/url-gen/qualifiers/fontHinting";
+// import { AnnotationData } from "../../types/types";
 
 interface NewAnnotationItemProps {
   timestamp: number;
   onAddAnnotation: (text: string, timestamp: number) => void; // Callback for adding a new annotation
-  onTimestampClick: (timestamp: number) => void; // Callbock 
+  onTimestampClick: (timestamp: number) => void; // Callbock
 }
 
 const NewAnnotationItem: React.FC<NewAnnotationItemProps> = ({
   timestamp,
   onAddAnnotation,
-  onTimestampClick
+  onTimestampClick,
 }) => {
   const [newAnnotation, setNewAnnotation] = useState<string>("");
 
@@ -47,9 +47,12 @@ const NewAnnotationItem: React.FC<NewAnnotationItemProps> = ({
     }
   };
 
-
   return (
-    <AnnotationBaseItem timestamp="00:00" timestampNum={0} onTimestampClick={() => onTimestampClick(timestamp)}>
+    <AnnotationBaseItem
+      timestamp="00:00"
+      timestampNum={0}
+      onTimestampClick={() => onTimestampClick(timestamp)}
+    >
       {/* Input field for new annotation */}
       <InputGroup>
         <FormControl
