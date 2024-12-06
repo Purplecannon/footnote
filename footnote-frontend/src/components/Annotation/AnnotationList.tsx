@@ -54,7 +54,7 @@ const AnnotationList: React.FC<AnnotationListProps> = ({
       {/* Render each annotation */}
       {annotations.map((annotation) => (
         <AnnotationItem
-          timestamp={timestamp}
+          timestamp={annotation.timestampNum}
           key={annotation.id}
           annotation={annotation}
           onEditSave={(id, newText) => onEditSave(id, newText, projectID)}

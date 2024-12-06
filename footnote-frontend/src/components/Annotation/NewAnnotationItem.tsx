@@ -24,6 +24,8 @@ import React, { useState } from "react";
 import { Button, InputGroup, FormControl } from "react-bootstrap";
 import AnnotationBaseItem from "./AnnotationBaseItem";
 import CheckIcon from "../../assets/check-square-fill.svg";
+import { none } from "@cloudinary/url-gen/qualifiers/fontHinting";
+import { AnnotationData } from "../../types/types";
 
 interface NewAnnotationItemProps {
   timestamp: number;

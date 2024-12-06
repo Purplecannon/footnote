@@ -1,5 +1,5 @@
 /**
- * Author: Mia, Lauren
+ * Author: Mia, Lauren, Kirupa
  * Central file for backend handling of annotation retrieval, creation, deletion.
  */
 
@@ -105,7 +105,8 @@ async function getAnnotations(pid) {
       // extract the aid, timestamp, and text
       return rows.map((row) => ({
         id: row.aid,
-        timestamp: row.timestampStr,
+        timestampStr: row.timestampStr,
+        timestampNum: row.timestampNum,
         text: row.text,
       }));
     }
