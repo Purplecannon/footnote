@@ -8,6 +8,7 @@ import axios from "axios";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
 import pencil from "../../assets/pencil.ico";
 import arrow from "../../assets/arrow.png";
+import "./ProjectPage.css";
 
 import { API_BASE_URL } from "../../config";
 
@@ -141,60 +142,59 @@ const ProjectPage: React.FC = () => {
   };
 
   return (
-    <Container fluid>
-      {/* Project Title */}
+    <section id="projectpage">
+      <Container fluid>
+        {/* Project Title */}
 
-      <Row className="text-white p-1 mb-1">
-        <div>
-          <button
-            className="back-home-button"
-            onClick={() => navigate("/home")}
-          >
-            Back to Project Home
-          </button>
-        </div>
-        <div className="container">
-          <input
-            type="text"
-            value={titleInput}
-            onChange={handleTitleChange}
-            className="form-control text-center input-field"
-            style={{
-              fontSize: "48px",
-              fontWeight: "650",
-              color: "#3c009d",
-              backgroundColor: "transparent",
-              border: "none",
-              width: "400px",
-              outline: "none",
-            }}
-            placeholder="Enter Project Title"
-          />
+        <Row className="text-white p-1 mb-1">
+          <div>
+            <button
+              className="back-home-button"
+              onClick={() => navigate("/home")}
+            >
+              Back to Project Home
+            </button>
+          </div>
+          <div className="container">
+            <input
+              type="text"
+              value={titleInput}
+              onChange={handleTitleChange}
+              className="form-control text-center input-field"
+              style={{
+                fontSize: "48px",
+                fontWeight: "650",
+                color: "#3c009d",
+                backgroundColor: "transparent",
+                border: "none",
+                width: "400px",
+                outline: "none",
+              }}
+              placeholder="Enter Project Title"
+            />
+          </div>
+        </Row>
 
-          <div className="underline" />
-        </div>
-      </Row>
+        {/* Video and Annotations */}
 
-      {/* Video and Annotations */}
+        <Row className="mb-1">
+          {/* Video Section */}
 
-      <Row className="mb-1">
-        {/* Video Section */}
-
-        <Col md={7}>
-          <div
-            className="d-flex justify-content-center align-items-center"
-            style={{
-              width: "100%",
-              height: "500px",
-              backgroundColor: "#f0f0f0", // Grey background
-              border: "2px dashed #ccc", // Dashed border for placeholder
-              borderRadius: "10px",
-              position: "relative",
-            }}
-          >
-            {!project?.videoURL ? (
-              <>
-                {/* <span
+          <Col md={7}>
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{
+                width: "100%",
+                height: "500px",
+                backgroundColor: "#f0f0f0", // Grey background
+                border: "2px dashed #ccc", // Dashed border for placeholder
+                borderRadius: "10px",
+                position: "relative",
+              }}
+            >
+              {!project?.videoURL ? (
+                <>
+                  {/* <span
                   style={{
                     fontSize: "3rem",
                     color: "#888",
@@ -204,112 +204,113 @@ const ProjectPage: React.FC = () => {
                   +
                 </span> */}
 
-                <p
-                  style={{
-                    position: "absolute",
-                    color: "#888",
-                    top: "50px",
-                    right: "90px",
-                    fontSize: "15px",
-                    fontWeight: "500",
-                  }}
-                >
-                  Import Video
-                </p>
+                  <p
+                    style={{
+                      position: "absolute",
+                      color: "#888",
+                      top: "50px",
+                      right: "90px",
+                      fontSize: "15px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Import Video
+                  </p>
 
-                <p
-                  style={{
-                    position: "absolute",
-                    color: "#888",
-                    top: "75px",
-                    right: "120px",
-                    fontSize: "12px",
-                    fontWeight: "500",
-                  }}
-                >
-                  .MP4
-                </p>
+                  <p
+                    style={{
+                      position: "absolute",
+                      color: "#888",
+                      top: "75px",
+                      right: "120px",
+                      fontSize: "12px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    .MP4
+                  </p>
 
+                  <img
+                    src={arrow} // Provide the relative path to your pencil.ico image
+                    alt="arrow points to pencil"
+                    style={{
+                      position: "absolute",
+                      top: "30px",
+                      right: "55px",
+                      width: "30px", // Adjust the size of the image as needed
+                      height: "30px",
+                      opacity: 0.9,
+                    }}
+                  />
+                </>
+              ) : (
+                <ReactPlayer
+                  controls={true}
+                  ref={playerRef}
+                  onPause={handlePause}
+                  onSeek={handleSeek}
+                  url={project.videoURL} // Video URL from project
+                  width="100%" // Ensure it fits in the container
+                  height="100%"
+                />
+              )}
+
+              <button
+                onClick={() => document.getElementById("file-input")?.click()} // Trigger file input on click
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  padding: "5px 10px",
+                  border: "none",
+                  cursor: "pointer",
+                  zIndex: 10, // Ensure the button is above other elements
+                }}
+              >
                 <img
-                  src={arrow} // Provide the relative path to your pencil.ico image
-                  alt="arrow points to pencil"
+                  src={pencil} // Provide the relative path to your pencil.ico image
+                  alt="pencil"
                   style={{
-                    position: "absolute",
-                    top: "30px",
-                    right: "55px",
-                    width: "30px", // Adjust the size of the image as needed
-                    height: "30px",
-                    opacity: 0.9,
+                    width: "20px", // Adjust the size of the image as needed
+                    height: "20px",
                   }}
                 />
-              </>
-            ) : (
-              <ReactPlayer
-                controls={true}
-                ref={playerRef}
-                onPause={handlePause}
-                onSeek={handleSeek}
-                url={project.videoURL} // Video URL from project
-                width="100%" // Ensure it fits in the container
-                height="100%"
-              />
-            )}
+              </button>
+            </div>
 
-            <button
-              onClick={() => document.getElementById("file-input")?.click()} // Trigger file input on click
-              style={{
-                position: "absolute",
-                top: "10px",
-                right: "10px",
-                padding: "5px 10px",
-                border: "none",
-                cursor: "pointer",
-                zIndex: 10, // Ensure the button is above other elements
-              }}
-            >
-              <img
-                src={pencil} // Provide the relative path to your pencil.ico image
-                alt="pencil"
-                style={{
-                  width: "20px", // Adjust the size of the image as needed
-                  height: "20px",
-                }}
-              />
-            </button>
-          </div>
+            <input
+              id="file-input"
+              type="file"
+              accept="video/mp4"
+              onChange={handleFileUpload}
+              style={{ display: "none" }} // Hidden file input
+            />
+          </Col>
 
-          <input
-            id="file-input"
-            type="file"
-            accept="video/mp4"
-            onChange={handleFileUpload}
-            style={{ display: "none" }} // Hidden file input
-          />
-        </Col>
+          {/* Annotation Section */}
 
-        {/* Annotation Section */}
+          <Col md={5}>
+            <div className="w-100">
+              <Annotation projectID={projectID || 0} timestamp={timestamp} />
+            </div>
+          </Col>
+        </Row>
 
-        <Col md={5}>
-          <div className="w-100">
-            <Annotation projectID={projectID || 0} timestamp={timestamp} />
-          </div>
-        </Col>
-      </Row>
+        {/* Delete Project Button */}
 
-      {/* Delete Project Button */}
+        <Row className="mt-4">
+          <Col className="text-center">
+            <Button variant="danger" onClick={handleDeleteProject}>
+              Delete Project
+            </Button>
+          </Col>
+        </Row>
 
-      <Row className="mt-4">
-        <Col className="text-center">
-          <Button variant="danger" onClick={handleDeleteProject}>
-            Delete Project
-          </Button>
-        </Col>
-      </Row>
-
-      <div>
-        <LogoutButton></LogoutButton>
-      </div>
-    </Container>
+        <div>
+          <LogoutButton></LogoutButton>
+        </div>
+      </Container>
+    </section>
   );
 };
 

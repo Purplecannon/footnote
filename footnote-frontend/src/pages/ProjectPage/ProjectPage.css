@@ -1,14 +1,26 @@
 /* General Page Styles */
+
+#projectpage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../../assets/bg3.jpeg");
+  background-size: cover;
+  background-position: top left;
+  background-repeat: repeat-y;
+  filter: brightness(0.8);
+  z-index: -10;
+}
+
 .container-fluid {
   display: flex;
   flex-direction: column;
   margin: auto;
-  margin-top: 200px;
+  margin-top: 50px;
   width: 600px;
-  background: #ffffff;
-  padding-bottom: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 /* Header Styles */
@@ -40,14 +52,6 @@
 
 .back-home-button:hover {
   background-color: #3c009d;
-}
-
-/* Underline beneath header */
-.underline {
-  width: 61px;
-  height: 6px;
-  background: #3c009d;
-  border-radius: 9px;
 }
 
 .input-field {
