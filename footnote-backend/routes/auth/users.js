@@ -1,5 +1,5 @@
 /**
- * Author: Mia
+ * Author: Mia, Catherine
  * Central file for backend handling of user authentication, includes session handling
  */
 
@@ -26,9 +26,10 @@ router.post("/create-user", async (req, res) => {
     if (result === "Created user " + username.toLowerCase()) {
       req.session.isLoggedIn = true;
       req.session.username = username.toLowerCase();
+      return res.status(200).send(result);
+    } else {
+      return res.status(401).json({ message: result });
     }
-
-    res.send(result); // TODO: wrap this in else block?
   } catch (err) {
     console.log("Error creating user: ", err);
     res.status(500).send("Error creating user");
@@ -48,9 +49,10 @@ router.post("/login-user", async (req, res) => {
     if (result === "Login successful for user " + username.toLowerCase()) {
       req.session.isLoggedIn = true;
       req.session.username = username.toLowerCase();
+      return res.status(200).send(result);
+    } else {
+      return res.status(401).json({ message: result });
     }
-
-    res.send(result); // TODO: wrap this in else block?
   } catch (err) {
     console.log("Error logging in user: ", err);
     res.status(500).send("Error logging in user");

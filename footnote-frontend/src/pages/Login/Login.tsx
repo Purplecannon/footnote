@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import "./Login.css";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { API_BASE_URL } from "../../config";
 import loginWindow from "../../assets/login-window.png";
 import submitButton from "../../assets/submit-button.png";
 import welcomeWindow from "../../assets/welcome-window.png";
+import errorWindow from "../../assets/small-window.png";
+import closeButton from "../../assets/close-button.png";
 
 interface ILoginModel {
   username: string;
@@ -20,6 +22,7 @@ export const Login: React.FC = () => {
 
   const [data, setData] = useState<ILoginModel>({ username: "", password: "" });
   const [showPassword, setShowPassword] = useState(false); // State to control password visibility
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error message
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev); // Toggle visibility
@@ -52,12 +55,24 @@ export const Login: React.FC = () => {
       ) {
         login();
         navigate("/home");
-      } else {
-        alert(response.data);
       }
     } catch (err) {
-      console.log("Error on login request: ", err);
+      if (err instanceof AxiosError) {
+        if (err.response && err.response.data) {
+          console.log(err.response?.data?.message);
+          setErrorMessage(err.response?.data?.message);
+        } else {
+          // invalid or missing error message
+          console.log(err);
+        }
+      } else {
+        console.log(err);
+      }
     }
+  };
+
+  const handleCloseError = () => {
+    setErrorMessage(null);
   };
 
   return (
@@ -106,6 +121,18 @@ export const Login: React.FC = () => {
             alt="Login Image Overlay"
           />
         </div>
+        {errorMessage && (
+          <div className="error-container">
+            <img
+              className="close-button"
+              src={closeButton}
+              alt="Close button"
+              onClick={handleCloseError}
+            />
+            <img className="error-image" src={errorWindow} alt="Error window" />
+            <div className="error-message text-center">{errorMessage}</div>
+          </div>
+        )}
       </div>
     </div>
   );

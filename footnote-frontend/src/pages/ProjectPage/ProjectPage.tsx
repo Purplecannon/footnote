@@ -74,6 +74,7 @@ const ProjectPage: React.FC = () => {
     debounceTimeout.current = setTimeout(async () => {
       try {
         await updateProject(event.target.value);
+        await setTitleInput(project?.title || "");
       } catch (err) {
         console.error("Failed to update project title:", err);
         alert("Error updating the project title. Please try again.");
