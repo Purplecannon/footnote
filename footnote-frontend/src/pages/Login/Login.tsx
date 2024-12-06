@@ -8,6 +8,8 @@ import { API_BASE_URL } from "../../config";
 import loginWindow from "../../assets/login-window.png";
 import submitButton from "../../assets/submit-button.png";
 import welcomeWindow from "../../assets/welcome-window.png";
+import errorWindow from "../../assets/small-window.png";
+import closeButton from "../../assets/close-button.png";
 
 interface ILoginModel {
   username: string;
@@ -20,6 +22,7 @@ export const Login: React.FC = () => {
 
   const [data, setData] = useState<ILoginModel>({ username: "", password: "" });
   const [showPassword, setShowPassword] = useState(false); // State to control password visibility
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // State for error message
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev); // Toggle visibility
@@ -54,23 +57,22 @@ export const Login: React.FC = () => {
         navigate("/home");
       }
     } catch (err) {
-      if(err instanceof AxiosError) {
-        if(err.response && err.response.data) {
+      if (err instanceof AxiosError) {
+        if (err.response && err.response.data) {
           console.log(err.response?.data?.message);
-          var errorMessage = document.getElementById("errorMessage");
-          if(errorMessage) {
-            errorMessage.innerHTML = err.response?.data?.message;
-          }
-        }
-        else {
+          setErrorMessage(err.response?.data?.message);
+        } else {
           // invalid or missing error message
           console.log(err);
         }
-      }
-      else {
+      } else {
         console.log(err);
       }
     }
+  };
+
+  const handleCloseError = () => {
+    setErrorMessage(null);
   };
 
   return (
@@ -107,7 +109,6 @@ export const Login: React.FC = () => {
             <div className="forgot-password text-center">
               Don't have an account? <Link to="/signup"> Click here!</Link>
             </div>
-            <div className="error-message text-center" id="errorMessage"></div>
             <div className="submit-container">
               <button className="submit" type="submit">
                 <img src={submitButton} alt="Submit" className="submit-image" />
@@ -120,6 +121,18 @@ export const Login: React.FC = () => {
             alt="Login Image Overlay"
           />
         </div>
+        {errorMessage && (
+          <div className="error-container">
+            <img
+              className="close-button"
+              src={closeButton}
+              alt="Close button"
+              onClick={handleCloseError}
+            />
+            <img className="error-image" src={errorWindow} alt="Error window" />
+            <div className="error-message text-center">{errorMessage}</div>
+          </div>
+        )}
       </div>
     </div>
   );

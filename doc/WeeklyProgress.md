@@ -389,6 +389,7 @@ Initial meeting with team:
 - Fixed bug: Enter key from login/signup page now works, in addition to Submit button
 
 #### Catherine Jin
+
 - Changed tests to expect error codes that more accurately reflect the error that occurs
 - Implemented the throwing of the correct error codes that accurately reflect the error that occurs
 - Implemented the display of the correct error messages for sign in and login (ex: displays "Incorrect Password" below the input fields when user attempt to log in with incorrect password)
@@ -423,6 +424,12 @@ Initial meeting with team:
 - Worked on video mirroring functionality
 - Create a separate video upload button
   - Users can now click on the video to play/pause rather than being prompted to upload another video
+- Designed new hologram style for the webpage and graphic elements on Canva and Photoshop
+- Added the styling for:
+  - Login, Signup pages: includes graphics/styling, Password manager, Error message rendering
+  - UserHome page: includes graphics/styling, better thumbnail scaling, pixel window over thumbnails
+  - Logout button: includes graphics/styling
+  - Cursor: still a bit buggy - will improve!
 
 #### Catherine Jin
 
