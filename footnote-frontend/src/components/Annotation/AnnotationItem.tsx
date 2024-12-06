@@ -45,12 +45,14 @@ interface AnnotationItemProps {
   annotation: AnnotationData; // The data for the annotation
   onEditSave: (id: number, newText: string, projectId: number) => void; // Callback for saving edits
   onDeleteClick: (id: number, projectId: number) => void; // Callback for deleting the annotation
+  onTimestampClick: (timestampNum: number) => void; // Callback for clicking on timestamp
 }
 
 const AnnotationItem: React.FC<AnnotationItemProps> = ({
   annotation,
   onEditSave,
   onDeleteClick,
+  onTimestampClick,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(annotation.text);
@@ -69,8 +71,9 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
 
   return (
     <AnnotationBaseItem
-      timestamp={annotation.timestamp}
-      onTimestampClick={() => {}}
+      timestamp={annotation.timestampStr}
+      timestampNum={annotation.timestampNum}
+      onTimestampClick={onTimestampClick}
     >
       {isEditing ? (
         <InputGroup>

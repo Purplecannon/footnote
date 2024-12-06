@@ -41,6 +41,15 @@ const ProjectPage: React.FC = () => {
     console.log("Video scrubbed to:", newTimestamp);
   };
 
+  // Handle the timestamp click and update the timestamp
+  const handleTimestampClick = (newTimestamp: number) => {
+    setTimestamp(newTimestamp);
+    if (playerRef.current) {
+      playerRef.current.seekTo(newTimestamp, "seconds");
+    }
+    console.log("Video seeked to timestamp:", newTimestamp);
+  };
+
   const handlePause = () => {
     if (playerRef.current) {
       const currentTime = playerRef.current.getCurrentTime();
@@ -291,7 +300,11 @@ const ProjectPage: React.FC = () => {
 
         <Col md={5}>
           <div className="w-100">
-            <Annotation projectID={projectID || 0} timestamp={timestamp} />
+            <Annotation
+              projectID={projectID || 0}
+              timestamp={timestamp}
+              onTimestampClick={handleTimestampClick}
+            />
           </div>
         </Col>
       </Row>

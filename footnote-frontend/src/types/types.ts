@@ -13,7 +13,9 @@ export interface AnnotationData {
 
   id: number;
 
-  timestamp: string;
+  timestampStr: string;
+
+  timestampNum: number;
 
   text: string;
 }
