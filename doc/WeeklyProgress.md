@@ -432,6 +432,9 @@ Initial meeting with team:
   - Cursor: still a bit buggy - will improve!
 
 #### Catherine Jin
+- Pull request for error message code
+- Adjusted tests to account for thumbnail functionality
+- Wrote annotation tests
 
 #### Elainie Kassa
 
