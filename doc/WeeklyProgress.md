@@ -455,3 +455,11 @@ Initial meeting with team:
 #### Alicia Z.
 
 - Deploy to domain
+- Added documentation for the following files
+  - LogoutButton.tsx
+  - PasswordInput.tsx
+  - ProjectCard.tsx
+  - AuthContext.tsx
+  - useAnnotations.ts
+  - useProject.ts
+  - types.ts
