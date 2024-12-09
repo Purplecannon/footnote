@@ -9,6 +9,8 @@ import LogoutButton from "../../components/LogoutButton/LogoutButton";
 import pencil from "../../assets/pencil.ico";
 import arrow from "../../assets/arrow.png";
 import "./ProjectPage.css";
+import homeIcon from "../../assets/home-button.png";
+import deleteIcon from "../../assets/delete-button.png";
 
 import { API_BASE_URL } from "../../config";
 
@@ -40,6 +42,15 @@ const ProjectPage: React.FC = () => {
   const handleSeek = (newTimestamp: number) => {
     setTimestamp(newTimestamp);
     console.log("Video scrubbed to:", newTimestamp);
+  };
+
+  // Handle the timestamp click and update the timestamp
+  const handleTimestampClick = (newTimestamp: number) => {
+    setTimestamp(newTimestamp);
+    if (playerRef.current) {
+      playerRef.current.seekTo(newTimestamp, "seconds");
+    }
+    console.log("Video seeked to timestamp:", newTimestamp);
   };
 
   const handlePause = () => {
@@ -146,31 +157,14 @@ const ProjectPage: React.FC = () => {
       <Container fluid>
         {/* Project Title */}
 
-        <Row className="text-white p-1 mb-1">
-          <div>
-            <button
-              className="back-home-button"
-              onClick={() => navigate("/home")}
-            >
-              Back to Project Home
-            </button>
-          </div>
-          <div className="container">
+        <Row>
+          <div className="title-container">
             <input
               type="text"
               value={titleInput}
               onChange={handleTitleChange}
-              className="form-control text-center input-field"
-              style={{
-                fontSize: "48px",
-                fontWeight: "650",
-                color: "#3c009d",
-                backgroundColor: "transparent",
-                border: "none",
-                width: "400px",
-                outline: "none",
-              }}
               placeholder="Enter Project Title"
+              className="title-input"
             />
           </div>
         </Row>
@@ -194,16 +188,6 @@ const ProjectPage: React.FC = () => {
             >
               {!project?.videoURL ? (
                 <>
-                  {/* <span
-                  style={{
-                    fontSize: "3rem",
-                    color: "#888",
-                    position: "absolute",
-                  }}
-                >
-                  +
-                </span> */}
-
                   <p
                     style={{
                       position: "absolute",
@@ -231,13 +215,13 @@ const ProjectPage: React.FC = () => {
                   </p>
 
                   <img
-                    src={arrow} // Provide the relative path to your pencil.ico image
+                    src={arrow}
                     alt="arrow points to pencil"
                     style={{
                       position: "absolute",
                       top: "30px",
                       right: "55px",
-                      width: "30px", // Adjust the size of the image as needed
+                      width: "30px",
                       height: "30px",
                       opacity: 0.9,
                     }}
@@ -249,8 +233,8 @@ const ProjectPage: React.FC = () => {
                   ref={playerRef}
                   onPause={handlePause}
                   onSeek={handleSeek}
-                  url={project.videoURL} // Video URL from project
-                  width="100%" // Ensure it fits in the container
+                  url={project.videoURL}
+                  width="100%"
                   height="100%"
                 />
               )}
@@ -264,14 +248,14 @@ const ProjectPage: React.FC = () => {
                   padding: "5px 10px",
                   border: "none",
                   cursor: "pointer",
-                  zIndex: 10, // Ensure the button is above other elements
+                  zIndex: 10,
                 }}
               >
                 <img
-                  src={pencil} // Provide the relative path to your pencil.ico image
+                  src={pencil}
                   alt="pencil"
                   style={{
-                    width: "20px", // Adjust the size of the image as needed
+                    width: "20px",
                     height: "20px",
                   }}
                 />
@@ -283,7 +267,7 @@ const ProjectPage: React.FC = () => {
               type="file"
               accept="video/mp4"
               onChange={handleFileUpload}
-              style={{ display: "none" }} // Hidden file input
+              style={{ display: "none" }}
             />
           </Col>
 
@@ -291,21 +275,30 @@ const ProjectPage: React.FC = () => {
 
           <Col md={5}>
             <div className="w-100">
-              <Annotation projectID={projectID || 0} timestamp={timestamp} />
+              <Annotation
+                projectID={projectID || 0}
+                timestamp={timestamp}
+                onTimestampClick={handleTimestampClick}
+              />
             </div>
           </Col>
         </Row>
 
+        {/* Home Button */}
+        <div>
+          <button className="home-button" onClick={() => navigate("/home")}>
+            <img src={homeIcon} alt="Home" className="home-icon" />
+          </button>
+        </div>
+
         {/* Delete Project Button */}
+        <div>
+          <button className="delete-button" onClick={handleDeleteProject}>
+            <img src={deleteIcon} alt="Delete" className="delete-icon" />
+          </button>
+        </div>
 
-        <Row className="mt-4">
-          <Col className="text-center">
-            <Button variant="danger" onClick={handleDeleteProject}>
-              Delete Project
-            </Button>
-          </Col>
-        </Row>
-
+        {/* Logout Button */}
         <div>
           <LogoutButton></LogoutButton>
         </div>

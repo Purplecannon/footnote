@@ -1,5 +1,5 @@
 /**
- * Author: Mia, Lauren
+ * Author: Mia, Lauren, Kirupa
  * Central file for backend handling of annotation retrieval, creation, deletion.
  */
 
@@ -39,10 +39,10 @@ router.post("/add", async (req, res) => {
     return res.status(401).send("Unauthorized, please log in");
   }
 
-  const { timestamp, text, projectID } = req.body;
+  const { timestampStr, timestampNum, text, projectID } = req.body;
 
   try {
-    const result = await addAnnotation(timestamp, text, projectID);
+    const result = await addAnnotation(timestampStr, timestampNum, text, projectID);
     res.send(result);
   } catch (err) {
     console.log("Error adding annotation: ", err);
@@ -105,7 +105,8 @@ async function getAnnotations(pid) {
       // extract the aid, timestamp, and text
       return rows.map((row) => ({
         id: row.aid,
-        timestamp: row.timestampStr,
+        timestampStr: row.timestampStr,
+        timestampNum: row.timestampNum,
         text: row.text,
       }));
     }
@@ -123,16 +124,17 @@ async function getAnnotations(pid) {
  * @param {*} pid
  * @returns
  */
-async function addAnnotation(timestamp, text, pid) {
+async function addAnnotation(timestampStr, timestampNum, text, pid) {
   try {
     const [result] = await conn
       .promise()
-      .query(INSERT_ANNOTATION, [timestamp, text, pid]);
+      .query(INSERT_ANNOTATION, [timestampStr, timestampNum, text, pid]);
 
     if (result.affectedRows > 0) {
       return {
         id: result.insertId, // equivalent to aid
-        timestamp: timestamp,
+        timestampStr: timestampStr,
+        timestampNum: timestampNum,
         text: text,
       };
     } else {
