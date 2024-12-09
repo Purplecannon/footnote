@@ -101,6 +101,8 @@ Initial meeting with team:
 - Worked on learning typescript and shifted existing code to typescript (vite React)
 - Split signin/login into two components in order to keep track of data more efficiently.
 - Made interfaces to keep track of username, password, and confirm password for Sign in page and Login page.
+- Worked on the documentation for Frontend components and their functionality 
+- Updated my personal schedule and wrote a risk assessment for the doc
 
 #### Mia Huynh
 
@@ -149,6 +151,7 @@ Initial meeting with team:
 - Created handleSubmit function that sends this data via a POST request.
 - Was able to console.log(data) but had to conduct more research in order to figure out how to link this to the
   backend for the sign up page.
+- Revised documentation based on comments for frontend
 
 #### Mia Huynh
 
@@ -197,6 +200,7 @@ Initial meeting with team:
 - Mia was able to get the code to work on her computer, so I created a handleSubmit function for Login
   (similar to how I implemented this for the Sign in component) in order to pass that information to that
   backend as well.
+- Looked into frontend testing and added some information to the living document
 
 #### Mia Huynh
 
@@ -251,6 +255,7 @@ Initial meeting with team:
   - turned on controls so that the video player had play, pause, speed adjustment, volume adjustment, and scrubber capabilities
 - Kept track of the timestamp (# of seconds played) when a user paused the video as well as the title.
 - Created the video upload functionality so users could directly upload mp4 files to our website.
+- Added bug documentation to the living document
 
 #### Mia Huynh
 
@@ -316,8 +321,8 @@ Initial meeting with team:
 - Used useParam to keep track of the pid (project id)
 - Created a handleTitleChange that updated the title after the user stopped typing for 1 second
 - Created an async function to pass the project title and project id to the backend
-- Fixed Sign Up button so it was consistent with the Log In button
-- Fixed alignment of the forgot password text
+- Fixed Sign Up button so it was consistent with the Log In button and fixed alignment of the forgot password text
+- Worked on styling the sign up/login containers, the video player component, and the title of the project page (fonts, colors, sizing, box shadows).
 
 #### Mia Huynh
 
@@ -372,6 +377,13 @@ Initial meeting with team:
 ## Assignment: Peer review
 
 #### Kirupa Gunaseelan
+- Worked with the Husky Swap team to obtain proper credentials and complete set up
+- Peer reviewed and assigned issues/bugs to the HuskySwap team commenting on feedback
+- Looked through the annotation components and useAnnotation hooks in order to understand
+how the code worked so I could start working on population timestamps in annotations
+- Developed a plan for integrating the timestamp in the annotation and briefed Mia
+about it. I asked Mia to add an additional field to the SQL Table (timestampStr 
+and timestampNum). 
 
 #### Mia Huynh
 
@@ -414,6 +426,14 @@ Initial meeting with team:
 ## Assignment
 
 #### Kirupa Gunaseelan
+- Actually implemented the timestamp into the annotation. When a user pauses or scrubs
+to a certain point in the video and makes an annotation, the timestamp at that moment will
+be saved with the annotation text and shown on the page. 
+  - Added an additional timestamp prop to Annotation, passed this prop to Annotation Item, 
+  and then AnnotationBaseItem (which has the html/css that shows the timestamp)
+  - Utilized the timestampString function to convert the timestamp number to string format 
+  and pass that information via the "addAnnotation" function in the useAnnotation hook 
+  (this also passes the information to the database). 
 
 #### Mia Huynh
 
@@ -451,6 +471,24 @@ Initial meeting with team:
 ---
 
 ## Week 11
+
+#### Kirupa Gunaseelan
+- Now looked into the backend code (Apis for the annotations) to implement the 
+timestamp clicking functionality. 
+- Implement the timestamp click (when a user clicks on timestamp it takes them to 
+the appropriate spot in the video)
+  - Updated the AnnotationData component to store the timestampNum as well 
+  - Created a callback function for onTimestampClick() in AnnotationBaseItem
+    - Created a handleTimestamp() function in ProjectPage that seeks to the given timestamp
+    in the video player. 
+  - Updated annotation API and useAnnotation hooks to properly handle the timestamp number 
+  and string data. 
+  - Ensured backward compatibility with existing code (and updated all variables
+  to account for the timestamp variable change -- splitting timestamp into a number
+  version and string version)
+  - Edited SQL queries so that GET/INSERT Annotations extracted both the timestampStr and 
+  timestampNum. 
+
 
 #### Mia Huynh
 
