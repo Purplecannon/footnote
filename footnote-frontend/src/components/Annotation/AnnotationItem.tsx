@@ -5,12 +5,16 @@
  * to view, edit, or delete the annotation content.
  *
  * Props:
+ * - `timestampNum` (number): The numerical value of the timestamp associated with
+ * the annotation
  * - `annotation` (AnnotationData): The data for the annotation, including
  *   its ID, text, timestamp, and associated project ID.
  * - `onEditSave` (function): Callback to handle saving an edited annotation.
  *   Receives `id`, `newText`, and `projectId` as arguments.
  * - `onDeleteClick` (function): Callback to handle deleting an annotation.
  *   Receives `id` and `projectId` as arguments.
+ * - `onTimestampClick` (function, optional): Callback executed when the timestamp
+ *   button is clicked.
  *
  * Behavior:
  * - When editing is active:
@@ -23,12 +27,14 @@
  * <AnnotationItem
  *   annotation={{
  *     id: 1,
- *     timestamp: "01:30",
+ *     timestamp: "1:30",
  *     text: "This is an annotation",
  *     projectID: 123
+ * 
  *   }}
  *   onEditSave={(id, newText, projectId) => console.log(id, newText, projectId)}
  *   onDeleteClick={(id, projectId) => console.log(id, projectId)}
+ *   onTimestampClick={onTimestampClick}
  * />
  * ```
  */

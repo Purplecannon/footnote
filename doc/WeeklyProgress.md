@@ -473,6 +473,7 @@ be saved with the annotation text and shown on the page.
 ## Week 11
 
 #### Kirupa Gunaseelan
+- Fixed timestamp so it rounded down, and updated documentation for annotation components
 - Now looked into the backend code (Apis for the annotations) to implement the 
 timestamp clicking functionality. 
 - Implement the timestamp click (when a user clicks on timestamp it takes them to 

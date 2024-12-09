@@ -9,6 +9,9 @@
  * Props:
  * - `projectID` (number): The unique identifier for the project whose annotations
  *   are being managed.
+ * - `timestamp` (number): The most recent timestamp from the video player 
+ * - `onTimestampClick` (function): A callback function for how to handle the timestamp
+ * button in subcomponent. 
  *
  * Behavior:
  * - While data is loading, a "Loading..." message is displayed.
@@ -37,7 +40,7 @@ import AnnotationList from "./AnnotationList";
 
 interface AnnotationProps {
   projectID: number; // The ID of the project for which annotations are managed
-  timestamp: number;
+  timestamp: number; // most recent timestamp that is getting passed down
   onTimestampClick: (timestampNum: number) => void; // Callback for clicking on timestamp
 }
 
