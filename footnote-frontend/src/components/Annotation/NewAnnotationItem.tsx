@@ -6,8 +6,12 @@
  * consistent styling and structure.
  *
  * Props:
+* - `timestamp` (number): The numerical value of the timestamp associated with
+ * the annotation
  * - `onAddAnnotation` (function): Callback to handle adding a new annotation.
  *   Receives the new annotation text as an argument.
+* - `onTimestampClick` (function, optional): Callback executed when the timestamp
+ *   button is clicked.
  *
  * Behavior:
  * - Users can type a new annotation in the input field.
