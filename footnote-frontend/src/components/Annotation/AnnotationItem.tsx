@@ -96,7 +96,7 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
           />
         </InputGroup>
       ) : (
-        <span>{annotation.text}</span>
+        <span style={{color: 'white'}}>{annotation.text}</span>
       )}
 
       {!isEditing && (

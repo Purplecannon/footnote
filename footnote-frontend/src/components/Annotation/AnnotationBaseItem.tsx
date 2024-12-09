@@ -46,7 +46,7 @@ const AnnotationBaseItem: React.FC<AnnotationBaseItemProps> = ({
       as="li"
       className="d-flex justify-content-between align-items-center"
     >
-      <Button variant="link" onClick={() => onTimestampClick(timestampNum)} className="p-0">
+      <Button variant="link" onClick={() => onTimestampClick(timestampNum)} className="p-0" style={{color: 'white'}}>
         <strong>{timestamp}</strong>
       </Button>
       {children}
