@@ -1,5 +1,6 @@
 /**
- * Author: Alicia, Mia
+ * This module provides functions for uploading video and thumbnail files
+ * to DigitalOcean Spaces, an S3-compatible object storage service, using AWS SDK v3.
  */
 
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
@@ -19,8 +20,6 @@ const BUCKET_NAME = process.env.DO_SPACES_BUCKET;
 const THUMBNAIL_BUCKET_NAME = process.env.DO_SPACES_THUMBNAIL_BUCKET;
 
 /**
- * uploadToS3
- *
  * Uploads a file to a DigitalOcean Space (S3 compatible service) using the AWS SDK v3.
  *
  * @param {Object} file - The file to upload (retrieved from multer's file object).
@@ -55,6 +54,14 @@ async function uploadToS3(file) {
   }
 }
 
+/**
+ * Uploads a thumbnail image to a DigitalOcean Space, with the image saved as a public-readable file.
+ *
+ * @param {Object} file - The thumbnail file to upload (retrieved from multer's file object).
+ * @param {string} videoName - The name of the video associated with the thumbnail.
+ * @returns {Promise<Object>} - Resolves with the uploaded thumbnail's URL and metadata.
+ * @throws {Error} - Throws an error if the upload to S3 fails.
+ */
 async function uploadThumbnailToS3(file, videoName) {
   const params = {
     Bucket: THUMBNAIL_BUCKET_NAME,
@@ -78,4 +85,5 @@ async function uploadThumbnailToS3(file, videoName) {
   }
 }
 
+// Exports
 module.exports = { uploadToS3, uploadThumbnailToS3 };

@@ -1,9 +1,7 @@
 /**
- * Author: Mia
- *
- * Provides functionality to generate a thumbnail image
- * from a video buffer. The thumbnail is created using the fluent-ffmpeg library,
- * and temporary files are managed to handle the intermediate processing steps.
+ * Provides functionality to generate a thumbnail image from a video buffer using
+ * the fluent-ffmpeg library. It handles temporary video files and thumbnail images
+ * during the processing steps.
  */
 
 const ffmpeg = require("fluent-ffmpeg");
@@ -21,10 +19,18 @@ if (!fs.existsSync(thumbnailDir)) {
 /**
  * Generates a thumbnail image from a video buffer.
  *
- * @param {Buffer} videoBuffer - The video file data provided as a buffer.
- * @param {string} videoName - The original name of the video, used for naming temporary files.
- * @param {function} callback - A callback function to handle the generated thumbnail or errors.
- *                              Callback signature: (error, thumbnailBuffer) => void
+ * This function processes the video buffer by saving it as a temporary video file,
+ * and using ffmpeg to generate a thumbnail image. The thumbnail is returned via
+ * a callback function, and temporary files are cleaned up after processing.
+ *
+ * @param {Buffer} videoBuffer - The video data as a buffer that will be processed to generate the thumbnail.
+ * @param {string} videoName - The name of the video, used for naming temporary files.
+ * @param {function} callback - A callback function that handles the generated thumbnail or errors.
+ *                               The callback should have the following signature:
+ *                               `(error, thumbnailBuffer) => void`
+ *                               - `error` is an error object if an error occurs during thumbnail generation,
+ *                                 or `null` if successful.
+ *                               - `thumbnailBuffer` is the buffer containing the generated thumbnail image.
  */
 function generateThumbnail(videoBuffer, videoName, callback) {
   const timestamp = Date.now();

@@ -44,12 +44,12 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
 // enable cors in backend: to allow frontend (port 5173) to communicate with backend (port 3000)
-app.use(
-  cors({
-    origin: "http://localhost:5173", // url of frontend
-    credentials: true, // allow credentials (cookies) to be sent
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // url of frontend
+//     credentials: true, // allow credentials (cookies) to be sent
+//   })
+// );
 
 app.use(logger("dev"));
 app.use(express.json()); // to parse JSON bodies
