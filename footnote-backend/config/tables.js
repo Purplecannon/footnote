@@ -1,5 +1,4 @@
 /**
- * Author: Mia
  * Functions to create, clear, reset all necessary tables including
  * USERS, PROJECTS, ANNOTATIONS, SESSIONS
  */
@@ -23,7 +22,8 @@ const {
 
 /**
  * Creates all necessary tables in the database.
- * This function runs SQL queries to create the USERS, PROJECTS, and ANNOTATIONS tables.
+ * This function runs SQL queries to create the USERS, PROJECTS, and ANNOTATIONS tables with suffixes
+ * based on the environment (e.g., `USERS_dev`, `PROJECTS_dev`).
  */
 async function createTables() {
   await createTable(CREATE_USERS_TABLE, `USERS_${tableSuffix}`);
@@ -55,6 +55,8 @@ async function resetTables() {
 
 /**
  * Creates a table in the DigitalOcean database cluster using the provided SQL query.
+ * This helper function runs the provided SQL query to create a table in the database.
+ *
  * @param {string} tableSql - The SQL query to execute for creating the table.
  * @param {string} tableName - The name of the table to be created.
  */
@@ -69,8 +71,9 @@ async function createTable(tableSql, tableName) {
 
 /**
  * Clears all data from the specified table in the DigitalOcean database.
- * This function executes the provided SQL query to remove all rows from the target table
+ * This helper function runs the provided SQL query to remove all rows from the target table
  * while preserving its structure.
+ *
  * @param {string} tableSql - The SQL query to execute for clearing the table.
  * @param {string} tableName - The name of the table to be cleared.
  */
@@ -85,8 +88,9 @@ async function clearTable(tableSql, tableName) {
 
 /**
  * Resets the auto-increment value of the specified table in the DigitalOcean database.
- * This function executes the provided SQL query to reset the auto-increment counter of
+ * This helper function executes the provided SQL query to reset the auto-increment counter of
  * the target table to 1, which is typically used to restart the sequence for primary key IDs.
+ *
  * @param {string} tableSql - The SQL query to execute for resetting the table's auto-increment.
  * @param {string} tableName - The name of the table whose auto-increment value will be reset.
  */

@@ -24,6 +24,13 @@ Initial meeting with team:
 - Did research on frontend tools (HTML/CSS/React) as well as Figma
 - Started working on screens on Figma for Sign in, Login, and the Project page (video + annotations)
 
+#### Mia Huynh
+
+- Discussed the project in further details with team so we all get a better understanding of the project
+- Delegated tasks
+- Wrote user cases and worked on team's living document
+- Started researching services for backend
+
 #### Catherine Jin
 
 - Wrote user cases and discussed with team for feedback
@@ -411,7 +418,7 @@ Initial meeting with team:
 
 ## Week 10
 
-## Assignment
+## Assignment: Final demo
 
 #### Kirupa Gunaseelan
 
@@ -452,9 +459,19 @@ Initial meeting with team:
 
 ## Week 11
 
+## Assignment: Final demo
+
 #### Mia Huynh
 
 - Added more styling for ProjectPage
+- Updated documentation:
+  - doc files
+    - DeveloperGuidelines.md, especially build steps
+    - UserManual.md, especially updated app using instructions
+  - backend files:
+    - database.js
+    - tables.js
+    - sqlConstants.js
 
 #### Alicia Z.
 
