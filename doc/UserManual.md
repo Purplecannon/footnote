@@ -19,7 +19,7 @@ For final release: Navigate to <https://footnote.us/> to use Footnote.
 
 ## How to use the software
 
-The initial page will be a login page where you can enter your username and password if you have an account with Footnote already. If it is your first time using Footnote, you can click the 'Click Here!' to create an account. This will direct you to a page where you can create a username and a password and confirm your password. Once your account is created, you will be directed to the login page to log into your account you jsut made.
+The initial page will be a login page where you can enter your username and password if you have an account with Footnote already. If it is your first time using Footnote, you can click the 'Click Here!' to create an account. This will direct you to a page where you can create a username and a password and confirm your password. Once your account is created, you will be directed to the login page to log into your account you just made.
 
 After successfully giving your username and password, you will be directed to the projects home page. Here, you will be able to see all the different projects you have previously made displayed in a board view. If a previously made project is clicked on, it will open the project page for that project. You will also have the button to create a new projects. If the create new project button is clicked, you will be directed to a blank project page.
 
