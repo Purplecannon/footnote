@@ -1,6 +1,6 @@
 /**
- * Author: Mia, Catherine
- * Central file for backend handling of user authentication, includes session handling
+ * Central file for backend handling of user authentication, including session management.
+ * This file contains routes for user creation, login, and logout functionality.
  */
 
 // Imports
@@ -14,8 +14,15 @@ const {
 } = require("../../queries/sqlConstants");
 
 /**
- * Creates a new user, with the given username, password (stored as hashedPassword)
- * Endpoint: POST http://localhost:3000/users/create-user
+ * Endpoint: POST /users/create-user
+ *
+ * Route for creating a new user with a given username and password.
+ * The password is stored as a hashed password in the database.
+ *
+ * @param {string} username - The username for the new user (case-insensitive).
+ * @param {string} password - The password for the new user.
+ * @param {string} confirmPassword - A confirmation of the password for validation.
+ * @returns {Object} - Response message indicating whether user creation was successful or failed.
  */
 router.post("/create-user", async (req, res) => {
   const { username, password, confirmPassword } = req.body;
@@ -37,8 +44,14 @@ router.post("/create-user", async (req, res) => {
 });
 
 /**
- * Login an existing user, with the given username, password
- * Endpoint: POST http://localhost:3000/users/login-user
+ * Endpoint: POST /users/login-user
+ *
+ * Route for logging in an existing user with a given username and password.
+ * If login is successful, the session is created for the user.
+ *
+ * @param {string} username - The username of the user trying to log in.
+ * @param {string} password - The password provided by the user to log in.
+ * @returns {Object} - Response message indicating whether login was successful or failed.
  */
 router.post("/login-user", async (req, res) => {
   const { username, password } = req.body;
@@ -60,8 +73,11 @@ router.post("/login-user", async (req, res) => {
 });
 
 /**
- * Logout an existing user, with the username currently associated with the session
- * Endpoint: GET http://localhost:3000/users/logout
+ * Endpoint: GET /users/logout
+ *
+ * Route for logging out the current user. The session is destroyed.
+ *
+ * @returns {Object} - Response message indicating whether logout was successful or failed.
  */
 router.get("/logout", (req, res) => {
   req.session.destroy((err) => {
@@ -75,13 +91,15 @@ router.get("/logout", (req, res) => {
 });
 
 /**
- * Create a new user given a username and password.
- * The password stored is a hashed password.
- * Usernames should be unique and are not case-sensitive.
- * @param {*} username
- * @param {*} password
- * @param {*} confirmPassword
- * @returns
+ * Creates a new user in the database with a unique username and a hashed password.
+ *
+ * Usernames are case-insensitive and must be unique.
+ * The password is hashed using bcrypt before being stored in the database.
+ *
+ * @param {string} username - The username for the new user (case-insensitive).
+ * @param {string} password - The password for the new user.
+ * @param {string} confirmPassword - The confirmation of the password for validation.
+ * @returns {string} - A message indicating the result of the user creation process.
  */
 async function createUser(username, password, confirmPassword) {
   try {
@@ -131,12 +149,12 @@ async function createUser(username, password, confirmPassword) {
 }
 
 /**
- * Login an existing user given a username and password.
- * The password stored is a hashed password.
- * Usernames should be unique and are not case-sensitive.
- * @param {*} username
- * @param {*} password
- * @returns
+ * Logs in an existing user with a given username and password.
+ * The function checks whether the password matches the stored hashed password.
+ *
+ * @param {string} username - The username of the user trying to log in.
+ * @param {string} password - The password provided by the user to log in.
+ * @returns {string} - A message indicating the result of the login process.
  */
 async function loginUser(username, password) {
   try {

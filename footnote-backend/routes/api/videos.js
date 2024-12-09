@@ -1,7 +1,3 @@
-/**
- * Author: Alicia, Mia
- */
-
 const express = require("express");
 const multer = require("multer"); // Middleware for handling file uploads
 const generateThumbnail = require("../api/thumbnails");
@@ -19,17 +15,20 @@ const {
 const upload = multer({ storage: multer.memoryStorage() });
 
 /**
- * Endpoint: POST http://localhost:3000/videos/upload-video
+ * Endpoint: POST /videos/upload-video
  *
  * Route for uploading a video file. The file is uploaded to the server, and then stored in
  * DigitalOcean Spaces using the AWS SDK. The route expects a single video file and returns
- * the URL of the uploaded file.
+ * the URL of the uploaded file, along with the thumbnail URL.
  *
- * @name POST /upload-video
- * @function
  * @param {string} path - Express route path.
  * @param {callback} middleware - Middleware to handle file uploads using multer.
  * @param {callback} callback - Async function that handles the request and response.
+ *                               The function does the following:
+ *                               - Validates the uploaded file and project ID.
+ *                               - Uploads the video to S3 and generates a thumbnail.
+ *                               - Updates the video and thumbnail URLs in the database.
+ *                               - Responds with a success message and the URLs of the uploaded video and thumbnail.
  */
 router.post("/upload-video", upload.single("video"), async (req, res) => {
   try {
@@ -89,11 +88,12 @@ router.post("/upload-video", upload.single("video"), async (req, res) => {
 });
 
 /**
- * Adds a video URL to a previously created project using the pid.
- * Returns error message if there is no existing matching pid in PROJECTS.
- * @param {*} pid
- * @param {*} videoUrl
- * @returns
+ * Adds the video URL to a project with the specified pid in the database.
+ * If no matching project ID (pid) is found, returns an error message.
+ *
+ * @param {string} pid - The project ID to update with the new video URL.
+ * @param {string} videoUrl - The URL of the uploaded video to store in the database.
+ * @returns {string} - A success or error message based on whether the URL update was successful.
  */
 async function addUrl(pid, videoUrl) {
   try {
@@ -112,6 +112,14 @@ async function addUrl(pid, videoUrl) {
   }
 }
 
+/**
+ * Adds the thumbnail URL to a project with the specified pid in the database.
+ * If no matching project ID (pid) is found, returns an error message.
+ *
+ * @param {string} pid - The project ID to update with the new thumbnail URL.
+ * @param {string} thumbnailUrl - The URL of the uploaded thumbnail to store in the database.
+ * @returns {string} - A success or error message based on whether the URL update was successful.
+ */
 async function addThumbnailUrl(pid, thumbnailUrl) {
   try {
     const [result] = await conn

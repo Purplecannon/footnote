@@ -1,6 +1,7 @@
 /**
- * Author: Mia, Lauren, Kirupa
  * Central file for backend handling of annotation retrieval, creation, deletion.
+ * This module provides routes to interact with annotations for specific projects,
+ * including viewing, adding, editing, and deleting annotations.
  */
 
 // Imports
@@ -15,7 +16,14 @@ const {
 } = require("../../queries/sqlConstants");
 
 /**
- * Endpoint: GET http://localhost:3000/annotations/all
+ * Endpoint: GET /annotations/all
+ *
+ * Retrieves all annotations associated with a given project ID.
+ * Only accessible to logged-in users.
+ *
+ * @param {Object} req - Express request object, must contain projectID query parameter.
+ * @param {Object} res - Express response object.
+ * @returns {Object} List of annotations for the project if successful, or an error message.
  */
 router.get("/all", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
@@ -32,7 +40,13 @@ router.get("/all", async (req, res) => {
 });
 
 /**
- * Endpoint: POST http://localhost:3000/annotations/add
+ * Endpoint: POST /annotations/add
+ *
+ * Adds a new annotation to a project. Only accessible to logged-in users.
+ *
+ * @param {Object} req - Express request object, must contain timestampStr, timestampNum, text, and projectID in the body.
+ * @param {Object} res - Express response object.
+ * @returns {Object} The created annotation with ID if successful, or an error message.
  */
 router.post("/add", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
@@ -42,7 +56,12 @@ router.post("/add", async (req, res) => {
   const { timestampStr, timestampNum, text, projectID } = req.body;
 
   try {
-    const result = await addAnnotation(timestampStr, timestampNum, text, projectID);
+    const result = await addAnnotation(
+      timestampStr,
+      timestampNum,
+      text,
+      projectID
+    );
     res.send(result);
   } catch (err) {
     console.log("Error adding annotation: ", err);
@@ -51,7 +70,13 @@ router.post("/add", async (req, res) => {
 });
 
 /**
- * Endpoint: PUT http://localhost:3000/annotations/edit
+ * Endpoint: PUT /annotations/edit
+ *
+ * Edits an existing annotation. Only accessible to logged-in users.
+ *
+ * @param {Object} req - Express request object, must contain id, text, and projectID in the body.
+ * @param {Object} res - Express response object.
+ * @returns {Object} An empty object if the annotation was updated successfully, or an error message.
  */
 router.put("/edit", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
@@ -70,7 +95,13 @@ router.put("/edit", async (req, res) => {
 });
 
 /**
- * Endpoint: DELETE http://localhost:3000/annotations/delete
+ * Endpoint: DELETE /annotations/delete
+ *
+ * Deletes an annotation given its ID. Only accessible to logged-in users.
+ *
+ * @param {Object} req - Express request object, must contain id of the annotation in the body.
+ * @param {Object} res - Express response object.
+ * @returns {Object} A message confirming deletion or stating that the annotation was not found.
  */
 router.delete("/delete", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
@@ -91,9 +122,10 @@ router.delete("/delete", async (req, res) => {
 });
 
 /**
+ * Retrieves all annotations for a specific project.
  *
- * @param {*} pid
- * @returns
+ * @param {number} pid - The project ID for which to fetch annotations.
+ * @returns {Array} An array of annotations for the project.
  */
 async function getAnnotations(pid) {
   try {
@@ -118,11 +150,13 @@ async function getAnnotations(pid) {
 }
 
 /**
+ * Adds a new annotation to a project.
  *
- * @param {*} timestamp
- * @param {*} text
- * @param {*} pid
- * @returns
+ * @param {string} timestampStr - The timestamp string for the annotation.
+ * @param {number} timestampNum - The numerical timestamp for the annotation.
+ * @param {string} text - The text content of the annotation.
+ * @param {number} pid - The project ID to associate the annotation with.
+ * @returns {Object} The newly created annotation object (id, timestampStr, timestampNum, text).
  */
 async function addAnnotation(timestampStr, timestampNum, text, pid) {
   try {
@@ -147,11 +181,12 @@ async function addAnnotation(timestampStr, timestampNum, text, pid) {
 }
 
 /**
+ * Edits an existing annotation.
  *
- * @param {*} aid
- * @param {*} text
- * @param {*} projectID
- * @returns
+ * @param {number} aid - The annotation ID to be updated.
+ * @param {string} text - The new text content for the annotation.
+ * @param {number} projectID - The project ID associated with the annotation.
+ * @returns {void} Returns nothing if successful, otherwise throws an error.
  */
 async function editAnnotation(aid, text, projectID) {
   try {
@@ -169,9 +204,10 @@ async function editAnnotation(aid, text, projectID) {
 }
 
 /**
- * Deletes an annotation, given the annotation id.
- * @param {*} aid
- * @returns
+ * Deletes an annotation by its ID.
+ *
+ * @param {number} aid - The annotation ID to delete.
+ * @returns {string} A message indicating whether the annotation was deleted or not found.
  */
 async function deleteAnnotation(aid) {
   try {

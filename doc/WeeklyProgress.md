@@ -24,6 +24,13 @@ Initial meeting with team:
 - Did research on frontend tools (HTML/CSS/React) as well as Figma
 - Started working on screens on Figma for Sign in, Login, and the Project page (video + annotations)
 
+#### Mia Huynh
+
+- Discussed the project in further details with team so we all get a better understanding of the project
+- Delegated tasks
+- Wrote user cases and worked on team's living document
+- Started researching services for backend
+
 #### Catherine Jin
 
 - Wrote user cases and discussed with team for feedback
@@ -101,7 +108,7 @@ Initial meeting with team:
 - Worked on learning typescript and shifted existing code to typescript (vite React)
 - Split signin/login into two components in order to keep track of data more efficiently.
 - Made interfaces to keep track of username, password, and confirm password for Sign in page and Login page.
-- Worked on the documentation for Frontend components and their functionality 
+- Worked on the documentation for Frontend components and their functionality
 - Updated my personal schedule and wrote a risk assessment for the doc
 
 #### Mia Huynh
@@ -377,13 +384,14 @@ Initial meeting with team:
 ## Assignment: Peer review
 
 #### Kirupa Gunaseelan
+
 - Worked with the Husky Swap team to obtain proper credentials and complete set up
 - Peer reviewed and assigned issues/bugs to the HuskySwap team commenting on feedback
 - Looked through the annotation components and useAnnotation hooks in order to understand
-how the code worked so I could start working on population timestamps in annotations
+  how the code worked so I could start working on population timestamps in annotations
 - Developed a plan for integrating the timestamp in the annotation and briefed Mia
-about it. I asked Mia to add an additional field to the SQL Table (timestampStr 
-and timestampNum). 
+  about it. I asked Mia to add an additional field to the SQL Table (timestampStr
+  and timestampNum).
 
 #### Mia Huynh
 
@@ -423,17 +431,18 @@ and timestampNum).
 
 ## Week 10
 
-## Assignment
+## Assignment: Final demo
 
 #### Kirupa Gunaseelan
+
 - Actually implemented the timestamp into the annotation. When a user pauses or scrubs
-to a certain point in the video and makes an annotation, the timestamp at that moment will
-be saved with the annotation text and shown on the page. 
-  - Added an additional timestamp prop to Annotation, passed this prop to Annotation Item, 
-  and then AnnotationBaseItem (which has the html/css that shows the timestamp)
-  - Utilized the timestampString function to convert the timestamp number to string format 
-  and pass that information via the "addAnnotation" function in the useAnnotation hook 
-  (this also passes the information to the database). 
+  to a certain point in the video and makes an annotation, the timestamp at that moment will
+  be saved with the annotation text and shown on the page.
+  - Added an additional timestamp prop to Annotation, passed this prop to Annotation Item,
+    and then AnnotationBaseItem (which has the html/css that shows the timestamp)
+  - Utilized the timestampString function to convert the timestamp number to string format
+    and pass that information via the "addAnnotation" function in the useAnnotation hook
+    (this also passes the information to the database).
 
 #### Mia Huynh
 
@@ -472,28 +481,45 @@ be saved with the annotation text and shown on the page.
 
 ## Week 11
 
+## Assignment: Final demo
+
 #### Kirupa Gunaseelan
+
 - Fixed timestamp so it rounded down, and updated documentation for annotation components
-- Now looked into the backend code (Apis for the annotations) to implement the 
-timestamp clicking functionality. 
-- Implement the timestamp click (when a user clicks on timestamp it takes them to 
-the appropriate spot in the video)
-  - Updated the AnnotationData component to store the timestampNum as well 
+- Now looked into the backend code (Apis for the annotations) to implement the
+  timestamp clicking functionality.
+- Implement the timestamp click (when a user clicks on timestamp it takes them to
+  the appropriate spot in the video)
+  - Updated the AnnotationData component to store the timestampNum as well
   - Created a callback function for onTimestampClick() in AnnotationBaseItem
     - Created a handleTimestamp() function in ProjectPage that seeks to the given timestamp
-    in the video player. 
-  - Updated annotation API and useAnnotation hooks to properly handle the timestamp number 
-  and string data. 
+      in the video player.
+  - Updated annotation API and useAnnotation hooks to properly handle the timestamp number
+    and string data.
   - Ensured backward compatibility with existing code (and updated all variables
-  to account for the timestamp variable change -- splitting timestamp into a number
-  version and string version)
-  - Edited SQL queries so that GET/INSERT Annotations extracted both the timestampStr and 
-  timestampNum. 
-
+    to account for the timestamp variable change -- splitting timestamp into a number
+    version and string version)
+  - Edited SQL queries so that GET/INSERT Annotations extracted both the timestampStr and
+    timestampNum.
 
 #### Mia Huynh
 
 - Added more styling for ProjectPage
+- Updated documentation:
+  - doc files
+    - DeveloperGuidelines.md, especially build steps
+    - UserManual.md, especially updated app using instructions
+  - backend files:
+    - database.js
+    - tables.js
+    - sqlConstants.js
+    - annotations.js
+    - index.js
+    - projects.js
+    - thumbnails.js
+    - videos.js
+    - users.js
+    - s3Service.js
 
 #### Alicia Z.
 
