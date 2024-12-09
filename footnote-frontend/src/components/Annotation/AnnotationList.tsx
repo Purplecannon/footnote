@@ -12,7 +12,7 @@
  * - `onAddAnnotation` (function): Callback to add a new annotation.
  * - `projectID` (number): The project ID for context.
  * -  timestamp` (number): The most recent timestamp associated with the project ID
-* - `onTimestampClick` (function, optional): Callback executed when the timestamp
+ * - `onTimestampClick` (function, optional): Callback executed when the timestamp
  *   button is clicked.
  *
  * Usage:

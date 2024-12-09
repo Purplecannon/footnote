@@ -16,7 +16,7 @@
  * ```tsx
  * <AnnotationBaseItem
  *   timestamp="00:45"
- *   timestampNum=45
+ *   timestampNum={45}
  *   onTimestampClick={() => console.log("Timestamp clicked")}
  * >
  *   <span>Additional content</span>
