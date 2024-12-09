@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, ChangeEvent } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import Annotation from "../../components/Annotation/Annotation";
 import ReactPlayer from "react-player";
 import useProject from "../../hooks/useProject";
