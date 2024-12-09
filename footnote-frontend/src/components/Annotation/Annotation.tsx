@@ -41,7 +41,11 @@ interface AnnotationProps {
   onTimestampClick: (timestampNum: number) => void; // Callback for clicking on timestamp
 }
 
-const Annotation: React.FC<AnnotationProps> = ({ projectID, timestamp, onTimestampClick }) => {
+const Annotation: React.FC<AnnotationProps> = ({
+  projectID,
+  timestamp,
+  onTimestampClick,
+}) => {
   // Fetch annotations and manage state using the useAnnotations hook
   const {
     annotations, // Array of annotation objects

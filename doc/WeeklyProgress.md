@@ -452,6 +452,10 @@ Initial meeting with team:
 
 ## Week 11
 
+#### Mia Huynh
+
+- Added more styling for ProjectPage
+
 #### Alicia Z.
 
 - Deploy to domain

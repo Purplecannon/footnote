@@ -1,67 +1,46 @@
 /* General Page Styles */
+
+#projectpage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../../assets/holographic-background.jpg");
+  background-size: cover;
+  background-position: top left;
+  background-repeat: repeat-y;
+  filter: brightness(0.6);
+  z-index: -10;
+}
+
 .container-fluid {
   display: flex;
   flex-direction: column;
   margin: auto;
-  margin-top: 200px;
+  margin-top: 50px;
   width: 600px;
-  background: #ffffff;
-  padding-bottom: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  padding-left: 60px !important;
+  padding-right: 60px !important;
 }
 
-/* Header Styles */
-.header-placeholder {
+.title-container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 9px;
-  width: 100%;
-  margin-top: 30px;
+  padding-bottom: 40px;
 }
 
-.header-placeholder h1 {
-  font-size: 48px;
-  font-weight: 700;
-  color: #3c009d; /* Main color */
-}
-
-/* back to home button */
-.back-home-button {
-  padding: 10px 20px;
-  color: white;
-  background-color: #4c00b4;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.back-home-button:hover {
-  background-color: #3c009d;
-}
-
-/* Underline beneath header */
-.underline {
-  width: 61px;
-  height: 6px;
-  background: #3c009d;
-  border-radius: 9px;
-}
-
-.input-field {
+.title-input {
+  outline: none;
+  background-color: transparent;
+  text-align: center;
   font-size: 48px;
   font-weight: 650;
-  color: #3c009d;
-  background-color: transparent;
   border: none;
-  width: 400px;
-  outline: none; /* Removes the default focus outline */
-}
-
-.input-field:focus {
-  box-shadow: 0 0 5px rgba(60, 0, 157, 0.5); /* Optional custom focus effect */
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Nice text shadow */
 }
 
 /* Main content section */
@@ -79,17 +58,6 @@
   padding: 20px;
   border-right: 2px solid #eaeaea;
 }
-
-.underline {
-  width: 61px;
-  height: 6px;
-  background: #3c009d;
-  border-radius: 9px;
-}
-
-/* .upload-video {
-  !important margin-top: 90px;
-} */
 
 .placeholder-video {
   text-align: center;
@@ -143,7 +111,7 @@
 }
 
 .annotation-wrapper .annotation p {
-  color: #797979;
+  color: white !important;
   font-size: 16px;
 }
 
@@ -160,12 +128,39 @@
   align-items: center;
 }
 
-.text-center {
-  text-align: center;
-}
-
 .border-end {
   border-right: 2px solid #eaeaea;
+}
+
+.home-button,
+.delete-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 170px;
+  height: 50px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 30px;
+  z-index: 1000; /* Ensures it's on top of other elements */
+}
+
+.home-button {
+  left: 40px;
+}
+
+.delete-button {
+  left: 50vw;
+  transform: translateX(-50%);
+}
+
+.home-icon,
+.delete-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 /* Optional: Styling for responsive behavior */
