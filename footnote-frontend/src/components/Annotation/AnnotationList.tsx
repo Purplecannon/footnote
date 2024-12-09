@@ -11,6 +11,9 @@
  * - `onDeleteClick` (function): Callback to delete an annotation.
  * - `onAddAnnotation` (function): Callback to add a new annotation.
  * - `projectID` (number): The project ID for context.
+ * -  timestamp` (number): The most recent timestamp associated with the project ID
+ * - `onTimestampClick` (function, optional): Callback executed when the timestamp
+ *   button is clicked.
  *
  * Usage:
  * ```tsx
@@ -20,6 +23,8 @@
  *   onDeleteClick={(id, projectID) => console.log("Delete", id, projectID)}
  *   onAddAnnotation={(newText, projectID) => console.log("Add", newText, projectID)}
  *   projectID={123}
+ *   timestamp-{4}
+ *   onTimestampClick={onTimestampClick}
  * />
  * ```
  */

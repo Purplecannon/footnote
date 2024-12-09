@@ -7,6 +7,7 @@
  *
  * Props:
  * - `timestamp` (string): The timestamp displayed on the button.
+ * - `timestampNum` (number): The numerical value of the timestamp
  * - `children` (ReactNode): Additional content displayed in the annotation item.
  * - `onTimestampClick` (function, optional): Callback executed when the timestamp
  *   button is clicked.
@@ -15,6 +16,7 @@
  * ```tsx
  * <AnnotationBaseItem
  *   timestamp="00:45"
+ *   timestampNum={45}
  *   onTimestampClick={() => console.log("Timestamp clicked")}
  * >
  *   <span>Additional content</span>
