@@ -1,6 +1,8 @@
 /**
- * Author: Mia
- * File for project back end handling
+ * File for handling project-related backend functionality in the application.
+ * This file contains routes for managing projects, including viewing, creating,
+ * editing, and deleting projects. The routes also enforce user authentication
+ * to ensure that only logged-in users can interact with projects.
  */
 
 // Imports
@@ -18,7 +20,14 @@ const {
 } = require("../../queries/sqlConstants");
 
 /**
- * Endpoint: GET http://localhost:3000/projects/home
+ * Endpoint: GET /projects/home
+ *
+ * Retrieves a list of projects for the logged-in user.
+ * Only accessible to logged-in users.
+ *
+ * @param {Object} req - Express request object, must be authenticated.
+ * @param {Object} res - Express response object.
+ * @returns {Object} List of projects under the logged-in user's account.
  */
 router.get("/home", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
@@ -35,7 +44,14 @@ router.get("/home", async (req, res) => {
 });
 
 /**
- * Endpoint: GET http://localhost:3000/projects/create-project
+ * Endpoint: GET /projects/create-project
+ *
+ * Retrieves a new project ID for creating a new project.
+ * Only accessible to logged-in users.
+ *
+ * @param {Object} req - Express request object, must be authenticated.
+ * @param {Object} res - Express response object.
+ * @returns {Object} The newly generated project ID and default title for the new project.
  */
 router.get("/create-project", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
@@ -53,7 +69,14 @@ router.get("/create-project", async (req, res) => {
 });
 
 /**
- * Endpoint: GET http://localhost:3000/projects/load-project/:pid
+ * Endpoint: GET /projects/load-project/:pid
+ *
+ * Retrieves a project by its ID.
+ * Only accessible to logged-in users.
+ *
+ * @param {Object} req - Express request object, must contain project ID in route parameter.
+ * @param {Object} res - Express response object.
+ * @returns {Object} The project details for the specified project ID.
  */
 router.get("/load-project/:pid", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
@@ -72,7 +95,14 @@ router.get("/load-project/:pid", async (req, res) => {
 });
 
 /**
- * Endpoint: PUT http://localhost:3000/projects/edit-project-name
+ * Endpoint: PUT /projects/edit-project-name
+ *
+ * Edits the name of a project.
+ * Only accessible to logged-in users and ensures the user is the owner of the project.
+ *
+ * @param {Object} req - Express request object, must contain project name and ID in the body.
+ * @param {Object} res - Express response object.
+ * @returns {Object} A success message if the project name is updated, or an error message.
  */
 router.put("/edit-project-name", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
@@ -83,7 +113,9 @@ router.put("/edit-project-name", async (req, res) => {
   console.log(`PID = ${pid}`);
 
   if (projectName.length > 100) {
-    return res.status(400).json({message: "Project name is longer than 100 characters"});
+    return res
+      .status(400)
+      .json({ message: "Project name is longer than 100 characters" });
   }
 
   try {
@@ -100,10 +132,9 @@ router.put("/edit-project-name", async (req, res) => {
     // Update project name
     const result = await editProjectName(projectName, pid);
 
-    if(result === "Project name edited successfully") {
+    if (result === "Project name edited successfully") {
       return res.status(200).send(result);
-    }
-    else {
+    } else {
       return res.status(400).send(result);
     }
   } catch (err) {
@@ -113,7 +144,14 @@ router.put("/edit-project-name", async (req, res) => {
 });
 
 /**
- * Endpoint: DELETE http://localhost:3000/projects/delete-project
+ * Endpoint: DELETE /projects/delete-project/:projectID
+ *
+ * Deletes a project by its ID.
+ * Only accessible to logged-in users.
+ *
+ * @param {Object} req - Express request object, must contain project ID in route parameter.
+ * @param {Object} res - Express response object.
+ * @returns {Object} A success message if the project is deleted, or an error message.
  */
 router.delete("/delete-project/:projectID", async (req, res) => {
   if (!req.session.isLoggedIn || !req.session.username) {
@@ -125,10 +163,9 @@ router.delete("/delete-project/:projectID", async (req, res) => {
   try {
     const result = await deleteProject(pid);
 
-    if(result === "Deleted project with pid " + pid) {
+    if (result === "Deleted project with pid " + pid) {
       res.status(200).send(result);
-    }
-    else {
+    } else {
       res.status(400).send(result);
     }
   } catch (err) {
@@ -138,18 +175,16 @@ router.delete("/delete-project/:projectID", async (req, res) => {
 });
 
 /**
- * Retrieve the list of existing projects (pid, project_name) under the given username
- * @param {*} username
- * @returns
+ * Retrieves the list of existing projects (pid, project_name) under the given username.
+ *
+ * @param {string} username - The username of the logged-in user.
+ * @returns {Array} A list of projects associated with the given username.
  */
+
 async function getProjects(username) {
   try {
-    // usernames are not case-sensitive
     const usernameLower = username.toLowerCase();
 
-    // retrieve projects under this username in database
-    // rows hold the results, i.e., the first element of the two-element array returned by .query()
-    // rows is either empty [] or is an array of objects:
     const [rows] = await conn
       .promise()
       .query(GET_PROJECTS_BY_USERNAME, [usernameLower]);
@@ -157,12 +192,11 @@ async function getProjects(username) {
     if (rows.length === 0) {
       return [];
     } else {
-      // return an array of objects containing both pid and project_name
       return rows.map((row) => ({
-        projectID: row.pid, // return 'pid' as 'id' to match frontend model
-        title: row.project_name, // return 'project_name' as 'title' to match frontend model
-        videoURL: row.video_url, // return 'video_url' as 'videoURL' to match frontend model
-        thumbnailURL: row.thumbnail_url, // return 'thumbnail_url' as 'thumbnailURL' to match frontend model
+        projectID: row.pid,
+        title: row.project_name,
+        videoURL: row.video_url,
+        thumbnailURL: row.thumbnail_url,
       }));
     }
   } catch (err) {
@@ -173,9 +207,10 @@ async function getProjects(username) {
 }
 
 /**
- * Retrieve a project id for a newly created project for the given username
- * @param {*} username
- * @returns
+ * Retrieves a new project ID for a logged-in user.
+ *
+ * @param {string} username - The username of the logged-in user.
+ * @returns {number} The newly generated project ID.
  */
 async function getPid(username) {
   try {
@@ -188,9 +223,10 @@ async function getPid(username) {
 }
 
 /**
+ * Loads a project by its ID.
  *
- * @param {*} pid
- * @returns
+ * @param {number} pid - The project ID to load.
+ * @returns {Object} The details of the project (projectID, title, videoURL, thumbnailURL, username).
  */
 async function loadProject(pid) {
   try {
@@ -214,10 +250,11 @@ async function loadProject(pid) {
 }
 
 /**
+ * Edits the name of a project.
  *
- * @param {*} projectName
- * @param {*} pid
- * @returns
+ * @param {string} projectName - The new project name.
+ * @param {number} pid - The project ID to update.
+ * @returns {string} A message indicating whether the project name was updated successfully.
  */
 async function editProjectName(projectName, pid) {
   try {
@@ -236,8 +273,10 @@ async function editProjectName(projectName, pid) {
 }
 
 /**
+ * Deletes all annotations associated with the specified project ID.
  *
- * @param {*} pid
+ * @param {number} pid - The project ID associated with the annotations to be deleted.
+ * @throws {Error} Throws an error if the deletion process encounters any issues
  */
 async function deleteAllAnnotations(pid) {
   try {
@@ -249,9 +288,10 @@ async function deleteAllAnnotations(pid) {
 }
 
 /**
- * Deletes a project with a given pid
- * @param {*} pid
- * @returns
+ * Deletes a project by its ID.
+ *
+ * @param {number} pid - The project ID to delete.
+ * @returns {string} A message indicating whether the project was deleted.
  */
 async function deleteProject(pid) {
   await deleteAllAnnotations(pid);

@@ -7,6 +7,7 @@
  *
  * Props:
  * - `timestamp` (string): The timestamp displayed on the button.
+ * - `timestampNum` (number): The numerical value of the timestamp
  * - `children` (ReactNode): Additional content displayed in the annotation item.
  * - `onTimestampClick` (function, optional): Callback executed when the timestamp
  *   button is clicked.
@@ -15,6 +16,7 @@
  * ```tsx
  * <AnnotationBaseItem
  *   timestamp="00:45"
+ *   timestampNum={45}
  *   onTimestampClick={() => console.log("Timestamp clicked")}
  * >
  *   <span>Additional content</span>
@@ -44,7 +46,7 @@ const AnnotationBaseItem: React.FC<AnnotationBaseItemProps> = ({
       as="li"
       className="d-flex justify-content-between align-items-center"
     >
-      <Button variant="link" onClick={() => onTimestampClick(timestampNum)} className="p-0">
+      <Button variant="link" onClick={() => onTimestampClick(timestampNum)} className="p-0" style={{color: 'white'}}>
         <strong>{timestamp}</strong>
       </Button>
       {children}

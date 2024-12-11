@@ -2,9 +2,7 @@
 
 ## How to obtain the source code
 
-The source code of footnote can be found in its private [GitHub repository](https://github.com/miahuynhh/footnote).
-
-If you are not currently a collaborator and want to obtain the source code, please email your request to <miahuynh@cs.washington.edu>.
+The source code of footnote can be found in its public [GitHub repository](https://github.com/miahuynhh/footnote).
 
 ## The layout of Footnote's directory structure
 
@@ -13,10 +11,15 @@ If you are not currently a collaborator and want to obtain the source code, plea
 ```
 footnote-frontend
 ├── public # Reusable actions, e.g., navigating, opening, creating entities
-├── pages # Website pages
-├── components # Reusable React components across scenes
-├── hooks # Reusable React hooks
-└── routes # Route definitions
+├── src
+│ ├── api # Medias used in UI
+│ ├── pages # Website pages
+│ ├── components # Reusable React components across scenes
+│ ├── hooks # Reusable hooks
+│ ├── types # data types
+│ ├── context # authorization context
+│ └── routes # Route definitions
+└── congif # backend endpoint configuration
 ```
 
 ### Backend
@@ -33,27 +36,39 @@ footnote-backend
 
 ## How to build the software
 
-1. Make sure Git is installed on your OS, following this [guide](https://github.com/git-guides/install-git).
+1. Make sure Git, Node.js (and npm), and ffmpeg are installed on your OS, following these guides:
 
-2. Make sure Node.js (and npm) is installed on your OS, following this [guide](https://nodejs.org/en).
+   - [Git guide](https://github.com/git-guides/install-git)
+   - [Node guide](https://nodejs.org/en)
+   - [FFmpeg guide](https://www.ffmpeg.org/download.html) (Homebrew installation recommended for Mac users)
 
-3. In the directory of your choice, clone the remote repository by running this command on the command line:
+2. In the directory of your choice, clone the remote repository by running this command on the command line:
    ```
    git clone git@github.com:miahuynhh/footnote.git
    ```
-4. You should now see a local `footnote` directory. From that root `footnote` directory, run the following commands:
+3. You should now see a local `footnote` directory. From that root `footnote` directory, run the following commands:
    ```
    npm run install-all  # to install all dependencies in the footnote, footnote-backend, and footnote-frontend folders
    npm run build        # to build the frontend; commonly used for deployment, can skip during development
    ```
-5. For the backend to properly build, you will need to:
-   1. Navigate to the `footnote-backend` directory and create a `.env` file
-   2. Navigate to the `footnote-backend/config` directory and create a `ca-certificate.crt` file
-   3. Email <miahuynh@cs.washington.edu> for the content of these secure files. Once you have the content, make sure to save, navigate back to the root `footnote` directory, and run:
-   ```
-   npm start  # to start the server (on port 3000) and the app (on port 5173) concurrently
-   ```
-6. If the build was successful, you should see a build log that looks something like this:
+4. For the backend to properly build, you will need to:
+   1. Navigate to the `footnote-backend/app.js` file and uncomment these lines:
+      ```
+      app.use(
+      cors({
+         origin: "http://localhost:5173", // url of frontend
+         credentials: true, // allow credentials (cookies) to be sent
+      })
+      );
+      ```
+   2. Navigate to the `footnote-backend` directory and create a `.env` file
+   3. Navigate to the `footnote-backend/config` directory and create a `ca-certificate.crt` file
+   4. Email <miahuynh@cs.washington.edu> for the content of these secure files. Once you have the content, make sure to save.
+   5. Navigate back to the root `footnote` directory, and run:
+      ```
+      npm start  # to start the server (on port 3000) and the app (on port 5173) concurrently
+      ```
+5. If the build was successful, you should see a build log that looks something like this:
 
    ```
    > footnote@1.0.0 start
@@ -68,19 +83,19 @@ footnote-backend
    [0] > node ./bin/www
    [0]
    [1]
-   [1]   VITE v5.4.10  ready in 203 ms
+   [1]   VITE v5.4.10  ready in 219 ms
    [1]
    [1]   ➜  Local:   http://localhost:5173/
    [1]   ➜  Network: use --host to expose
-   [0] Connected to the database as 654106
-   [0] USERS table created
-   [0] PROJECTS table created
-   [0] ANNOTATIONS table created
-   [0] All tables initialized
+   [0] Setting port to 3000
+   [0] Connected to the database as 1320368
+   [0] USERS_dev table created
+   [0] PROJECTS_dev table created
+   [0] ANNOTATIONS_dev table created
    ```
 
-7. Navigate to <http://localhost:5173/> on your browser with a working internet connection and interact with the Footnote app.
-8. For any errors encountered during these steps, refer to the Troubleshooting section below.
+6. Navigate to <http://localhost:5173/> on your browser with a working internet connection and interact with the Footnote app.
+7. For any errors encountered during these steps, refer to the Troubleshooting section below.
 
 ## How to test the software
 
@@ -100,33 +115,30 @@ footnote-backend
 
 ## How to add new tests
 
-Navigate to the `test` directory - either in footnote-backend or footnote-frontend - and write tests using [Mocha](https://mochajs.org/) and the default node [assert](https://nodejs.org/api/assert.html) library, either by adding to an existing file with the `.mjs` extension, or by creating a new one. For a new file, import the assertion library:
+1. Navigate to the `test` directory - either in footnote-backend or footnote-frontend - and write tests using [Mocha](https://mochajs.org/) and the default node [assert](https://nodejs.org/api/assert.html) library, either by adding to an existing file with the `.mjs` extension, or by creating a new one. For a new file, import the assertion library:
 
-```
-import * as assert from 'assert';
-```
+   ```
+   import * as assert from 'assert';
+   ```
 
-If your tests involve testing and making `http` requests, import and use:
+2. If your tests involve testing and making `http` requests, import and use:
 
-- The [Supertest](https://www.npmjs.com/package/supertest) library if you're testing `http` requests that don't rely on login sessions
+   - The [Supertest](https://www.npmjs.com/package/supertest) library if you're testing `http` requests that don't rely on login sessions
+     ```
+     import request from 'supertest';
+     ```
+   - The [Supertest-session](https://www.npmjs.com/package/supertest-session) library if you're testing `http` requests that rely on login sessions
+     ```
+     import session from 'supertest-session';
+     ```
 
-```
-import request from 'supertest';
-```
+3. Also import `app.js`.
 
-- The [Supertest-session](https://www.npmjs.com/package/supertest-session) library if you're testing `http` requests that rely on login sessions
+   ```
+   import app from '../app.js'
+   ```
 
-```
-import session from 'supertest-session';
-```
-
-Also import `app.js`.
-
-```
-import app from '../app.js'
-```
-
-If the new test you add involves testing a file upload (ex: Testing the code for uploading videos) and you need to upload fake files, navigate to the directory within the `test` directory titled `test-<insert-file-type-here>` and add the file within the new directory (ex: the `test-videos` directory). If no suitable directory exists, create one within the `test` directory.
+4. If the new test you add involves testing a file upload (ex: Testing the code for uploading videos) and you need to upload fake files, navigate to the directory within the `test` directory titled `test-<insert-file-type-here>` and add the file within the new directory (ex: the `test-videos` directory). If no suitable directory exists, create one within the `test` directory.
 
 ## How to build a release of the software
 
@@ -172,4 +184,4 @@ For database connection troubleshooting, refer to Digital Ocean Cluster document
 - [Unknown database](https://docs.digitalocean.com/support/when-connecting-to-mysql-i-get-an-unknown-database-error/)
 - [Host blocked by too many connection errors](https://docs.digitalocean.com/support/when-connecting-to-mysql-i-get-a-host-is-blocked-error/)
 
-For any issues that require admin access, please email <miahuynh@cs.washington.edu>.
+For any issues at all, or those requiring admin access, please email <miahuynh@cs.washington.edu>.
