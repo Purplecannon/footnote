@@ -60,7 +60,7 @@ const AnnotationList: React.FC<AnnotationListProps> = ({
   return (
     <ul>
       {/* Render each annotation */}
-      {annotations.map((annotation) => (
+      {annotations.sort((a, b) => a.timestampNum - b.timestampNum).map((annotation) => (
         <AnnotationItem
           timestamp={annotation.timestampNum}
           key={annotation.id}
