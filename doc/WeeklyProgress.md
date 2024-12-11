@@ -529,6 +529,7 @@ Initial meeting with team:
     - s3Service.js
 - Delegated sections and tasks for member for the final presentation
 - Cleaned up DigitalOcean Spaces: removed unnecessary testing/development videos/thumbnails
+- Defined backend route and implemented handling for favorite/unfavorite an annotation in annotations.js. Adjusted the ANNOTATIONS table schema and annotations database queries accordingly in sqlConstants.js.
 
 #### Alicia Z.
 
