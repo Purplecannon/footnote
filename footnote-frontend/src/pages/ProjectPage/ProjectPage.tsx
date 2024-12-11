@@ -5,13 +5,13 @@ import Annotation from "../../components/Annotation/Annotation";
 import ReactPlayer from "react-player";
 import useProject from "../../hooks/useProject";
 import axios from "axios";
-import LogoutButton from "../../components/LogoutButton/LogoutButton";
-import pencil from "../../assets/pencil.ico";
-import arrow from "../../assets/arrow.png";
 import "./ProjectPage.css";
 import homeIcon from "../../assets/home-button.png";
 import deleteIcon from "../../assets/delete-button.png";
-// import annotationWindow from "../../assets/annotation-window.png";
+import LogoutButton from "../../components/LogoutButton/LogoutButton";
+import uploadIcon from "../../assets/upload.png";
+import closeButton from "../../assets/close-button.png";
+import importMessage from "../../assets/import-message-window.png";
 
 import { API_BASE_URL } from "../../config";
 
@@ -28,6 +28,7 @@ const ProjectPage: React.FC = () => {
   const [titleInput, setTitleInput] = React.useState(project?.title || ""); // Local state for the input field
   const [timestamp, setTimestamp] = useState<number>(0);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null); // debouncing the POST request
+  const [showImportMessage, setShowImportMessage] = useState(true);
 
   useEffect(() => {
     if (project) {
@@ -153,6 +154,10 @@ const ProjectPage: React.FC = () => {
     }
   };
 
+  const handleCloseWindow = () => {
+    setShowImportMessage(false);
+  };
+
   return (
     <section id="projectpage">
       <Container fluid>
@@ -175,42 +180,24 @@ const ProjectPage: React.FC = () => {
         <Row className="mb-1">
           {/* Video Section */}
 
-          <Col md={7}>
+          <Col md={7} style={{ paddingRight: "30px", paddingLeft: "0" }}>
             <div className="video-placeholder d-flex justify-content-center align-items-center">
               {!project?.videoURL ? (
-                <>
-                  <p
-                    style={{
-                      position: "absolute",
-                      color: "#888",
-                      top: "50px",
-                      right: "90px",
-                      fontSize: "15px",
-                      fontWeight: "500",
-                    }}
-                  >
-                    Import Video
-                  </p>
-
-                  <p
-                    style={{
-                      position: "absolute",
-                      color: "#888",
-                      top: "75px",
-                      right: "120px",
-                      fontSize: "12px",
-                      fontWeight: "500",
-                    }}
-                  >
-                    .MP4
-                  </p>
-
-                  <img
-                    className="arrow-to-pencil"
-                    src={arrow}
-                    alt="arrow points to pencil"
-                  />
-                </>
+                showImportMessage && (
+                  <div className="import-message">
+                    <img
+                      className="import-close-button"
+                      src={closeButton}
+                      alt="Close button"
+                      onClick={handleCloseWindow}
+                    />
+                    <img
+                      className="import-message-image"
+                      src={importMessage}
+                      alt="import"
+                    />
+                  </div>
+                )
               ) : (
                 <ReactPlayer
                   controls={true}
@@ -224,13 +211,13 @@ const ProjectPage: React.FC = () => {
               )}
 
               <button
-                className="pencil-video-button"
+                className="upload-video-button"
                 onClick={() => document.getElementById("file-input")?.click()} // Trigger file input on click
               >
                 <img
-                  className="pencil-video-button-img"
-                  src={pencil}
-                  alt="pencil"
+                  className="upload-video-button-img"
+                  src={uploadIcon}
+                  alt="upload"
                 />
               </button>
             </div>

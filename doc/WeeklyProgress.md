@@ -505,10 +505,12 @@ Initial meeting with team:
 #### Mia Huynh
 
 - Added more styling for ProjectPage
-  - Overall background, components layout
+  - Overall background, components layout and spacing
   - Scrollable annotation component - the component no longer overflows when many annotations are created
   - Designed and added new y2k styling: edit icon, delete icon, annotation pixel window, Home button, Delete button
-  - Styled each AnnotationItem, NewAnnotationItem
+  - Styled AnnotationItem, NewAnnotationItem, AnnotationList
+  - Removed the unneeded check button for saving an annotation (just press Enter instead)
+- Made sure password icons have transparent background
 - Updated documentation:
   - doc files
     - DeveloperGuidelines.md, especially build steps

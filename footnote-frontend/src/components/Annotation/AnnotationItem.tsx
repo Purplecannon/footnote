@@ -85,6 +85,7 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
         {isEditing ? (
           <InputGroup>
             <FormControl
+              className="no-border-shadow"
               value={editText}
               onChange={(e) => setEditText(e.target.value)}
               onBlur={handleEditSave}
