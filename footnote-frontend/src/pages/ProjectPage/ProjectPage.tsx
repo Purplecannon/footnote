@@ -11,6 +11,7 @@ import arrow from "../../assets/arrow.png";
 import "./ProjectPage.css";
 import homeIcon from "../../assets/home-button.png";
 import deleteIcon from "../../assets/delete-button.png";
+// import annotationWindow from "../../assets/annotation-window.png";
 
 import { API_BASE_URL } from "../../config";
 
@@ -245,8 +246,10 @@ const ProjectPage: React.FC = () => {
 
           {/* Annotation Section */}
 
-          <Col md={5}>
+          <Col className="annotation-section" md={5}>
+            <div className="scroll-space"></div>
             <div className="annotation-container">
+              <div className="annotation-heading">Notes</div>
               <Annotation
                 projectID={projectID || 0}
                 timestamp={timestamp}

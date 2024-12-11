@@ -505,8 +505,10 @@ Initial meeting with team:
 #### Mia Huynh
 
 - Added more styling for ProjectPage
+  - Overall background, components layout
   - Scrollable annotation component - the component no longer overflows when many annotations are created
-  - New holographic styling: edit icon, delete icon
+  - Designed and added new y2k styling: edit icon, delete icon, annotation pixel window, Home button, Delete button
+  - Styled each AnnotationItem, NewAnnotationItem
 - Updated documentation:
   - doc files
     - DeveloperGuidelines.md, especially build steps
@@ -522,6 +524,8 @@ Initial meeting with team:
     - videos.js
     - users.js
     - s3Service.js
+- Delegated sections and tasks for member for the final presentation
+- Cleaned up DigitalOcean Spaces: removed unnecessary testing/development videos/thumbnails
 
 #### Alicia Z.
 

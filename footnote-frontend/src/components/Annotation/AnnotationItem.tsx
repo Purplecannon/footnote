@@ -76,49 +76,51 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
   };
 
   return (
-    <AnnotationBaseItem
-      timestamp={annotation.timestampStr}
-      timestampNum={annotation.timestampNum}
-      onTimestampClick={onTimestampClick}
-    >
-      {isEditing ? (
-        <InputGroup>
-          <FormControl
-            value={editText}
-            onChange={(e) => setEditText(e.target.value)}
-            onBlur={handleEditSave}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleEditSave();
-              if (e.key === "Escape") handleEditCancel();
-            }}
-            placeholder="Edit annotation"
-            autoFocus
-          />
-        </InputGroup>
-      ) : (
-        <span style={{ color: "white" }}>{annotation.text}</span>
-      )}
+    <div className="annotation-item">
+      <AnnotationBaseItem
+        timestamp={annotation.timestampStr}
+        timestampNum={annotation.timestampNum}
+        onTimestampClick={onTimestampClick}
+      >
+        {isEditing ? (
+          <InputGroup>
+            <FormControl
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              onBlur={handleEditSave}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleEditSave();
+                if (e.key === "Escape") handleEditCancel();
+              }}
+              placeholder="Edit annotation"
+              autoFocus
+            />
+          </InputGroup>
+        ) : (
+          <span className="annotation-text">{annotation.text}</span>
+        )}
 
-      {!isEditing && (
-        <div>
-          <Button
-            variant="link"
-            onClick={() => setIsEditing(true)}
-            className="p-0 mx-2"
-          >
-            <img src={EditIcon} alt="Edit" width={16} height={16} />
-          </Button>
+        {!isEditing && (
+          <div>
+            <Button
+              variant="link"
+              onClick={() => setIsEditing(true)}
+              className="p-0 mx-2"
+            >
+              <img src={EditIcon} alt="Edit" width={16} height={16} />
+            </Button>
 
-          <Button
-            variant="link"
-            onClick={() => onDeleteClick(annotation.id, annotation.projectID)}
-            className="p-0"
-          >
-            <img src={TrashIcon} alt="Delete" width={16} height={16} />
-          </Button>
-        </div>
-      )}
-    </AnnotationBaseItem>
+            <Button
+              variant="link"
+              onClick={() => onDeleteClick(annotation.id, annotation.projectID)}
+              className="p-0"
+            >
+              <img src={TrashIcon} alt="Delete" width={16} height={16} />
+            </Button>
+          </div>
+        )}
+      </AnnotationBaseItem>
+    </div>
   );
 };
 
