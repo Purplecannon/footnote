@@ -175,17 +175,7 @@ const ProjectPage: React.FC = () => {
           {/* Video Section */}
 
           <Col md={7}>
-            <div
-              className="d-flex justify-content-center align-items-center"
-              style={{
-                width: "100%",
-                height: "500px",
-                backgroundColor: "#f0f0f0", // Grey background
-                border: "2px dashed #ccc", // Dashed border for placeholder
-                borderRadius: "10px",
-                position: "relative",
-              }}
-            >
+            <div className="video-placeholder d-flex justify-content-center align-items-center">
               {!project?.videoURL ? (
                 <>
                   <p
@@ -215,16 +205,9 @@ const ProjectPage: React.FC = () => {
                   </p>
 
                   <img
+                    className="arrow-to-pencil"
                     src={arrow}
                     alt="arrow points to pencil"
-                    style={{
-                      position: "absolute",
-                      top: "30px",
-                      right: "55px",
-                      width: "30px",
-                      height: "30px",
-                      opacity: 0.9,
-                    }}
                   />
                 </>
               ) : (
@@ -240,24 +223,13 @@ const ProjectPage: React.FC = () => {
               )}
 
               <button
+                className="pencil-video-button"
                 onClick={() => document.getElementById("file-input")?.click()} // Trigger file input on click
-                style={{
-                  position: "absolute",
-                  top: "10px",
-                  right: "10px",
-                  padding: "5px 10px",
-                  border: "none",
-                  cursor: "pointer",
-                  zIndex: 10,
-                }}
               >
                 <img
+                  className="pencil-video-button-img"
                   src={pencil}
                   alt="pencil"
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                  }}
                 />
               </button>
             </div>
@@ -274,7 +246,7 @@ const ProjectPage: React.FC = () => {
           {/* Annotation Section */}
 
           <Col md={5}>
-            <div className="w-100">
+            <div className="annotation-container">
               <Annotation
                 projectID={projectID || 0}
                 timestamp={timestamp}

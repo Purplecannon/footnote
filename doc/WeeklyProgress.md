@@ -505,6 +505,8 @@ Initial meeting with team:
 #### Mia Huynh
 
 - Added more styling for ProjectPage
+  - Scrollable annotation component - the component no longer overflows when many annotations are created
+  - New holographic styling: edit icon, delete icon
 - Updated documentation:
   - doc files
     - DeveloperGuidelines.md, especially build steps

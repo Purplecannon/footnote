@@ -1,5 +1,9 @@
 /* General Page Styles */
 
+#projectpage * {
+  cursor: url("../../assets/cursor-shadow.png"), auto;
+}
+
 #projectpage::before {
   content: "";
   position: absolute;
@@ -50,69 +54,46 @@
 }
 
 /* Left Half - Placeholder for Video Player */
-.left-half {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  padding: 20px;
-  border-right: 2px solid #eaeaea;
-}
-
-.placeholder-video {
-  text-align: center;
-  background: #eaeaea;
-  padding: 40px;
-  border-radius: 12px;
+.video-placeholder {
   width: 100%;
+  height: 500px;
+  background-color: #f0f0f0;
+  border: 3px solid black;
+  position: relative;
 }
 
-.placeholder-video h2 {
-  font-size: 24px;
-  color: #3c009d;
+.arrow-to-pencil {
+  position: absolute;
+  top: 30px;
+  right: 55px;
+  width: 30px;
+  height: 30px;
+  opacity: 0.9;
 }
 
-.placeholder-video p {
-  color: #797979;
-  font-size: 16px;
+.pencil-video-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.pencil-video-button-img {
+  width: 20px;
+  height: 20px;
 }
 
 /* Right Half - Annotation Section */
-.right-half {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  padding: 20px;
-}
-
-/* Annotation wrapper (Right Column) */
-.annotation-wrapper {
-  width: 100%;
-  padding: 30px;
-  background: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  margin-top: 30px;
-}
-
-.annotation-wrapper .annotation {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.annotation-wrapper .annotation h3 {
-  font-size: 22px;
-  color: #3c009d;
-  font-weight: 700;
-}
-
-.annotation-wrapper .annotation p {
-  color: white !important;
-  font-size: 16px;
+.annotation-container {
+  max-height: 70vh; /* Use 80% of the viewport height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 10px; /* Add some padding for better UI */
+  border-radius: 8px; /* Rounded corners */
+  border: 1px solid #ddd; /* Subtle border for separation */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
 }
 
 /* Flex utility classes */

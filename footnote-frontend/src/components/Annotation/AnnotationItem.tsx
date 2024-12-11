@@ -30,7 +30,7 @@
  *     timestamp: "1:30",
  *     text: "This is an annotation",
  *     projectID: 123
- * 
+ *
  *   }}
  *   onEditSave={(id, newText, projectId) => console.log(id, newText, projectId)}
  *   onDeleteClick={(id, projectId) => console.log(id, projectId)}
@@ -43,8 +43,8 @@ import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import AnnotationBaseItem from "./AnnotationBaseItem";
 import { AnnotationData } from "../../types/types";
-import TrashIcon from "../../assets/trash3-fill.svg";
-import EditIcon from "../../assets/pencil-square.svg";
+import TrashIcon from "../../assets/trash.png";
+import EditIcon from "../../assets/pen.png";
 
 interface AnnotationItemProps {
   timestamp: number;
@@ -96,7 +96,7 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
           />
         </InputGroup>
       ) : (
-        <span style={{color: 'white'}}>{annotation.text}</span>
+        <span style={{ color: "white" }}>{annotation.text}</span>
       )}
 
       {!isEditing && (
