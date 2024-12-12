@@ -509,6 +509,7 @@ Initial meeting with team:
   - doc files
     - DeveloperGuidelines.md, especially build steps
     - UserManual.md, especially updated app using instructions
+    - Top level README.md
   - backend files:
     - database.js
     - tables.js
