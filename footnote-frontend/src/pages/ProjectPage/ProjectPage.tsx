@@ -11,6 +11,8 @@ import deleteIcon from "../../assets/delete-button.png";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
 import uploadIcon from "../../assets/upload.png";
 import importMessage from "../../assets/import-message-window-2.png";
+import infoWindow from "../../assets/long-window.png";
+import closeButton from "../../assets/close-button.png";
 
 import { API_BASE_URL } from "../../config";
 
@@ -28,6 +30,7 @@ const ProjectPage: React.FC = () => {
   const [timestamp, setTimestamp] = useState<number>(0);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null); // debouncing the POST request
   const [showImportMessage, setShowImportMessage] = useState(true);
+  const [infoMessage, setInfoMessage] = useState<string | null>(null); // State for info message
 
   useEffect(() => {
     if (project) {
@@ -81,7 +84,7 @@ const ProjectPage: React.FC = () => {
         await setTitleInput(project?.title || "");
       } catch (err) {
         console.error("Failed to update project title:", err);
-        alert("Error updating the project title. Please try again.");
+        setInfoMessage("Error updating the title. Please try again.");
       }
     }, 1000);
   };
@@ -94,12 +97,12 @@ const ProjectPage: React.FC = () => {
     const file = event.target.files?.[0];
 
     if (!file) {
-      alert("No file selected.");
+      setInfoMessage("No file selected.");
       return;
     }
 
     if (file.type !== "video/mp4") {
-      alert("Please upload a valid MP4 file.");
+      setInfoMessage("Please upload a valid MP4 file.");
       return;
     }
 
@@ -113,23 +116,17 @@ const ProjectPage: React.FC = () => {
       setProject((prev) => (prev ? { ...prev, videoURL: fileUrl } : null));
 
       // Send the file to the backend
-      const response = await axios.post(
-        `${API_BASE_URL}/videos/upload-video`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data", // Specify form-data encoding
-          },
-          withCredentials: true, // Include credentials if required
-        }
-      );
+      await axios.post(`${API_BASE_URL}/videos/upload-video`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Specify form-data encoding
+        },
+        withCredentials: true, // Include credentials if required
+      });
 
       // Handle success response
-      console.log("Video uploaded successfully:", response.data);
-      alert("Video uploaded successfully.");
+      setInfoMessage("Video uploaded successfully!");
     } catch (error) {
-      console.error("Failed to upload video:", error);
-      alert("Error uploading video. Please try again.");
+      setInfoMessage("Error uploading video. Please try again.");
     }
   };
 
@@ -148,7 +145,7 @@ const ProjectPage: React.FC = () => {
       } catch (err) {
         console.error("Failed to delete project:", err);
 
-        alert("Error deleting the project. Please try again.");
+        setInfoMessage("Error deleting the project. Please try again.");
       }
     }
   };
@@ -157,11 +154,28 @@ const ProjectPage: React.FC = () => {
     setShowImportMessage(false);
   };
 
+  const handleCloseInfoWindow = () => {
+    setInfoMessage(null);
+  };
+
   return (
     <section id="projectpage">
       <Container fluid>
-        {/* Project Title */}
+        {/* Info Message */}
+        {infoMessage && (
+          <div className="info-container">
+            <img
+              className="info-close-button"
+              src={closeButton}
+              alt="Close button"
+              onClick={handleCloseInfoWindow}
+            />
+            <img className="info-image" src={infoWindow} alt="Info window" />
+            <div className="info-message text-center">{infoMessage}</div>
+          </div>
+        )}
 
+        {/* Project Title */}
         <Row>
           <div className="title-container">
             <input
