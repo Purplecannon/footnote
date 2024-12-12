@@ -1,8 +1,8 @@
 /* General Page Styles */
 
-#projectpage * {
+/* #projectpage * {
   cursor: url("../../assets/cursor-shadow.png"), auto;
-}
+} */
 
 #projectpage::before {
   content: "";
