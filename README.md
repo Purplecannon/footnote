@@ -4,27 +4,26 @@ Footnote is a web application designed to support dancers and choreographers in 
 
 # Current Features
 
-The beta release includes:
+Footnote's final release includes the following features:
 
-- User authentication, or signup/login
+- User authentication (Sign up/Login)
+
 - Project management
 
-  - Creation of new projects
-  - Viewing and editing existing projects
+  - Creating new projects
+  - Viewing existing projects
+  - Editing exisiting projects
 
-- Video capabilities:
+- Video management
 
-  - Upload
-  - Video Storage
+  - Video upload
   - Playback controls
+  - Cloud video storage
 
 - Annotation system
-    - Add, edit, and delete annotations
 
-Our work in progress:
-
-- Annotation system:
-  - Time-synchronized notes
+  - Adding, editing, favoriting, and deleting annotations
+  - Annotations are time-synchronized with video
 
 # User Manual
 

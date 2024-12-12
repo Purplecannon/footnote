@@ -91,7 +91,6 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
     setFavorite(favorite);
   }
 
-  console.log("favorite annotations", annotation);
   return (
     <div className="annotation-item">
       <AnnotationBaseItem
