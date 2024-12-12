@@ -10,8 +10,7 @@ import homeIcon from "../../assets/home-button.png";
 import deleteIcon from "../../assets/delete-button.png";
 import LogoutButton from "../../components/LogoutButton/LogoutButton";
 import uploadIcon from "../../assets/upload.png";
-import closeButton from "../../assets/close-button.png";
-import importMessage from "../../assets/import-message-window.png";
+import importMessage from "../../assets/import-message-window-2.png";
 
 import { API_BASE_URL } from "../../config";
 
@@ -191,15 +190,15 @@ const ProjectPage: React.FC = () => {
                 showImportMessage && (
                   <div className="import-message">
                     <img
-                      className="import-close-button"
-                      src={closeButton}
-                      alt="Close button"
-                      onClick={handleCloseWindow}
-                    />
-                    <img
                       className="import-message-image"
                       src={importMessage}
-                      alt="import"
+                      alt="import message"
+                    />
+                    <div
+                      className="close-area"
+                      onClick={handleCloseWindow} // Click only triggers on this specific area
+                      aria-label="Close"
+                      role="button"
                     />
                   </div>
                 )

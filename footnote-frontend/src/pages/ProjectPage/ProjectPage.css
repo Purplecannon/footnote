@@ -1,8 +1,8 @@
 /* General Page Styles */
 
-#projectpage * {
+/* #projectpage * {
   cursor: url("../../assets/cursor-shadow.png"), auto;
-}
+} */
 
 #projectpage::before {
   content: "";
@@ -75,21 +75,28 @@
   background-position: center;
 }
 
-.import-message-image {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+.import-message {
+  position: relative; /* Ensures the clickable area is positioned relative to this container */
+  display: inline-block;
+  top: -25%;
+  left: 20%;
   width: 40%;
-  transform: translate(0%, -160%);
-  z-index: 10;
+  z-index: 20;
 }
 
-.import-close-button {
+.import-message-image {
+  width: 100%;
+  height: auto;
+}
+
+.close-area {
   position: absolute;
-  width: 18px;
-  left: 86%;
-  top: 6.5%;
-  z-index: 20;
+  top: 5%; /* Adjust to align with the top-right of the image */
+  right: 5%; /* Adjust to align with the right side of the image */
+  width: 6%; /* Smaller width to only cover the 'close' button */
+  height: 10%; /* Smaller height to only cover the 'close' button */
+  z-index: 30; /* Ensures it's on top of the image */
+  cursor: pointer; /* Pointer cursor to indicate interactivity */
 }
 
 .upload-video-button {
