@@ -52,7 +52,11 @@ interface AnnotationItemProps {
   annotation: AnnotationData; // The data for the annotation
   onEditSave: (id: number, newText: string, projectId: number) => void; // Callback for saving edits
   onDeleteClick: (id: number, projectId: number) => void; // Callback for deleting the annotation
-  onFavoriteAnnotation: (id: number, newFavorite: number, projectId: number) => void; // Callback for favoriting the annotation
+  onFavoriteAnnotation: (
+    id: number,
+    newFavorite: number,
+    projectId: number
+  ) => void; // Callback for favoriting the annotation
   onTimestampClick: (timestampNum: number) => void; // Callback for clicking on timestamp
 }
 
@@ -81,18 +85,20 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
 
   const handleFavorite = (id: number, favorite: number, projectID: number) => {
     if (favorite == 1) {
-      favorite = favorite - 1; 
+      favorite = favorite - 1;
     } else if (favorite == 0) {
-      favorite = favorite + 1; 
+      favorite = favorite + 1;
     } else {
       console.log("something is wrong.");
     }
-    onFavoriteAnnotation(id, favorite, projectID)
+    onFavoriteAnnotation(id, favorite, projectID);
     setFavorite(favorite);
-  }
+  };
 
   return (
-    <div className="annotation-item">
+    <div
+      className={`annotation-item ${favorite === 1 ? "favorite-style" : ""}`}
+    >
       <AnnotationBaseItem
         timestamp={annotation.timestampStr}
         timestampNum={annotation.timestampNum}
@@ -114,14 +120,20 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
             />
           </InputGroup>
         ) : (
-          <span  className={`annotation-text ${favorite === 1 ? "<insert class>" : ""}`}>{annotation.text}</span>
+          <span className={`annotation-text`}>{annotation.text}</span>
         )}
 
         {!isEditing && (
           <div>
             <Button
               variant="link"
-              onClick={() => handleFavorite(annotation.id, annotation.favorite, annotation.projectID)}
+              onClick={() =>
+                handleFavorite(
+                  annotation.id,
+                  annotation.favorite,
+                  annotation.projectID
+                )
+              }
               className="p-0"
             >
               <img src={FavoriteIcon} alt="Favorite" width={16} height={16} />
