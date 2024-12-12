@@ -181,7 +181,12 @@ const ProjectPage: React.FC = () => {
           {/* Video Section */}
 
           <Col md={7} style={{ paddingRight: "30px", paddingLeft: "0" }}>
-            <div className="video-placeholder d-flex justify-content-center align-items-center">
+            <div
+              className={`video-placeholder d-flex justify-content-center align-items-center ${
+                !project?.videoURL ? "no-video" : ""
+              }`}
+            >
+              {" "}
               {!project?.videoURL ? (
                 showImportMessage && (
                   <div className="import-message">
@@ -209,7 +214,6 @@ const ProjectPage: React.FC = () => {
                   height="100%"
                 />
               )}
-
               <button
                 className="upload-video-button"
                 onClick={() => document.getElementById("file-input")?.click()} // Trigger file input on click
