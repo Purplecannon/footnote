@@ -512,6 +512,7 @@ Initial meeting with team:
   - Removed the unneeded check button for saving an annotation (just press Enter instead)
   - Designed a welcome message that pops up when no video is uploaded prompting user to import a video, a user can press a close button to close the window
   - Designed a graphic as the placeholder backround for the video component - added into frontend code
+- Made pop up error/info windows (that are closable) for ProjectPage (instead of the old console.alerts)
 - Made sure password icons on login/signup page have transparent background
 - Updated documentation:
   - doc files
