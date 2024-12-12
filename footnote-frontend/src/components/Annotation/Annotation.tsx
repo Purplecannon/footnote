@@ -57,6 +57,7 @@ const Annotation: React.FC<AnnotationProps> = ({
     addAnnotation,
     editAnnotation,
     deleteAnnotation,
+    favoriteAnnotation,
   } = useAnnotations(projectID); // Pass projectID to the custom hook
 
   // Show loading indicator while fetching data
@@ -74,6 +75,7 @@ const Annotation: React.FC<AnnotationProps> = ({
         annotations={annotations} // Pass annotations to the list
         onEditSave={editAnnotation} // Callback for saving edits
         onDeleteClick={deleteAnnotation} // Callback for deleting annotations
+        onFavoriteAnnotation={favoriteAnnotation} // Callback for favorating an annotation
         onAddAnnotation={addAnnotation} // Callback for adding annotations
         onTimestampClick={onTimestampClick}
         projectID={projectID} // Pass the projectID for context
