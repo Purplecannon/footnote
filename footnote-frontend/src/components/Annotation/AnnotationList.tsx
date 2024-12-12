@@ -38,6 +38,7 @@ interface AnnotationListProps {
   annotations: AnnotationData[];
   onEditSave: (id: number, newText: string, projectID: number) => void;
   onDeleteClick: (id: number, projectID: number) => void;
+  onFavoriteAnnotation: (id: number, newFavorite: number, projectID: number) => void;
   onAddAnnotation: (
     newText: string,
     newTimestamp: number,
@@ -53,6 +54,7 @@ const AnnotationList: React.FC<AnnotationListProps> = ({
   onEditSave,
   onDeleteClick,
   onAddAnnotation,
+  onFavoriteAnnotation,
   onTimestampClick,
   projectID,
   timestamp,
@@ -69,6 +71,7 @@ const AnnotationList: React.FC<AnnotationListProps> = ({
             annotation={annotation}
             onEditSave={(id, newText) => onEditSave(id, newText, projectID)}
             onDeleteClick={(id) => onDeleteClick(id, projectID)}
+            onFavoriteAnnotation={(id, newFavorite) => onFavoriteAnnotation(id, newFavorite,  projectID)}
             onTimestampClick={onTimestampClick}
           />
         ))}

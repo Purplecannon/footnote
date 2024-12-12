@@ -86,6 +86,7 @@ export const useAnnotations = (projectID: number) => {
           id: response.data.id,
           timestampStr,
           timestampNum,
+          favorite: 0, 
           text,
           projectID,
         };
@@ -146,6 +147,34 @@ export const useAnnotations = (projectID: number) => {
     }
   };
 
+  /**
+ * Deletes an annotation from the project.
+ * @param id - ID of the annotation to delete.
+ */
+  const favoriteAnnotation = async (id: number, newFavorite: number) => {
+    setAnnotations((prev) =>
+      prev.map((annotation) =>
+        annotation.id === id ? { ...annotation, favorite: newFavorite } : annotation
+      )
+    );
+
+    console.log("useAnnotationsFavorite", newFavorite);
+    try {
+      await axios.put(
+        `${API_BASE_URL}/annotations/favorite`,
+        {
+          id,
+          favorite: newFavorite,
+          projectID,
+        },
+        { withCredentials: true }
+      );
+    } catch (err) {
+      console.error("Error favoriting annotation:", err);
+      setError("Failed to favorite annotation.");
+    }
+  };
+
   // Returns hook values and functions for external use
   return {
     annotations,
@@ -154,5 +183,6 @@ export const useAnnotations = (projectID: number) => {
     addAnnotation,
     editAnnotation,
     deleteAnnotation,
+    favoriteAnnotation,
   };
 };

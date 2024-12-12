@@ -45,12 +45,14 @@ import AnnotationBaseItem from "./AnnotationBaseItem";
 import { AnnotationData } from "../../types/types";
 import TrashIcon from "../../assets/trash.png";
 import EditIcon from "../../assets/pen.png";
+import FavoriteIcon from "../../assets/favorite.png";
 
 interface AnnotationItemProps {
   timestamp: number;
   annotation: AnnotationData; // The data for the annotation
   onEditSave: (id: number, newText: string, projectId: number) => void; // Callback for saving edits
   onDeleteClick: (id: number, projectId: number) => void; // Callback for deleting the annotation
+  onFavoriteAnnotation: (id: number, newFavorite: number, projectId: number) => void; // Callback for favoriting the annotation
   onTimestampClick: (timestampNum: number) => void; // Callback for clicking on timestamp
 }
 
@@ -58,9 +60,11 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
   annotation,
   onEditSave,
   onDeleteClick,
+  onFavoriteAnnotation,
   onTimestampClick,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [favorite, setFavorite] = useState(annotation.favorite);
   const [editText, setEditText] = useState(annotation.text);
 
   const handleEditSave = () => {
@@ -74,6 +78,18 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
     setEditText(annotation.text);
     setIsEditing(false);
   };
+
+  const handleFavorite = (id: number, favorite: number, projectID: number) => {
+    if (favorite == 1) {
+      favorite = favorite - 1; 
+    } else if (favorite == 0) {
+      favorite = favorite + 1; 
+    } else {
+      console.log("something is wrong.");
+    }
+    onFavoriteAnnotation(id, favorite, projectID)
+    setFavorite(favorite);
+  }
 
   return (
     <div className="annotation-item">
@@ -98,11 +114,19 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
             />
           </InputGroup>
         ) : (
-          <span className="annotation-text">{annotation.text}</span>
+          <span  className={`annotation-text ${favorite === 1 ? "<insert class>" : ""}`}>{annotation.text}</span>
         )}
 
         {!isEditing && (
           <div>
+            <Button
+              variant="link"
+              onClick={() => handleFavorite(annotation.id, annotation.favorite, annotation.projectID)}
+              className="p-0"
+            >
+              <img src={FavoriteIcon} alt="Favorite" width={16} height={16} />
+            </Button>
+
             <Button
               variant="link"
               onClick={() => setIsEditing(true)}
